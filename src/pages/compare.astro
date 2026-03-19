@@ -1,0 +1,243 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+
+const comparisons = [
+  {
+    feature: 'Open-source scanners',
+    fimil: true,
+    sonarqube: false,
+    snyk: false,
+    github: false,
+  },
+  {
+    feature: 'Unified dashboard',
+    fimil: true,
+    sonarqube: true,
+    snyk: true,
+    github: true,
+  },
+  {
+    feature: 'SAST',
+    fimil: true,
+    sonarqube: true,
+    snyk: true,
+    github: true,
+  },
+  {
+    feature: 'SCA',
+    fimil: true,
+    sonarqube: false,
+    snyk: true,
+    github: true,
+  },
+  {
+    feature: 'Secrets detection',
+    fimil: true,
+    sonarqube: false,
+    snyk: false,
+    github: true,
+  },
+  {
+    feature: 'IaC scanning',
+    fimil: true,
+    sonarqube: false,
+    snyk: true,
+    github: false,
+  },
+  {
+    feature: 'Container scanning',
+    fimil: true,
+    sonarqube: false,
+    snyk: true,
+    github: false,
+  },
+  {
+    feature: 'SBOM generation',
+    fimil: true,
+    sonarqube: false,
+    snyk: false,
+    github: true,
+  },
+  {
+    feature: 'Cross-tool deduplication',
+    fimil: true,
+    sonarqube: false,
+    snyk: false,
+    github: false,
+  },
+  {
+    feature: 'EPSS scoring',
+    fimil: true,
+    sonarqube: false,
+    snyk: false,
+    github: false,
+  },
+  {
+    feature: 'Self-hosted option',
+    fimil: true,
+    sonarqube: true,
+    snyk: false,
+    github: false,
+  },
+  {
+    feature: 'Free tier',
+    fimil: true,
+    sonarqube: true,
+    snyk: true,
+    github: false,
+  },
+];
+
+const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'];
+---
+
+<BaseLayout
+  title="Compare — Fimil"
+  description="See how Fimil compares to SonarQube, Snyk, and GitHub Advanced Security for application security."
+>
+  <Hero
+    headline="Why Teams Choose Fimil"
+    subheadline="Compare Fimil with other application security platforms across features, scanners, and pricing."
+  />
+
+  {/* Comparison table */}
+  <section class="py-20 dark:bg-gray-950">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      {/* Desktop table */}
+      <div class="hidden overflow-x-auto sm:block">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-gray-200 dark:border-gray-800">
+              <th class="py-3 pr-4 font-medium text-gray-500 dark:text-gray-400">Feature</th>
+              <th class="px-4 py-3 font-semibold text-fimil-600 dark:text-fimil-400">Fimil</th>
+              {
+                competitors.map((c) => (
+                  <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-400">{c}</th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              comparisons.map((row) => (
+                <tr class="border-b border-gray-100 dark:border-gray-800/50">
+                  <td class="py-3 pr-4 text-gray-900 dark:text-white">{row.feature}</td>
+                  <td class="px-4 py-3">
+                    {row.fimil ? (
+                      <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                        &#x2713;
+                      </span>
+                    ) : (
+                      <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                        &mdash;
+                      </span>
+                    )}
+                  </td>
+                  <td class="px-4 py-3">
+                    {row.sonarqube ? (
+                      <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                        &#x2713;
+                      </span>
+                    ) : (
+                      <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                        &mdash;
+                      </span>
+                    )}
+                  </td>
+                  <td class="px-4 py-3">
+                    {row.snyk ? (
+                      <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                        &#x2713;
+                      </span>
+                    ) : (
+                      <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                        &mdash;
+                      </span>
+                    )}
+                  </td>
+                  <td class="px-4 py-3">
+                    {row.github ? (
+                      <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                        &#x2713;
+                      </span>
+                    ) : (
+                      <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                        &mdash;
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile cards */}
+      <div class="space-y-4 sm:hidden">
+        {
+          comparisons.map((row) => (
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+              <div class="mb-2 font-medium text-gray-900 dark:text-white">{row.feature}</div>
+              <div class="grid grid-cols-2 gap-2 text-sm">
+                <span
+                  class:list={[row.fimil ? 'text-green-600 dark:text-green-400' : 'text-gray-400']}
+                >
+                  Fimil: {row.fimil ? 'Yes' : 'No'}
+                </span>
+                <span
+                  class:list={[
+                    row.sonarqube ? 'text-green-600 dark:text-green-400' : 'text-gray-400',
+                  ]}
+                >
+                  SonarQube: {row.sonarqube ? 'Yes' : 'No'}
+                </span>
+                <span
+                  class:list={[row.snyk ? 'text-green-600 dark:text-green-400' : 'text-gray-400']}
+                >
+                  Snyk: {row.snyk ? 'Yes' : 'No'}
+                </span>
+                <span
+                  class:list={[row.github ? 'text-green-600 dark:text-green-400' : 'text-gray-400']}
+                >
+                  GitHub AS: {row.github ? 'Yes' : 'No'}
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Why Fimil */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Why Fimil?
+      </h2>
+      <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
+        <p>
+          Most security platforms either lock you into proprietary scanners or give you raw output
+          from a single tool. Fimil takes a different approach: orchestrate the best open-source
+          scanners and unify their output.
+        </p>
+        <p>
+          The result is comprehensive coverage across SAST, SCA, secrets, IaC, containers, and SBOMs
+          &mdash; with intelligent deduplication so your team isn't buried in duplicate findings
+          from overlapping tools.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    headline="See the Difference"
+    description="Try Fimil free and compare the results yourself."
+    cta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+  />
+</BaseLayout>

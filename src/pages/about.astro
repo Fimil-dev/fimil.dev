@@ -1,0 +1,95 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+
+const values = [
+  {
+    title: 'Open Source First',
+    description:
+      'We build on the best open-source security tools and contribute back to the ecosystem.',
+  },
+  {
+    title: 'Privacy by Design',
+    description:
+      'Your code stays yours. Scanners run in isolated, ephemeral containers with no network access.',
+  },
+  {
+    title: 'Signal Over Noise',
+    description:
+      'Security tools are only useful if teams actually act on the findings. We cut through the noise.',
+  },
+  {
+    title: 'API First',
+    description:
+      'Every feature is accessible via API. Automate your security workflows however you want.',
+  },
+];
+---
+
+<BaseLayout
+  title="About — Fimil"
+  description="Fimil is a unified application security platform built to cut through the noise of fragmented security tooling."
+>
+  <Hero
+    headline="Built for Security Teams That Ship"
+    subheadline="We believe application security shouldn't mean choosing between dozens of fragmented tools or expensive enterprise platforms."
+  />
+
+  {/* Story */}
+  <section class="py-20 dark:bg-gray-950">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Our Story
+      </h2>
+      <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
+        <p>
+          The application security landscape is fragmented. Teams need SAST, SCA, secrets detection,
+          IaC scanning, container scanning, and SBOM generation &mdash; but each category has its
+          own tools, its own dashboards, and its own alert fatigue.
+        </p>
+        <p>
+          Fimil was built to solve this. Instead of replacing the excellent open-source scanners
+          that already exist, we orchestrate them. One dashboard, one set of findings, one place to
+          triage and fix.
+        </p>
+        <p>
+          We run every scanner in an ephemeral, network-isolated container with strict resource
+          limits. Your code is never stored, never sent to third parties, and never used for
+          training. Security tooling should be secure by default.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Values */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        What We Believe
+      </h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        {
+          values.map((v) => (
+            <div class="reveal rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+              <h3 class="font-heading text-lg font-semibold text-gray-900 dark:text-white">
+                {v.title}
+              </h3>
+              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{v.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    headline="Join Us"
+    description="We're building the future of application security. Start scanning for free."
+    cta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+  />
+</BaseLayout>

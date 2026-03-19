@@ -1,0 +1,172 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import PricingCard from '@/components/PricingCard.astro';
+import CTASection from '@/components/CTASection.astro';
+
+const plans = [
+  {
+    name: 'Free',
+    price: '$0',
+    description: 'For individual developers getting started.',
+    features: [
+      '3 repositories',
+      '10 scans per month',
+      '1 user',
+      'Community support',
+      'Basic dashboard',
+    ],
+    cta: { label: 'Get Started', href: 'https://app.fimil.dev/auth/register' },
+  },
+  {
+    name: 'Team',
+    price: '$49',
+    description: 'For small teams shipping secure software.',
+    features: [
+      '10 repositories',
+      '100 scans per month',
+      '5 users',
+      'Email support',
+      'Priority scoring',
+      'Auto-triage rules',
+    ],
+    cta: { label: 'Start Free Trial', href: 'https://app.fimil.dev/auth/register' },
+    highlighted: true,
+  },
+  {
+    name: 'Business',
+    price: '$199',
+    description: 'For growing teams that need more.',
+    features: [
+      '50 repositories',
+      '500 scans per month',
+      '25 users',
+      'Priority support',
+      'AI triage assistant',
+      'Auto-remediation PRs',
+      'SBOM generation',
+    ],
+    cta: { label: 'Start Free Trial', href: 'https://app.fimil.dev/auth/register' },
+  },
+  {
+    name: 'Enterprise',
+    price: 'Custom',
+    period: '',
+    description: 'For organizations with advanced needs.',
+    features: [
+      'Unlimited repositories',
+      'Unlimited scans',
+      'Unlimited users',
+      'Dedicated support',
+      'Self-hosted option',
+      'SSO / OIDC',
+      'Custom integrations',
+      'SLA guarantee',
+    ],
+    cta: { label: 'Contact Sales', href: '/contact' },
+  },
+];
+
+const faqs = [
+  {
+    q: 'Can I try Fimil before committing?',
+    a: 'Yes! The Free tier is available forever with no credit card required. Paid plans include a 14-day free trial.',
+  },
+  {
+    q: 'What scanners are included?',
+    a: 'All plans include all 12+ scanners: Semgrep, Bandit, Gosec, Trivy, Grype, OSV-Scanner, Gitleaks, TruffleHog, Checkov, Hadolint, Trivy Image, and Syft.',
+  },
+  {
+    q: 'Can I self-host Fimil?',
+    a: 'Yes. The Enterprise plan includes a self-hosted deployment option using our Kubernetes operator.',
+  },
+  {
+    q: 'What counts as a scan?',
+    a: 'A scan is one full run of all configured scanners against a repository. PR/diff-aware scans count as a full scan.',
+  },
+  {
+    q: 'Do you offer annual billing?',
+    a: 'Yes. Annual plans receive a 20% discount. Contact us for details.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="Pricing — Fimil"
+  description="Simple, transparent pricing for unified application security. Free tier available."
+  jsonLd={jsonLd}
+>
+  <Hero
+    headline="Simple, Transparent Pricing"
+    subheadline="Every plan includes all 12+ scanners. Pick the size that fits your team."
+  />
+
+  {/* Pricing cards */}
+  <section class="-mt-8 pb-20 dark:bg-gray-950">
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+      {
+        plans.map((plan) => (
+          <PricingCard
+            name={plan.name}
+            price={plan.price}
+            period={plan.period}
+            description={plan.description}
+            features={plan.features}
+            cta={plan.cta}
+            highlighted={plan.highlighted}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="mt-10 space-y-4">
+        {
+          faqs.map((faq) => (
+            <details class="group rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900/50">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                {faq.q}
+                <svg
+                  class="h-4 w-4 shrink-0 text-gray-400 transition-transform group-open:rotate-180"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-6 pb-4 text-sm text-gray-600 dark:text-gray-400">{faq.a}</div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    headline="Ready to Secure Your Code?"
+    description="Start with the free tier. Upgrade when you need more."
+    cta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+  />
+</BaseLayout>

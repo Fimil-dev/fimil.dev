@@ -1,0 +1,59 @@
+---
+interface Props {
+  headline: string;
+  subheadline: string;
+  primaryCta?: { label: string; href: string } | undefined;
+  secondaryCta?: { label: string; href: string } | undefined;
+}
+
+const { headline, subheadline, primaryCta, secondaryCta } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden bg-gradient-to-b from-fimil-50 to-white py-20 sm:py-28 dark:from-gray-900 dark:to-gray-950"
+>
+  {/* Decorative blobs */}
+  <div
+    class="absolute top-0 -left-40 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+    <h1
+      class="font-heading text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-white"
+    >
+      {headline}
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-gray-600 sm:text-xl dark:text-gray-400">
+      {subheadline}
+    </p>
+    {
+      (primaryCta || secondaryCta) && (
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {primaryCta && (
+            <a
+              href={primaryCta.href}
+              class="rounded-lg bg-fimil-600 px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
+            >
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.href}
+              class="rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+            >
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>

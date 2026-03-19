@@ -1,0 +1,165 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import FeatureCard from '@/components/FeatureCard.astro';
+import CTASection from '@/components/CTASection.astro';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
+    logo: 'https://fimil.dev/logo.svg',
+    description:
+      'Unified application security platform. Orchestrate 12+ open-source scanners behind a single dashboard.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Fimil',
+    applicationCategory: 'SecurityApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  },
+];
+
+const stats = [
+  { value: '12+', label: 'OSS Scanners' },
+  { value: '90%', label: 'Noise Reduction' },
+  { value: '5 min', label: 'To First Scan' },
+  { value: '24/7', label: 'Automated Scanning' },
+];
+
+const scannerCategories = [
+  {
+    icon: '\u{1F50D}',
+    title: 'SAST',
+    description:
+      'Static analysis with Semgrep, Bandit, and Gosec. Find vulnerabilities in your source code before they reach production.',
+  },
+  {
+    icon: '\u{1F4E6}',
+    title: 'SCA',
+    description:
+      'Software composition analysis with Trivy, Grype, and OSV-Scanner. Know every dependency and its vulnerabilities.',
+  },
+  {
+    icon: '\u{1F511}',
+    title: 'Secrets Detection',
+    description:
+      'Find leaked credentials with Gitleaks and TruffleHog. Catch API keys, tokens, and passwords before they ship.',
+  },
+  {
+    icon: '\u{1F3D7}\u{FE0F}',
+    title: 'IaC & Containers',
+    description:
+      'Scan Dockerfiles with Hadolint, infrastructure with Checkov, and container images with Trivy.',
+  },
+];
+---
+
+<BaseLayout title="Fimil — Unified Application Security Platform" jsonLd={jsonLd}>
+  <Hero
+    headline="12 Security Scanners. One Dashboard. Zero Noise."
+    subheadline="Orchestrate 12+ open-source security scanners — SAST, SCA, secrets, IaC, containers — into a single dashboard with intelligent deduplication and priority scoring."
+    primaryCta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+    secondaryCta={{ label: 'See Features', href: '/features' }}
+  />
+
+  {/* Stats */}
+  <section
+    class="border-b border-gray-200/60 bg-white py-12 dark:border-gray-800/60 dark:bg-gray-950"
+  >
+    <div class="mx-auto grid max-w-5xl grid-cols-2 gap-8 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
+      {
+        stats.map((stat) => (
+          <div class="reveal text-center">
+            <div class="font-heading text-3xl font-bold text-fimil-600 dark:text-fimil-400">
+              {stat.value}
+            </div>
+            <div class="mt-1 text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* Scanner categories */}
+  <section class="py-20 dark:bg-gray-950">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-heading text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Every Scanner You Need, Unified
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          Stop juggling separate tools. Fimil orchestrates best-in-class open-source scanners and
+          deduplicates their output into actionable findings.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          scannerCategories.map((cat) => (
+            <FeatureCard title={cat.title} description={cat.description} icon={cat.icon} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* How it works */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-3xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        How It Works
+      </h2>
+      <div class="mt-12 grid gap-8 md:grid-cols-3">
+        {
+          [
+            {
+              step: '1',
+              title: 'Connect',
+              description: 'Link your GitHub, GitLab, or Bitbucket repositories in seconds.',
+            },
+            {
+              step: '2',
+              title: 'Scan',
+              description:
+                'Fimil runs 12+ scanners in isolated containers and deduplicates the results.',
+            },
+            {
+              step: '3',
+              title: 'Fix',
+              description:
+                'Review prioritized findings with EPSS scoring and auto-generated fix suggestions.',
+            },
+          ].map((item) => (
+            <div class="reveal text-center">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-fimil-100 font-heading text-xl font-bold text-fimil-600 dark:bg-fimil-900/50 dark:text-fimil-400">
+                {item.step}
+              </div>
+              <h3 class="mt-4 font-heading text-xl font-semibold text-gray-900 dark:text-white">
+                {item.title}
+              </h3>
+              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    headline="Secure Your Code in Minutes"
+    description="Free tier available. No credit card required. Start scanning today."
+    cta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+  />
+</BaseLayout>

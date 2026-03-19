@@ -1,0 +1,99 @@
+---
+const year = new Date().getFullYear();
+
+const productLinks = [
+  { label: 'Features', href: '/features' },
+  { label: 'Compare', href: '/compare' },
+  { label: 'Pricing', href: '/pricing' },
+];
+
+const companyLinks = [
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Trust Center', href: 'https://trust.fimil.dev' },
+];
+
+const legalLinks = [
+  { label: 'Terms of Service', href: '/legal/terms-of-service' },
+  { label: 'Privacy Policy', href: '/legal/privacy-policy' },
+  { label: 'Security Policy', href: '/legal/security-policy' },
+  { label: 'Cookie Policy', href: '/legal/cookie-policy' },
+  { label: 'DPA', href: '/legal/data-processing-agreement' },
+];
+---
+
+<footer class="border-t border-gray-200/60 bg-gray-900 text-gray-400 dark:border-gray-800/60">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      {/* Brand */}
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/favicon.svg" alt="" class="h-6 w-6" />
+          <span class="font-heading text-lg font-semibold text-white">fimil</span>
+        </a>
+        <p class="mt-3 text-sm leading-relaxed">
+          Unified application security platform. 12+ open-source scanners, one dashboard.
+        </p>
+      </div>
+
+      {/* Product */}
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white uppercase">Product</h3>
+        <ul class="mt-3 space-y-2">
+          {
+            productLinks.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm transition-colors hover:text-white">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {/* Company */}
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white uppercase">Company</h3>
+        <ul class="mt-3 space-y-2">
+          {
+            companyLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm transition-colors hover:text-white"
+                  {...(link.href.startsWith('https://')
+                    ? { target: '_blank', rel: 'noopener' }
+                    : {})}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {/* Legal */}
+      <div>
+        <h3 class="text-sm font-semibold tracking-wide text-white uppercase">Legal</h3>
+        <ul class="mt-3 space-y-2">
+          {
+            legalLinks.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm transition-colors hover:text-white">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 border-t border-gray-800 pt-6 text-center text-sm">
+      &copy; {year} Fimil Inc. All rights reserved.
+    </div>
+  </div>
+</footer>

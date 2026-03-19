@@ -1,0 +1,79 @@
+---
+interface Props {
+  name: string;
+  price: string;
+  period?: string | undefined;
+  description: string;
+  features: string[];
+  cta: { label: string; href: string };
+  highlighted?: boolean | undefined;
+}
+
+const {
+  name,
+  price,
+  period = '/mo',
+  description,
+  features,
+  cta,
+  highlighted = false,
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'reveal flex flex-col rounded-xl border p-6 sm:p-8',
+    highlighted
+      ? 'relative border-fimil-600 ring-1 ring-fimil-600 dark:border-fimil-500 dark:ring-fimil-500'
+      : 'border-gray-200 dark:border-gray-800',
+  ]}
+>
+  {
+    highlighted && (
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+        <span class="rounded-full bg-fimil-600 px-3 py-1 text-xs font-medium text-white">
+          Most Popular
+        </span>
+      </div>
+    )
+  }
+
+  <h3 class="font-heading text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
+  <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{description}</p>
+
+  <div class="mt-4">
+    <span class="text-4xl font-bold text-gray-900 dark:text-white">{price}</span>
+    {price !== 'Custom' && <span class="text-sm text-gray-500">{period}</span>}
+  </div>
+
+  <ul class="mt-6 flex-1 space-y-3">
+    {
+      features.map((feature) => (
+        <li class="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <svg
+            class="mt-0.5 h-4 w-4 shrink-0 text-fimil-600 dark:text-fimil-400"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          {feature}
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={cta.href}
+    class:list={[
+      'mt-8 block rounded-lg px-4 py-2.5 text-center text-sm font-medium transition-colors',
+      highlighted
+        ? 'bg-fimil-600 text-white hover:bg-fimil-700'
+        : 'border border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800',
+    ]}
+  >
+    {cta.label}
+  </a>
+</div>
