@@ -10,27 +10,27 @@ interface Props {
 const { title, description, iconRight = true, bgGray = false, iconEmoji } = Astro.props;
 ---
 
-<section
-  class:list={[
-    'py-16 sm:py-20',
-    bgGray ? 'bg-gray-50 dark:bg-gray-900' : 'bg-white dark:bg-gray-950',
-  ]}
->
+<section class:list={['py-16 sm:py-20', bgGray ? 'bg-gray-50' : 'bg-white']}>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div
       class:list={[
-        'reveal flex flex-col items-center gap-8 lg:flex-row lg:gap-16',
+        'scroll-hidden flex flex-col items-center gap-8 lg:flex-row lg:gap-16',
         !iconRight && 'lg:flex-row-reverse',
       ]}
     >
       {/* Text content */}
       <div class="flex-1">
-        <h3
-          class="font-heading text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-white"
-        >
+        {
+          iconEmoji && (
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-fimil-100 text-fimil-600">
+              <span class="text-2xl">{iconEmoji}</span>
+            </div>
+          )
+        }
+        <h3 class="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           {title}
         </h3>
-        <p class="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+        <p class="mt-4 text-lg leading-8 text-gray-600">
           {description}
         </p>
       </div>
@@ -38,7 +38,7 @@ const { title, description, iconRight = true, bgGray = false, iconEmoji } = Astr
       {/* Icon / visual area */}
       <div class="flex flex-1 items-center justify-center">
         <div
-          class="flex h-32 w-32 items-center justify-center rounded-2xl bg-fimil-50 text-6xl sm:h-40 sm:w-40 dark:bg-fimil-900/30"
+          class="flex h-32 w-32 items-center justify-center rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 text-6xl shadow-lg sm:h-40 sm:w-40"
         >
           {iconEmoji || ''}
           <slot />

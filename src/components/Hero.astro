@@ -12,16 +12,16 @@ const hasVisual = Astro.slots.has('default');
 ---
 
 <section
-  class="relative overflow-hidden bg-gradient-to-b from-fimil-50 to-white py-20 sm:py-28 dark:from-gray-900 dark:to-gray-950"
+  class="relative overflow-hidden bg-gradient-to-b from-fimil-50 to-white py-24 sm:py-32 lg:py-40"
 >
   {/* Decorative blobs */}
   <div
-    class="absolute top-0 -left-40 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+    class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-fimil-100 opacity-50 blur-3xl"
     aria-hidden="true"
   >
   </div>
   <div
-    class="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+    class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-fimil-100 opacity-50 blur-3xl"
     aria-hidden="true"
   >
   </div>
@@ -30,20 +30,18 @@ const hasVisual = Astro.slots.has('default');
     class:list={[
       'relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8',
       hasVisual
-        ? 'flex flex-col items-center gap-12 lg:flex-row lg:gap-16'
-        : 'max-w-4xl text-center',
+        ? 'lg:grid lg:grid-cols-2 lg:items-center lg:gap-12'
+        : 'mx-auto max-w-3xl text-center',
     ]}
   >
     {/* Text content */}
-    <div class:list={[hasVisual ? 'flex-1 text-center lg:text-left' : '']}>
-      <h1
-        class="font-heading text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-white"
-      >
+    <div class:list={[hasVisual ? 'text-center lg:text-left' : '']}>
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
         {headline}
       </h1>
       <p
         class:list={[
-          'mt-6 text-lg text-gray-600 sm:text-xl dark:text-gray-400',
+          'mt-6 text-lg text-gray-600 sm:text-xl',
           hasVisual ? 'max-w-xl' : 'mx-auto max-w-2xl',
         ]}
       >
@@ -60,7 +58,7 @@ const hasVisual = Astro.slots.has('default');
             {primaryCta && (
               <a
                 href={primaryCta.href}
-                class="rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
+                class="min-w-[160px] rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
               >
                 {primaryCta.label}
               </a>
@@ -68,7 +66,7 @@ const hasVisual = Astro.slots.has('default');
             {secondaryCta && (
               <a
                 href={secondaryCta.href}
-                class="rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                class="min-w-[160px] rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
               >
                 {secondaryCta.label}
               </a>

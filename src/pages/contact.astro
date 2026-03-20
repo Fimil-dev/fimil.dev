@@ -12,60 +12,49 @@ import Hero from '@/components/Hero.astro';
     subheadline="Have a question, want a demo, or interested in a partnership? We'd love to hear from you."
   />
 
-  <section class="py-20 dark:bg-gray-950">
+  <section class="py-20">
     <div class="mx-auto grid max-w-5xl gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
       {/* Contact form */}
       <div>
-        <h2 class="font-heading text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Send Us a Message
-        </h2>
+        <h2 class="text-xl font-bold tracking-tight text-gray-900">Send Us a Message</h2>
         <form id="contact-form" class="mt-6 space-y-5">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Name
-            </label>
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <input
               type="text"
               id="name"
               name="name"
               required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
             />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email
-            </label>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
             />
           </div>
           <div>
-            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Company
-            </label>
+            <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
             <input
               type="text"
               id="company"
               name="company"
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
             />
           </div>
           <div>
-            <label
-              for="inquiry_type"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            <label for="inquiry_type" class="block text-sm font-medium text-gray-700"
+              >Inquiry Type</label
             >
-              Inquiry Type
-            </label>
             <select
               id="inquiry_type"
               name="inquiry_type"
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
             >
               <option value="general">General</option>
               <option value="sales">Sales</option>
@@ -74,15 +63,13 @@ import Hero from '@/components/Hero.astro';
             </select>
           </div>
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Message
-            </label>
+            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
             <textarea
               id="message"
               name="message"
               rows="4"
               required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
             ></textarea>
           </div>
           <button
@@ -98,11 +85,9 @@ import Hero from '@/components/Hero.astro';
       {/* Right column */}
       <div class="space-y-8">
         {/* Book a Demo */}
-        <div class="rounded-2xl bg-gray-50 p-8 dark:bg-gray-900">
-          <h3 class="font-heading text-lg font-semibold text-gray-900 dark:text-white">
-            Book a Demo
-          </h3>
-          <ul class="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-400">
+        <div class="rounded-2xl bg-gray-50 p-8">
+          <h3 class="text-lg font-semibold text-gray-900">Book a Demo</h3>
+          <ul class="mt-4 space-y-3 text-sm text-gray-600">
             <li class="flex items-start gap-2">
               <span class="mt-0.5 text-fimil-500">&#x2713;</span>
               See how Fimil orchestrates 12+ scanners
@@ -131,30 +116,20 @@ import Hero from '@/components/Hero.astro';
         </div>
 
         {/* Contact Information */}
-        <div
-          class="rounded-2xl border border-gray-200 bg-white p-8 dark:border-gray-800 dark:bg-gray-900"
-        >
-          <h3 class="font-heading text-lg font-semibold text-gray-900 dark:text-white">
-            Contact Information
-          </h3>
-          <div class="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-400">
+        <div class="rounded-2xl border border-gray-200 bg-white p-8">
+          <h3 class="text-lg font-semibold text-gray-900">Contact Information</h3>
+          <div class="mt-4 space-y-3 text-sm text-gray-600">
             <p>
-              <span class="font-medium text-gray-900 dark:text-white">Sales:</span>
-              <a href="mailto:sales@fimil.dev" class="ml-1 text-fimil-600 dark:text-fimil-400"
-                >sales@fimil.dev</a
-              >
+              <span class="font-medium text-gray-900">Sales:</span>
+              <a href="mailto:sales@fimil.dev" class="ml-1 text-fimil-600">sales@fimil.dev</a>
             </p>
             <p>
-              <span class="font-medium text-gray-900 dark:text-white">Support:</span>
-              <a href="mailto:support@fimil.dev" class="ml-1 text-fimil-600 dark:text-fimil-400"
-                >support@fimil.dev</a
-              >
+              <span class="font-medium text-gray-900">Support:</span>
+              <a href="mailto:support@fimil.dev" class="ml-1 text-fimil-600">support@fimil.dev</a>
             </p>
             <p>
-              <span class="font-medium text-gray-900 dark:text-white">Security:</span>
-              <a href="mailto:security@fimil.dev" class="ml-1 text-fimil-600 dark:text-fimil-400"
-                >security@fimil.dev</a
-              >
+              <span class="font-medium text-gray-900">Security:</span>
+              <a href="mailto:security@fimil.dev" class="ml-1 text-fimil-600">security@fimil.dev</a>
             </p>
           </div>
         </div>
@@ -189,13 +164,13 @@ import Hero from '@/components/Hero.astro';
       .then(function (res) {
         if (!res.ok) throw new Error('Request failed');
         status.textContent = "Message sent! We'll get back to you soon.";
-        status.className = 'text-sm text-green-600 dark:text-green-400';
+        status.className = 'text-sm text-green-600';
         status.classList.remove('hidden');
         form.reset();
       })
       .catch(function () {
         status.textContent = 'Something went wrong. Please email us directly.';
-        status.className = 'text-sm text-red-600 dark:text-red-400';
+        status.className = 'text-sm text-red-600';
         status.classList.remove('hidden');
       })
       .finally(function () {

@@ -1,9 +1,6 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
-  --font-heading: 'IBM Plex Mono', ui-monospace, monospace;
   --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
 
   --color-fimil-50: #f0f9ff;
@@ -16,6 +13,12 @@
   --color-fimil-700: #0369a1;
   --color-fimil-800: #075985;
   --color-fimil-900: #0c4a6e;
+
+  --color-critical: #ef4444;
+  --color-high: #f97316;
+  --color-medium: #f59e0b;
+  --color-low: #22c55e;
+  --color-info: #6b7280;
 }
 
 html {
@@ -28,22 +31,94 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* scroll reveal */
-.reveal {
+/* Scroll animations */
+.scroll-hidden {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
 }
 
-.reveal.visible {
+.scroll-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+.stagger-1 {
+  transition-delay: 0.1s;
+}
+.stagger-2 {
+  transition-delay: 0.2s;
+}
+.stagger-3 {
+  transition-delay: 0.3s;
+}
+.stagger-4 {
+  transition-delay: 0.4s;
+}
+.stagger-5 {
+  transition-delay: 0.5s;
+}
+.stagger-6 {
+  transition-delay: 0.6s;
+}
+.stagger-7 {
+  transition-delay: 0.7s;
+}
+.stagger-8 {
+  transition-delay: 0.8s;
+}
+
+/* Marketing animations */
+@keyframes marketing-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.marketing-page-enter {
+  animation: marketing-fade-in 0.4s ease both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .scroll-hidden {
     opacity: 1;
     transform: none;
     transition: none;
