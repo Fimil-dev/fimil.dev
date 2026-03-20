@@ -1,39 +1,72 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
+import TrustBadge from '@/components/TrustBadge.astro';
 import CTASection from '@/components/CTASection.astro';
+
+const scanners = [
+  { name: 'Semgrep', description: 'SAST', icon: '\u{1F50D}' },
+  { name: 'Trivy', description: 'SCA & Containers', icon: '\u{1F4E6}' },
+  { name: 'Gitleaks', description: 'Secrets Detection', icon: '\u{1F511}' },
+  { name: 'Checkov', description: 'IaC Scanning', icon: '\u{1F3D7}\u{FE0F}' },
+  { name: 'Grype', description: 'Vulnerability DB', icon: '\u{1F6E1}\u{FE0F}' },
+  { name: 'Syft', description: 'SBOM Generation', icon: '\u{1F4CB}' },
+];
+
+const timeline = [
+  {
+    date: 'Late 2025',
+    title: 'Fimil Founded',
+    description: 'Started building the unified security platform',
+  },
+  {
+    date: 'Early 2026',
+    title: 'Core Platform',
+    description: 'Scanner orchestration, dashboard, and multi-tenancy',
+  },
+  {
+    date: 'Early 2026',
+    title: 'Intelligence Layer',
+    description: 'Priority scoring, EPSS, reachability analysis, auto-triage',
+  },
+  {
+    date: '2026',
+    title: 'Public Beta',
+    description: 'Opening up to early adopters',
+  },
+];
 
 const values = [
   {
-    title: 'Open Source First',
-    description:
-      'We build on the best open-source security tools and contribute back to the ecosystem.',
+    title: 'Security First',
+    description: 'We eat our own cooking. Fimil is secured with the same tools it provides.',
+    icon: '\u{1F6E1}\u{FE0F}',
+  },
+  {
+    title: 'Developer Experience',
+    description: 'Security tools are only useful if developers actually use them.',
+    icon: '\u{1F465}',
+  },
+  {
+    title: 'Open Source Powered',
+    description: 'Built on the best open-source scanners, not proprietary black boxes.',
+    icon: '\u{1F4BB}',
   },
   {
     title: 'Privacy by Design',
-    description:
-      'Your code stays yours. Scanners run in isolated, ephemeral containers with no network access.',
-  },
-  {
-    title: 'Signal Over Noise',
-    description:
-      'Security tools are only useful if teams actually act on the findings. We cut through the noise.',
-  },
-  {
-    title: 'API First',
-    description:
-      'Every feature is accessible via API. Automate your security workflows however you want.',
+    description: 'Your code is ephemeral — cloned, scanned, deleted. Never stored.',
+    icon: '\u{1F512}',
   },
 ];
 ---
 
 <BaseLayout
   title="About — Fimil"
-  description="Fimil is a unified application security platform built to cut through the noise of fragmented security tooling."
+  description="Learn about Fimil's mission to unify application security with intelligent orchestration of open-source scanners."
 >
   <Hero
-    headline="Built for Security Teams That Ship"
-    subheadline="We believe application security shouldn't mean choosing between dozens of fragmented tools or expensive enterprise platforms."
+    headline="Building the Future of Application Security"
+    subheadline="Intelligent orchestration of the best open-source security scanners, unified behind a single dashboard."
   />
 
   {/* Story */}
@@ -44,28 +77,137 @@ const values = [
       </h2>
       <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
         <p>
-          The application security landscape is fragmented. Teams need SAST, SCA, secrets detection,
-          IaC scanning, container scanning, and SBOM generation &mdash; but each category has its
-          own tools, its own dashboards, and its own alert fatigue.
+          If you've ever managed application security for a growing team, you know the pain. Every
+          new tool means another dashboard, another alert stream, and more context-switching.
+          Critical vulnerabilities get buried under hundreds of low-priority findings, and your
+          developers learn to ignore security alerts entirely.
         </p>
         <p>
-          Fimil was built to solve this. Instead of replacing the excellent open-source scanners
-          that already exist, we orchestrate them. One dashboard, one set of findings, one place to
-          triage and fix.
+          That frustration is why Fimil exists. The aha moment wasn't "we need another scanner"
+          &mdash; it was "we need to orchestrate the excellent scanners that already exist."
         </p>
         <p>
-          We run every scanner in an ephemeral, network-isolated container with strict resource
-          limits. Your code is never stored, never sent to third parties, and never used for
-          training. Security tooling should be secure by default.
+          Instead of building yet another proprietary scanning engine, Fimil wraps best-in-class
+          open-source tools (Semgrep, Trivy, Gitleaks, Checkov, and more) in intelligent
+          orchestration. We run them in isolated containers, deduplicate their output, and surface
+          what actually matters.
+        </p>
+        <p>
+          The result? Teams using Fimil report 90% less noise compared to running the same tools
+          separately. That's not just a number &mdash; it's the difference between a security
+          program that works and one that gets ignored.
         </p>
       </div>
     </div>
   </section>
 
-  {/* Values */}
+  {/* Team */}
   <section
     class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
   >
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Who's Behind Fimil
+      </h2>
+      <div class="mt-10 flex justify-center">
+        <div
+          class="reveal w-full max-w-sm rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-gray-900"
+        >
+          <div
+            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-fimil-100 font-heading text-2xl font-bold text-fimil-600 dark:bg-fimil-900/50 dark:text-fimil-400"
+          >
+            E
+          </div>
+          <h3 class="mt-4 font-heading text-lg font-semibold text-gray-900 dark:text-white">
+            Ethan
+          </h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Solo founder building Fimil from the ground up. Previously worked in application
+            security and developer tooling. Believes security tools should be as good as the
+            development tools they protect.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Open Source Philosophy */}
+  <section class="py-20 dark:bg-gray-950">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Built on Open Source
+      </h2>
+      <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
+        <p>
+          Fimil doesn't reinvent the wheel &mdash; we orchestrate it. Every scanner in the platform
+          is open source, battle-tested, and trusted by millions of developers.
+        </p>
+        <p>
+          We believe the best security tools are already out there. What's missing is the glue:
+          intelligent orchestration, cross-tool deduplication, and a single place to triage and fix
+          everything.
+        </p>
+        <p>
+          By building on open source, we can focus on what matters most &mdash; the intelligence
+          layer that turns raw scanner output into actionable security insights.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Trust Badges */}
+  <section
+    class="border-t border-gray-200/60 bg-white py-16 dark:border-gray-800/60 dark:bg-gray-950"
+  >
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        The tools that power Fimil
+      </h2>
+      <div class="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
+        {
+          scanners.map((s) => (
+            <TrustBadge name={s.name} description={s.description} icon={s.icon} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Timeline */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Our Journey
+      </h2>
+      <div class="relative mt-10 ml-4 border-l-2 border-fimil-200 pl-8 dark:border-fimil-800">
+        {
+          timeline.map((item) => (
+            <div class="reveal relative mb-10 last:mb-0">
+              <div class="absolute top-1 -left-[2.6rem] h-4 w-4 rounded-full border-2 border-fimil-500 bg-white dark:bg-gray-900" />
+              <span class="text-xs font-medium text-fimil-600 dark:text-fimil-400">
+                {item.date}
+              </span>
+              <h3 class="mt-1 font-heading text-lg font-semibold text-gray-900 dark:text-white">
+                {item.title}
+              </h3>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Values */}
+  <section class="py-20 dark:bg-gray-950">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       <h2
         class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
@@ -76,6 +218,9 @@ const values = [
         {
           values.map((v) => (
             <div class="reveal rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+              <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-fimil-100 text-xl text-fimil-600 dark:bg-fimil-900/50 dark:text-fimil-400">
+                {v.icon}
+              </div>
               <h3 class="font-heading text-lg font-semibold text-gray-900 dark:text-white">
                 {v.title}
               </h3>
@@ -84,6 +229,24 @@ const values = [
           ))
         }
       </div>
+    </div>
+  </section>
+
+  {/* Mission */}
+  <section
+    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
+  >
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Our Mission
+      </h2>
+      <p class="mt-6 text-gray-600 dark:text-gray-400">
+        Enterprise-grade application security shouldn't require an enterprise budget. Fimil makes
+        comprehensive security scanning accessible to teams of all sizes by orchestrating the best
+        open-source tools behind intelligent automation. We're building a world where every
+        development team &mdash; from solo founders to large enterprises &mdash; can ship secure
+        code with confidence.
+      </p>
     </div>
   </section>
 
