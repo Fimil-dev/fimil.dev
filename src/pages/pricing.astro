@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/Hero.astro';
 import PricingCard from '@/components/PricingCard.astro';
 import CTASection from '@/components/CTASection.astro';
 
@@ -8,27 +7,21 @@ const plans = [
   {
     name: 'Free',
     price: '$0',
-    description: 'For individual developers getting started.',
-    features: [
-      '3 repositories',
-      '10 scans per month',
-      '1 user',
-      'Community support',
-      'Basic dashboard',
-    ],
+    description: 'For individual developers',
+    features: ['3 repositories', '10 scans/month', '1 user', 'All scanners', 'Basic dashboard'],
     cta: { label: 'Get Started', href: 'https://app.fimil.dev/auth/register' },
   },
   {
     name: 'Team',
     price: '$49',
-    description: 'For small teams shipping secure software.',
+    description: 'For growing teams',
     features: [
       '10 repositories',
-      '100 scans per month',
+      '100 scans/month',
       '5 users',
+      'Slack & API',
+      'Scanner profiles',
       'Email support',
-      'Priority scoring',
-      'Auto-triage rules',
     ],
     cta: { label: 'Start Free Trial', href: 'https://app.fimil.dev/auth/register' },
     highlighted: true,
@@ -36,15 +29,14 @@ const plans = [
   {
     name: 'Business',
     price: '$199',
-    description: 'For growing teams that need more.',
+    description: 'For larger organizations',
     features: [
       '50 repositories',
-      '500 scans per month',
+      '500 scans/month',
       '25 users',
+      'Auto-triage',
+      'Fix suggestions',
       'Priority support',
-      'AI triage assistant',
-      'Auto-remediation PRs',
-      'SBOM generation',
     ],
     cta: { label: 'Start Free Trial', href: 'https://app.fimil.dev/auth/register' },
   },
@@ -52,14 +44,14 @@ const plans = [
     name: 'Enterprise',
     price: 'Custom',
     period: '',
-    description: 'For organizations with advanced needs.',
+    description: 'For enterprises',
     features: [
       'Unlimited repositories',
       'Unlimited scans',
       'Unlimited users',
-      'Dedicated support',
       'Self-hosted option',
-      'SSO / OIDC',
+      'SSO/OIDC',
+      'Dedicated support',
       'Custom integrations',
       'SLA guarantee',
     ],
@@ -67,26 +59,121 @@ const plans = [
   },
 ];
 
-const faqs = [
+/* Feature comparison data */
+type CellValue = string | boolean;
+interface ComparisonRow {
+  feature: string;
+  free: CellValue;
+  team: CellValue;
+  business: CellValue;
+  enterprise: CellValue;
+}
+interface ComparisonCategory {
+  name: string;
+  rows: ComparisonRow[];
+}
+
+const comparisonData: ComparisonCategory[] = [
   {
-    q: 'Can I try Fimil before committing?',
-    a: 'Yes! The Free tier is available forever with no credit card required. Paid plans include a 14-day free trial.',
+    name: 'Core',
+    rows: [
+      { feature: 'Repositories', free: '3', team: '10', business: '50', enterprise: 'Unlimited' },
+      {
+        feature: 'Scans/month',
+        free: '10',
+        team: '100',
+        business: '500',
+        enterprise: 'Unlimited',
+      },
+      {
+        feature: 'Team members',
+        free: '1',
+        team: '5',
+        business: '25',
+        enterprise: 'Unlimited',
+      },
+    ],
   },
   {
-    q: 'What scanners are included?',
-    a: 'All plans include all 12+ scanners: Semgrep, Bandit, Gosec, Trivy, Grype, OSV-Scanner, Gitleaks, TruffleHog, Checkov, Hadolint, Trivy Image, and Syft.',
+    name: 'Scanners',
+    rows: [
+      { feature: 'SAST', free: true, team: true, business: true, enterprise: true },
+      { feature: 'SCA', free: true, team: true, business: true, enterprise: true },
+      { feature: 'Secrets', free: true, team: true, business: true, enterprise: true },
+      { feature: 'IaC', free: true, team: true, business: true, enterprise: true },
+      { feature: 'Container', free: true, team: true, business: true, enterprise: true },
+      { feature: 'SBOM', free: true, team: true, business: true, enterprise: true },
+    ],
+  },
+  {
+    name: 'Features',
+    rows: [
+      { feature: 'Notifications', free: false, team: true, business: true, enterprise: true },
+      { feature: 'API access', free: false, team: true, business: true, enterprise: true },
+      { feature: 'Export', free: false, team: true, business: true, enterprise: true },
+      { feature: 'Scanner profiles', free: false, team: true, business: true, enterprise: true },
+      { feature: 'Auto-triage', free: false, team: false, business: true, enterprise: true },
+      { feature: 'Scan policies', free: false, team: false, business: true, enterprise: true },
+      { feature: 'Priority scoring', free: false, team: false, business: true, enterprise: true },
+      { feature: 'EPSS enrichment', free: false, team: false, business: true, enterprise: true },
+    ],
+  },
+  {
+    name: 'Enterprise',
+    rows: [
+      { feature: 'Self-hosted', free: false, team: false, business: false, enterprise: true },
+      { feature: 'SSO/OIDC', free: false, team: false, business: false, enterprise: true },
+      {
+        feature: 'Custom integrations',
+        free: false,
+        team: false,
+        business: false,
+        enterprise: true,
+      },
+      { feature: 'SLA', free: false, team: false, business: false, enterprise: true },
+    ],
+  },
+];
+
+const planKeys = ['free', 'team', 'business', 'enterprise'] as const;
+const planLabels = ['Free', 'Team', 'Business', 'Enterprise'];
+
+const faqs = [
+  {
+    q: 'Can I switch plans?',
+    a: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately and billing is prorated.',
+  },
+  {
+    q: 'What payment methods do you accept?',
+    a: 'We accept all major credit cards. Annual billing is available with a 20% discount.',
+  },
+  {
+    q: 'Is there a free trial?',
+    a: 'Yes, all paid plans include a 14-day free trial. No credit card required to start.',
+  },
+  {
+    q: 'What happens when I hit my limits?',
+    a: "You'll be notified when you reach 80% of your plan limits. Scans will queue when you hit the limit. You can upgrade your plan at any time to continue scanning.",
   },
   {
     q: 'Can I self-host Fimil?',
-    a: 'Yes. The Enterprise plan includes a self-hosted deployment option using our Kubernetes operator.',
+    a: 'Self-hosted deployment is available on the Enterprise plan only, using our Kubernetes operator for easy installation and management.',
   },
   {
-    q: 'What counts as a scan?',
-    a: 'A scan is one full run of all configured scanners against a repository. PR/diff-aware scans count as a full scan.',
+    q: 'Do you offer startup discounts?',
+    a: 'Yes, we offer discounts for early-stage startups. Email sales@fimil.dev to learn more.',
   },
   {
-    q: 'Do you offer annual billing?',
-    a: 'Yes. Annual plans receive a 20% discount. Contact us for details.',
+    q: 'Is my source code stored?',
+    a: 'No. Scans run in ephemeral containers with no network access. Your source code is deleted immediately after the scan completes.',
+  },
+  {
+    q: 'Do you support air-gapped deployments?',
+    a: 'Yes, air-gapped deployments are available on the Enterprise plan only. Contact sales for details.',
+  },
+  {
+    q: 'What compliance certifications do you have?',
+    a: 'SOC 2 Type II certification is currently in progress. We are fully GDPR compliant.',
   },
 ];
 
@@ -103,13 +190,34 @@ const jsonLd = {
 
 <BaseLayout
   title="Pricing — Fimil"
-  description="Simple, transparent pricing for unified application security. Free tier available."
+  description="Simple, transparent pricing for unified application security. Free tier available. All plans include all scanners."
   jsonLd={jsonLd}
 >
-  <Hero
-    headline="Simple, Transparent Pricing"
-    subheadline="Every plan includes all 12+ scanners. Pick the size that fits your team."
-  />
+  {/* Header */}
+  <section
+    class="relative overflow-hidden bg-gradient-to-b from-fimil-50 to-white py-20 sm:py-28 dark:from-gray-900 dark:to-gray-950"
+  >
+    <div
+      class="absolute top-0 -left-40 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-fimil-200/30 blur-3xl dark:bg-fimil-800/20"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h1
+        class="font-heading text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-white"
+      >
+        Simple, Transparent Pricing
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-gray-600 sm:text-xl dark:text-gray-400">
+        Every plan includes all 12+ scanners. Pick the size that fits your team.
+      </p>
+    </div>
+  </section>
 
   {/* Pricing cards */}
   <section class="-mt-8 pb-20 dark:bg-gray-950">
@@ -130,13 +238,157 @@ const jsonLd = {
     </div>
   </section>
 
+  {/* Feature Comparison Table — Desktop */}
+  <section class="border-t border-gray-200/60 py-20 dark:border-gray-800/60 dark:bg-gray-950">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-white"
+      >
+        Feature Comparison
+      </h2>
+
+      {/* Desktop table */}
+      <div class="mt-12 hidden lg:block">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-gray-200 dark:border-gray-800">
+              <th class="pr-6 pb-4 font-heading font-semibold text-gray-900 dark:text-white"> </th>
+              {
+                planLabels.map((label) => (
+                  <th class="pb-4 text-center font-heading font-semibold text-gray-900 dark:text-white">
+                    {label}
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              comparisonData.map((category) => (
+                <>
+                  <tr>
+                    <td
+                      colspan={5}
+                      class="pt-8 pb-3 font-heading text-xs font-bold tracking-wider text-fimil-600 uppercase dark:text-fimil-400"
+                    >
+                      {category.name}
+                    </td>
+                  </tr>
+                  {category.rows.map((row) => (
+                    <tr class="border-b border-gray-100 dark:border-gray-800/50">
+                      <td class="py-3 pr-6 text-gray-600 dark:text-gray-400">{row.feature}</td>
+                      {planKeys.map((key) => (
+                        <td class="py-3 text-center">
+                          {typeof row[key] === 'boolean' ? (
+                            row[key] ? (
+                              <svg
+                                class="mx-auto h-5 w-5 text-fimil-600 dark:text-fimil-400"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            ) : (
+                              <span class="text-gray-300 dark:text-gray-700">&mdash;</span>
+                            )
+                          ) : (
+                            <span class="font-medium text-gray-900 dark:text-white">
+                              {row[key]}
+                            </span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile tab-switcher */}
+      <div class="mt-12 lg:hidden" x-data="{ activeTab: 0 }">
+        <div class="flex gap-1 rounded-lg bg-gray-100 p-1 dark:bg-gray-800" role="tablist">
+          {
+            planLabels.map((label, i) => (
+              <button
+                class="comparison-tab flex-1 rounded-md px-3 py-2 text-center text-xs font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                data-tab-index={i}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+              >
+                {label}
+              </button>
+            ))
+          }
+        </div>
+        <div class="mt-6">
+          {
+            planKeys.map((key, i) => (
+              <div
+                class:list={['comparison-panel space-y-1', i === 0 ? '' : 'hidden']}
+                data-panel-index={i}
+                role="tabpanel"
+              >
+                {comparisonData.map((category) => (
+                  <>
+                    <div class="pt-6 pb-2 font-heading text-xs font-bold tracking-wider text-fimil-600 uppercase dark:text-fimil-400">
+                      {category.name}
+                    </div>
+                    {category.rows.map((row) => (
+                      <div class="flex items-center justify-between border-b border-gray-100 py-2.5 dark:border-gray-800/50">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{row.feature}</span>
+                        <span class="text-sm">
+                          {typeof row[key] === 'boolean' ? (
+                            row[key] ? (
+                              <svg
+                                class="h-5 w-5 text-fimil-600 dark:text-fimil-400"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            ) : (
+                              <span class="text-gray-300 dark:text-gray-700">&mdash;</span>
+                            )
+                          ) : (
+                            <span class="font-medium text-gray-900 dark:text-white">
+                              {row[key]}
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
   {/* FAQ */}
   <section
     class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
   >
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <h2
-        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        class="text-center font-heading text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-white"
       >
         Frequently Asked Questions
       </h2>
@@ -164,9 +416,64 @@ const jsonLd = {
     </div>
   </section>
 
+  {/* Enterprise CTA */}
   <CTASection
-    headline="Ready to Secure Your Code?"
-    description="Start with the free tier. Upgrade when you need more."
-    cta={{ label: 'Get Started Free', href: 'https://app.fimil.dev/auth/register' }}
+    headline="Need More? Let's Talk."
+    description="Get a custom plan tailored to your organization's security requirements."
+    cta={{ label: 'Contact Sales', href: '/contact' }}
   />
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    const tabs = document.querySelectorAll('.comparison-tab');
+    const panels = document.querySelectorAll('.comparison-panel');
+    if (!tabs.length) return;
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        const index = parseInt(tab.getAttribute('data-tab-index') || '0', 10);
+
+        tabs.forEach(function (t) {
+          t.classList.remove(
+            'bg-white',
+            'text-gray-900',
+            'shadow-sm',
+            'dark:bg-gray-900',
+            'dark:text-white',
+          );
+          t.classList.add('text-gray-600', 'dark:text-gray-400');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add(
+          'bg-white',
+          'text-gray-900',
+          'shadow-sm',
+          'dark:bg-gray-900',
+          'dark:text-white',
+        );
+        tab.classList.remove('text-gray-600', 'dark:text-gray-400');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach(function (p) {
+          p.classList.add('hidden');
+        });
+        const activePanel = document.querySelector('[data-panel-index="' + index + '"]');
+        if (activePanel) activePanel.classList.remove('hidden');
+      });
+    });
+
+    /* Activate the first tab on load */
+    const firstTab = tabs[0];
+    if (firstTab) {
+      firstTab.classList.add(
+        'bg-white',
+        'text-gray-900',
+        'shadow-sm',
+        'dark:bg-gray-900',
+        'dark:text-white',
+      );
+      firstTab.classList.remove('text-gray-600', 'dark:text-gray-400');
+    }
+  })();
+</script>

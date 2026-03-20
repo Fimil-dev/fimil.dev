@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  icon: string;
+}
+
+const { name, description, icon } = Astro.props;
+---
+
+<div class="reveal flex flex-col items-center text-center">
+  <div
+    class="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+  >
+    {icon}
+  </div>
+  <h3 class="font-heading text-sm font-semibold text-gray-900 dark:text-white">{name}</h3>
+  <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{description}</p>
+</div>

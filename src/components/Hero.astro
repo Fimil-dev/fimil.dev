@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { headline, subheadline, primaryCta, secondaryCta } = Astro.props;
+
+const hasVisual = Astro.slots.has('default');
 ---
 
 <section
@@ -24,34 +26,63 @@ const { headline, subheadline, primaryCta, secondaryCta } = Astro.props;
   >
   </div>
 
-  <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-    <h1
-      class="font-heading text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-white"
-    >
-      {headline}
-    </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg text-gray-600 sm:text-xl dark:text-gray-400">
-      {subheadline}
-    </p>
+  <div
+    class:list={[
+      'relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8',
+      hasVisual
+        ? 'flex flex-col items-center gap-12 lg:flex-row lg:gap-16'
+        : 'max-w-4xl text-center',
+    ]}
+  >
+    {/* Text content */}
+    <div class:list={[hasVisual ? 'flex-1 text-center lg:text-left' : '']}>
+      <h1
+        class="font-heading text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-white"
+      >
+        {headline}
+      </h1>
+      <p
+        class:list={[
+          'mt-6 text-lg text-gray-600 sm:text-xl dark:text-gray-400',
+          hasVisual ? 'max-w-xl' : 'mx-auto max-w-2xl',
+        ]}
+      >
+        {subheadline}
+      </p>
+      {
+        (primaryCta || secondaryCta) && (
+          <div
+            class:list={[
+              'mt-10 flex flex-col gap-4 sm:flex-row',
+              hasVisual ? 'justify-center lg:justify-start' : 'items-center justify-center',
+            ]}
+          >
+            {primaryCta && (
+              <a
+                href={primaryCta.href}
+                class="rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
+              >
+                {primaryCta.label}
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                class="rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              >
+                {secondaryCta.label}
+              </a>
+            )}
+          </div>
+        )
+      }
+    </div>
+
+    {/* Optional visual slot (e.g. DashboardMockup) */}
     {
-      (primaryCta || secondaryCta) && (
-        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          {primaryCta && (
-            <a
-              href={primaryCta.href}
-              class="rounded-lg bg-fimil-600 px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
-            >
-              {primaryCta.label}
-            </a>
-          )}
-          {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              class="rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              {secondaryCta.label}
-            </a>
-          )}
+      hasVisual && (
+        <div class="flex flex-1 justify-center">
+          <slot />
         </div>
       )
     }

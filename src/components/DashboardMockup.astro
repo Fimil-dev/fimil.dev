@@ -1,0 +1,100 @@
+---
+// Browser-window mockup of the Fimil dashboard used in the hero section.
+// Pure Astro — no client JS required.
+---
+
+<div
+  class="w-full max-w-md transform overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl lg:rotate-1 dark:border-gray-700 dark:bg-gray-900"
+>
+  {/* Title bar */}
+  <div
+    class="flex items-center gap-2 border-b border-gray-200 bg-gray-900 px-4 py-2.5 dark:border-gray-700 dark:bg-gray-950"
+  >
+    <div class="flex gap-1.5">
+      <span class="h-3 w-3 rounded-full bg-red-500"></span>
+      <span class="h-3 w-3 rounded-full bg-yellow-500"></span>
+      <span class="h-3 w-3 rounded-full bg-green-500"></span>
+    </div>
+    <span class="ml-2 text-xs font-medium text-gray-400">Dashboard</span>
+  </div>
+
+  {/* Body */}
+  <div class="space-y-4 p-4 sm:p-5">
+    {/* Security score */}
+    <div class="flex items-center gap-4">
+      <div
+        class="flex h-16 w-16 items-center justify-center rounded-full border-4 border-green-500"
+      >
+        <span class="font-heading text-xl font-bold text-green-600 dark:text-green-400">87</span>
+      </div>
+      <div>
+        <div class="text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+          Security Score
+        </div>
+        <div class="text-sm font-semibold text-gray-900 dark:text-white">Good</div>
+      </div>
+    </div>
+
+    {/* Severity bars */}
+    <div class="space-y-2">
+      <div class="text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+        Findings by Severity
+      </div>
+      {/* Critical */}
+      <div class="flex items-center gap-2">
+        <span class="w-14 text-xs font-medium text-gray-600 dark:text-gray-300">Critical</span>
+        <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div class="h-full w-[8%] rounded-full bg-red-500"></div>
+        </div>
+        <span class="w-5 text-right text-xs font-semibold text-gray-900 dark:text-white">3</span>
+      </div>
+      {/* High */}
+      <div class="flex items-center gap-2">
+        <span class="w-14 text-xs font-medium text-gray-600 dark:text-gray-300">High</span>
+        <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div class="h-full w-[18%] rounded-full bg-orange-500"></div>
+        </div>
+        <span class="w-5 text-right text-xs font-semibold text-gray-900 dark:text-white">7</span>
+      </div>
+      {/* Medium */}
+      <div class="flex items-center gap-2">
+        <span class="w-14 text-xs font-medium text-gray-600 dark:text-gray-300">Medium</span>
+        <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div class="h-full w-[30%] rounded-full bg-yellow-500"></div>
+        </div>
+        <span class="w-5 text-right text-xs font-semibold text-gray-900 dark:text-white">12</span>
+      </div>
+      {/* Low */}
+      <div class="flex items-center gap-2">
+        <span class="w-14 text-xs font-medium text-gray-600 dark:text-gray-300">Low</span>
+        <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div class="h-full w-[45%] rounded-full bg-blue-400"></div>
+        </div>
+        <span class="w-5 text-right text-xs font-semibold text-gray-900 dark:text-white">18</span>
+      </div>
+    </div>
+
+    {/* Recent scans */}
+    <div class="space-y-2">
+      <div class="text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Recent Scans</div>
+      <div
+        class="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2 dark:border-gray-800"
+      >
+        <span class="text-sm font-medium text-gray-900 dark:text-white">api-service</span>
+        <span
+          class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/40 dark:text-green-400"
+          >Passed</span
+        >
+      </div>
+      <div
+        class="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2 dark:border-gray-800"
+      >
+        <span class="text-sm font-medium text-gray-900 dark:text-white">web-frontend</span>
+        <span
+          class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-400"
+          >3 issues</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
