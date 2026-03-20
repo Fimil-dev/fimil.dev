@@ -5,10 +5,10 @@ import CTASection from '@/components/CTASection.astro';
 
 type ComparisonRow = {
   feature: string;
-  fimil: boolean;
-  sonarqube: boolean;
-  snyk: boolean;
-  github: boolean;
+  fimil: boolean | string;
+  sonarqube: boolean | string;
+  snyk: boolean | string;
+  github: boolean | string;
 };
 
 type ComparisonCategory = {
@@ -21,11 +21,35 @@ const categories: ComparisonCategory[] = [
     name: 'Scanning Coverage',
     rows: [
       { feature: 'SAST', fimil: true, sonarqube: true, snyk: true, github: true },
-      { feature: 'SCA', fimil: true, sonarqube: false, snyk: true, github: true },
-      { feature: 'Secrets Detection', fimil: true, sonarqube: false, snyk: false, github: true },
+      {
+        feature: 'SCA / Dependency Scanning',
+        fimil: true,
+        sonarqube: false,
+        snyk: true,
+        github: true,
+      },
+      {
+        feature: 'Secrets Detection',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: true,
+      },
       { feature: 'IaC Scanning', fimil: true, sonarqube: false, snyk: true, github: false },
-      { feature: 'Container Scanning', fimil: true, sonarqube: false, snyk: true, github: false },
-      { feature: 'SBOM Generation', fimil: true, sonarqube: false, snyk: false, github: true },
+      {
+        feature: 'Container Image Scanning',
+        fimil: true,
+        sonarqube: false,
+        snyk: true,
+        github: false,
+      },
+      {
+        feature: 'SBOM Generation',
+        fimil: true,
+        sonarqube: false,
+        snyk: true,
+        github: false,
+      },
       {
         feature: 'Multi-Scanner Orchestration',
         fimil: true,
@@ -46,7 +70,7 @@ const categories: ComparisonCategory[] = [
     name: 'Intelligence & Prioritization',
     rows: [
       { feature: 'Priority Scoring', fimil: true, sonarqube: true, snyk: true, github: false },
-      { feature: 'EPSS Integration', fimil: true, sonarqube: false, snyk: true, github: false },
+      { feature: 'EPSS Enrichment', fimil: true, sonarqube: false, snyk: true, github: false },
       {
         feature: 'Reachability Analysis',
         fimil: true,
@@ -56,7 +80,13 @@ const categories: ComparisonCategory[] = [
       },
       { feature: 'Auto-Triage Rules', fimil: true, sonarqube: false, snyk: false, github: false },
       { feature: 'Fix Suggestions', fimil: true, sonarqube: true, snyk: true, github: true },
-      { feature: 'PR/Diff Scanning', fimil: true, sonarqube: true, snyk: true, github: true },
+      {
+        feature: 'PR / Diff-Aware Scanning',
+        fimil: true,
+        sonarqube: true,
+        snyk: true,
+        github: true,
+      },
       {
         feature: 'Compliance Mapping',
         fimil: true,
@@ -69,20 +99,26 @@ const categories: ComparisonCategory[] = [
   {
     name: 'Deployment & Pricing',
     rows: [
-      { feature: 'Cloud Hosted', fimil: true, sonarqube: false, snyk: true, github: true },
-      { feature: 'Self-Hosted Option', fimil: true, sonarqube: true, snyk: false, github: false },
+      { feature: 'Cloud (SaaS)', fimil: true, sonarqube: true, snyk: true, github: true },
+      { feature: 'Self-Hosted', fimil: true, sonarqube: true, snyk: false, github: false },
       {
-        feature: 'Air-Gapped Support',
+        feature: 'Air-Gapped Deployment',
         fimil: true,
         sonarqube: true,
         snyk: false,
         github: false,
       },
-      { feature: 'Free Tier', fimil: true, sonarqube: true, snyk: true, github: false },
+      {
+        feature: 'Free Tier',
+        fimil: true,
+        sonarqube: 'Community' as string,
+        snyk: true,
+        github: false,
+      },
       {
         feature: 'Open Source Scanners',
         fimil: true,
-        sonarqube: false,
+        sonarqube: 'Partial' as string,
         snyk: false,
         github: false,
       },
@@ -99,7 +135,13 @@ const categories: ComparisonCategory[] = [
   },
 ];
 
-const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
+const summaryCards = [
+  { value: '12+ Scanners', description: '1 Dashboard' },
+  { value: '90% Noise', description: 'Reduction' },
+  { value: 'Self-Hosted', description: 'or Cloud' },
+];
+
+const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
 ---
 
 <BaseLayout
@@ -108,26 +150,20 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
 >
   <Hero
     headline="How Fimil Compares"
-    subheadline="See how Fimil stacks up against SonarQube, Snyk, and GitHub Advanced Security across scanning coverage, intelligence, and deployment."
+    subheadline="Most security platforms are point solutions. Fimil is a unified platform that orchestrates the best open-source scanners and eliminates the noise."
   />
 
   {/* Summary cards */}
   <section class="border-b border-gray-200 bg-white py-12">
     <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
-      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
-        <div class="text-3xl font-bold text-fimil-600">12+</div>
-        <div class="text-sm font-medium text-fimil-600">Scanners</div>
-        <div class="mt-1 text-xs text-gray-500">1 Dashboard</div>
-      </div>
-      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
-        <div class="text-3xl font-bold text-fimil-600">90%</div>
-        <div class="text-sm font-medium text-fimil-600">Noise</div>
-        <div class="mt-1 text-xs text-gray-500">Reduction</div>
-      </div>
-      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
-        <div class="text-3xl font-bold text-fimil-600">Self-Hosted</div>
-        <div class="mt-1 text-xs text-gray-500">or Cloud</div>
-      </div>
+      {
+        summaryCards.map((card) => (
+          <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
+            <p class="text-2xl font-bold text-fimil-700">{card.value}</p>
+            <p class="mt-1 text-sm text-fimil-600">{card.description}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
@@ -160,7 +196,9 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                     <tr class="border-b border-gray-100">
                       <td class="py-3 pr-4 text-gray-900">{row.feature}</td>
                       <td class="px-4 py-3">
-                        {row.fimil ? (
+                        {typeof row.fimil === 'string' ? (
+                          <span class="text-sm text-gray-700">{row.fimil}</span>
+                        ) : row.fimil ? (
                           <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
@@ -171,7 +209,9 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                         )}
                       </td>
                       <td class="px-4 py-3">
-                        {row.sonarqube ? (
+                        {typeof row.sonarqube === 'string' ? (
+                          <span class="text-sm text-gray-700">{row.sonarqube}</span>
+                        ) : row.sonarqube ? (
                           <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
@@ -182,7 +222,9 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                         )}
                       </td>
                       <td class="px-4 py-3">
-                        {row.snyk ? (
+                        {typeof row.snyk === 'string' ? (
+                          <span class="text-sm text-gray-700">{row.snyk}</span>
+                        ) : row.snyk ? (
                           <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
@@ -193,7 +235,9 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                         )}
                       </td>
                       <td class="px-4 py-3">
-                        {row.github ? (
+                        {typeof row.github === 'string' ? (
+                          <span class="text-sm text-gray-700">{row.github}</span>
+                        ) : row.github ? (
                           <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
@@ -225,17 +269,56 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                   <div class="rounded-lg border border-gray-200 bg-white p-4">
                     <div class="mb-2 font-medium text-gray-900">{row.feature}</div>
                     <div class="grid grid-cols-2 gap-2 text-sm">
-                      <span class:list={[row.fimil ? 'text-green-600' : 'text-gray-400']}>
-                        Fimil: {row.fimil ? 'Yes' : 'No'}
+                      <span
+                        class:list={[
+                          typeof row.fimil === 'string'
+                            ? 'text-gray-700'
+                            : row.fimil
+                              ? 'text-green-600'
+                              : 'text-gray-400',
+                        ]}
+                      >
+                        Fimil:{' '}
+                        {typeof row.fimil === 'string' ? row.fimil : row.fimil ? 'Yes' : 'No'}
                       </span>
-                      <span class:list={[row.sonarqube ? 'text-green-600' : 'text-gray-400']}>
-                        SonarQube: {row.sonarqube ? 'Yes' : 'No'}
+                      <span
+                        class:list={[
+                          typeof row.sonarqube === 'string'
+                            ? 'text-gray-700'
+                            : row.sonarqube
+                              ? 'text-green-600'
+                              : 'text-gray-400',
+                        ]}
+                      >
+                        SonarQube:{' '}
+                        {typeof row.sonarqube === 'string'
+                          ? row.sonarqube
+                          : row.sonarqube
+                            ? 'Yes'
+                            : 'No'}
                       </span>
-                      <span class:list={[row.snyk ? 'text-green-600' : 'text-gray-400']}>
-                        Snyk: {row.snyk ? 'Yes' : 'No'}
+                      <span
+                        class:list={[
+                          typeof row.snyk === 'string'
+                            ? 'text-gray-700'
+                            : row.snyk
+                              ? 'text-green-600'
+                              : 'text-gray-400',
+                        ]}
+                      >
+                        Snyk: {typeof row.snyk === 'string' ? row.snyk : row.snyk ? 'Yes' : 'No'}
                       </span>
-                      <span class:list={[row.github ? 'text-green-600' : 'text-gray-400']}>
-                        GitHub AS: {row.github ? 'Yes' : 'No'}
+                      <span
+                        class:list={[
+                          typeof row.github === 'string'
+                            ? 'text-gray-700'
+                            : row.github
+                              ? 'text-green-600'
+                              : 'text-gray-400',
+                        ]}
+                      >
+                        GitHub AS:{' '}
+                        {typeof row.github === 'string' ? row.github : row.github ? 'Yes' : 'No'}
                       </span>
                     </div>
                   </div>
@@ -250,31 +333,32 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
 
   {/* Why Fimil */}
   <section class="border-t border-gray-200 bg-gray-50 py-20">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Why Fimil?</h2>
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Why Fimil</h2>
       <div class="mt-6 space-y-4 text-gray-600">
         <p>
-          Most security platforms either lock you into proprietary scanners or give you raw output
-          from a single tool. Fimil takes a different approach: orchestrate the best open-source
-          scanners and unify their output into a single, actionable dashboard.
+          Other platforms build their own proprietary scanners. Fimil takes a different approach: we
+          orchestrate the best open-source tools the security community has already built. This
+          means you get best-in-class detection without vendor lock-in.
         </p>
         <p>
-          With intelligent cross-tool deduplication, EPSS-based priority scoring, and reachability
-          analysis, your team sees only the findings that actually matter &mdash; reducing alert
-          fatigue by up to 90%.
+          The real problem isn't finding vulnerabilities &mdash; it's finding the right ones.
+          Running 12 scanners produces thousands of overlapping results. Fimil deduplicates across
+          tools, enriches with EPSS data, analyzes reachability, and surfaces only the findings that
+          actually matter.
         </p>
         <p>
-          Deploy Fimil as a cloud-hosted SaaS or self-host it in your own infrastructure. Either
-          way, your code is handled ephemerally &mdash; cloned, scanned, and deleted. Never stored,
-          never shared, never used for training.
+          And unlike most alternatives, Fimil gives you the choice: run it as a cloud service or
+          deploy on your own infrastructure. Your source code stays ephemeral &mdash; cloned,
+          scanned, deleted. Never persisted, never shared.
         </p>
       </div>
     </div>
   </section>
 
   <CTASection
-    headline="See the Difference"
-    description="Join the waitlist and compare the results yourself."
+    headline="Ready to Replace Your Patchwork of Tools?"
+    description="Join the waitlist or schedule a demo to see Fimil in action."
     cta={{ label: 'Join Waitlist', href: '/#waitlist' }}
   />
 </BaseLayout>

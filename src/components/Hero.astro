@@ -26,61 +26,66 @@ const hasVisual = Astro.slots.has('default');
   >
   </div>
 
-  <div
-    class:list={[
-      'relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8',
-      hasVisual
-        ? 'lg:grid lg:grid-cols-2 lg:items-center lg:gap-12'
-        : 'mx-auto max-w-3xl text-center',
-    ]}
-  >
-    {/* Text content */}
-    <div class:list={[hasVisual ? 'text-center lg:text-left' : '']}>
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-        {headline}
-      </h1>
-      <p
-        class:list={[
-          'mt-6 text-lg text-gray-600 sm:text-xl',
-          hasVisual ? 'max-w-xl' : 'mx-auto max-w-2xl',
-        ]}
-      >
-        {subheadline}
-      </p>
-      {
-        (primaryCta || secondaryCta) && (
-          <div
-            class:list={[
-              'mt-10 flex flex-col gap-4 sm:flex-row',
-              hasVisual ? 'justify-center lg:justify-start' : 'items-center justify-center',
-            ]}
-          >
-            {primaryCta && (
-              <a
-                href={primaryCta.href}
-                class="min-w-[160px] rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
-              >
-                {primaryCta.label}
-              </a>
-            )}
-            {secondaryCta && (
-              <a
-                href={secondaryCta.href}
-                class="min-w-[160px] rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
-              >
-                {secondaryCta.label}
-              </a>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {
+      hasVisual ? (
+        <div class="lg:grid lg:grid-cols-2 lg:items-center lg:gap-12">
+          <div class="text-center lg:text-left">
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+              {headline}
+            </h1>
+            <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-xl">{subheadline}</p>
+            {(primaryCta || secondaryCta) && (
+              <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6 lg:justify-start">
+                {primaryCta && (
+                  <a
+                    href={primaryCta.href}
+                    class="min-w-[160px] rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
+                  >
+                    {primaryCta.label}
+                  </a>
+                )}
+                {secondaryCta && (
+                  <a
+                    href={secondaryCta.href}
+                    class="min-w-[160px] rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+                  >
+                    {secondaryCta.label}
+                  </a>
+                )}
+              </div>
             )}
           </div>
-        )
-      }
-    </div>
-
-    {/* Optional visual slot (e.g. DashboardMockup) */}
-    {
-      hasVisual && (
-        <div class="flex flex-1 justify-center">
-          <slot />
+          <div class="mt-12 lg:mt-0">
+            <slot />
+          </div>
+        </div>
+      ) : (
+        <div class="mx-auto max-w-3xl text-center">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            {headline}
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-xl">{subheadline}</p>
+          {(primaryCta || secondaryCta) && (
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              {primaryCta && (
+                <a
+                  href={primaryCta.href}
+                  class="min-w-[160px] rounded-lg bg-fimil-600 px-6 py-3 text-center text-base font-medium text-white shadow-sm transition-colors hover:bg-fimil-700"
+                >
+                  {primaryCta.label}
+                </a>
+              )}
+              {secondaryCta && (
+                <a
+                  href={secondaryCta.href}
+                  class="min-w-[160px] rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+                >
+                  {secondaryCta.label}
+                </a>
+              )}
+            </div>
+          )}
         </div>
       )
     }
