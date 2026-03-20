@@ -32,19 +32,13 @@ const jsonLd = {
   ogImage={post.data.ogImage}
   jsonLd={jsonLd}
 >
-  <article class="py-20 dark:bg-gray-950">
+  <article class="py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <header class="mb-10">
-        <a
-          href="/blog"
-          class="text-sm text-fimil-600 transition-colors hover:text-fimil-700 dark:text-fimil-400 dark:hover:text-fimil-300"
-        >
+        <a href="/blog" class="text-sm text-fimil-600 transition-colors hover:text-fimil-700">
           &larr; Back to Blog
         </a>
-        <time
-          datetime={post.data.date.toISOString()}
-          class="mt-4 block text-sm text-gray-500 dark:text-gray-400"
-        >
+        <time datetime={post.data.date.toISOString()} class="mt-4 block text-sm text-gray-500">
           {
             post.data.date.toLocaleDateString('en-US', {
               year: 'numeric',
@@ -53,17 +47,13 @@ const jsonLd = {
             })
           }
         </time>
-        <h1
-          class="mt-2 font-heading text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white"
-        >
+        <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           {post.data.title}
         </h1>
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">By {post.data.author}</p>
+        <p class="mt-2 text-sm text-gray-500">By {post.data.author}</p>
       </header>
 
-      <div
-        class="prose prose-gray dark:prose-invert prose-headings:font-heading prose-a:text-fimil-600 dark:prose-a:text-fimil-400 max-w-none"
-      >
+      <div class="prose prose-gray prose-a:text-fimil-600 max-w-none">
         <Content />
       </div>
     </div>

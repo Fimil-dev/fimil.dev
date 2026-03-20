@@ -1,40 +1,31 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
-
 const navLinks = [
   { label: 'Features', href: '/features' },
   { label: 'Compare', href: '/compare' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Blog', href: '/blog' },
 ];
-
-const currentPath = Astro.url.pathname;
 ---
 
-<header
-  class="sticky top-0 z-50 border-b border-gray-200/60 bg-white/80 backdrop-blur-lg dark:border-gray-800/60 dark:bg-gray-950/80"
->
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+<header class="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-lg">
+  <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
     {/* Logo */}
-    <a href="/" class="flex items-center">
-      <img src="/logo-full-light.svg" alt="Fimil" class="h-8 dark:hidden" />
-      <img src="/logo-full-dark.svg" alt="Fimil" class="hidden h-8 dark:block" />
+    <a href="/" class="flex items-center gap-2">
+      <img src="/logo-icon-color.svg" alt="" class="h-10 w-10" />
+      <span
+        class="text-2xl font-semibold tracking-wide text-gray-900"
+        style="font-family: 'IBM Plex Mono', monospace">fimil</span
+      >
     </a>
 
     {/* Desktop nav */}
-    <div class="hidden items-center gap-1 md:flex">
+    <div class="hidden items-center gap-10 md:flex">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class:list={[
-              'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-              currentPath.startsWith(link.href)
-                ? 'text-fimil-600 dark:text-fimil-400'
-                : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100',
-            ]}
+            class="text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
           >
             {link.label}
           </a>
@@ -42,12 +33,11 @@ const currentPath = Astro.url.pathname;
       }
     </div>
 
-    {/* Desktop CTAs + theme toggle */}
+    {/* Desktop CTAs */}
     <div class="hidden items-center gap-3 md:flex">
-      <ThemeToggle />
       <a
         href="https://app.fimil.dev/auth/login"
-        class="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+        class="text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
       >
         Sign In
       </a>
@@ -61,11 +51,10 @@ const currentPath = Astro.url.pathname;
 
     {/* Mobile hamburger */}
     <div class="flex items-center gap-2 md:hidden">
-      <ThemeToggle />
       <button
         id="mobile-menu-btn"
         type="button"
-        class="rounded-lg p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+        class="rounded-lg p-2 text-gray-600 hover:text-gray-900"
         aria-label="Open menu"
         aria-expanded="false"
       >
@@ -86,33 +75,26 @@ const currentPath = Astro.url.pathname;
     </div>
   </nav>
 
+  {/* Mobile backdrop */}
+  <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/25 md:hidden"></div>
+
   {/* Mobile menu */}
-  <div
-    id="mobile-menu"
-    class="hidden border-t border-gray-200/60 bg-white md:hidden dark:border-gray-800/60 dark:bg-gray-950"
-  >
+  <div id="mobile-menu" class="hidden border-t border-gray-100 bg-white md:hidden">
     <div class="space-y-1 px-4 py-4">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class:list={[
-              'block rounded-lg px-3 py-2 text-base font-medium transition-colors',
-              currentPath.startsWith(link.href)
-                ? 'text-fimil-600 dark:text-fimil-400'
-                : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100',
-            ]}
+            class="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             {link.label}
           </a>
         ))
       }
-      <div
-        class="mt-4 flex flex-col gap-2 border-t border-gray-200/60 pt-4 dark:border-gray-800/60"
-      >
+      <div class="mt-4 flex flex-col gap-2 border-t border-gray-100 pt-4">
         <a
           href="https://app.fimil.dev/auth/login"
-          class="rounded-lg px-3 py-2 text-center text-base font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+          class="rounded-lg px-3 py-2 text-center text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
         >
           Sign In
         </a>
@@ -131,22 +113,30 @@ const currentPath = Astro.url.pathname;
   (function () {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('mobile-backdrop');
     const iconOpen = document.getElementById('menu-icon-open');
     const iconClose = document.getElementById('menu-icon-close');
     let isOpen = false;
 
-    btn.addEventListener('click', function () {
+    function toggle() {
       isOpen = !isOpen;
       menu.classList.toggle('hidden', !isOpen);
+      backdrop.classList.toggle('hidden', !isOpen);
       iconOpen.classList.toggle('hidden', isOpen);
       iconClose.classList.toggle('hidden', !isOpen);
       btn.setAttribute('aria-expanded', String(isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', toggle);
+
+    backdrop.addEventListener('click', function () {
+      if (isOpen) toggle();
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && isOpen) {
-        btn.click();
+        toggle();
       }
     });
   })();

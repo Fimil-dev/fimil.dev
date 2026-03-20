@@ -112,50 +112,36 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
   />
 
   {/* Summary cards */}
-  <section
-    class="border-b border-gray-200/60 bg-white py-12 dark:border-gray-800/60 dark:bg-gray-950"
-  >
+  <section class="border-b border-gray-200 bg-white py-12">
     <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
-      <div
-        class="reveal rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center dark:border-fimil-800 dark:bg-fimil-900/20"
-      >
-        <div class="font-heading text-3xl font-bold text-fimil-600 dark:text-fimil-400">12+</div>
-        <div class="text-sm font-medium text-fimil-600 dark:text-fimil-400">Scanners</div>
-        <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">1 Dashboard</div>
+      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
+        <div class="text-3xl font-bold text-fimil-600">12+</div>
+        <div class="text-sm font-medium text-fimil-600">Scanners</div>
+        <div class="mt-1 text-xs text-gray-500">1 Dashboard</div>
       </div>
-      <div
-        class="reveal rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center dark:border-fimil-800 dark:bg-fimil-900/20"
-      >
-        <div class="font-heading text-3xl font-bold text-fimil-600 dark:text-fimil-400">90%</div>
-        <div class="text-sm font-medium text-fimil-600 dark:text-fimil-400">Noise</div>
-        <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">Reduction</div>
+      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
+        <div class="text-3xl font-bold text-fimil-600">90%</div>
+        <div class="text-sm font-medium text-fimil-600">Noise</div>
+        <div class="mt-1 text-xs text-gray-500">Reduction</div>
       </div>
-      <div
-        class="reveal rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center dark:border-fimil-800 dark:bg-fimil-900/20"
-      >
-        <div class="font-heading text-3xl font-bold text-fimil-600 dark:text-fimil-400">
-          Self-Hosted
-        </div>
-        <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">or Cloud</div>
+      <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
+        <div class="text-3xl font-bold text-fimil-600">Self-Hosted</div>
+        <div class="mt-1 text-xs text-gray-500">or Cloud</div>
       </div>
     </div>
   </section>
 
   {/* Comparison table */}
-  <section class="py-20 dark:bg-gray-950">
+  <section class="py-20">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       {/* Desktop table */}
       <div class="hidden overflow-x-auto sm:block">
         <table class="w-full text-left text-sm">
           <thead>
-            <tr class="border-b border-gray-200 dark:border-gray-800">
-              <th class="py-3 pr-4 font-medium text-gray-500 dark:text-gray-400">Feature</th>
-              <th class="px-4 py-3 font-semibold text-fimil-600 dark:text-fimil-400">Fimil</th>
-              {
-                competitors.map((c) => (
-                  <th class="px-4 py-3 font-medium text-gray-500 dark:text-gray-400">{c}</th>
-                ))
-              }
+            <tr class="border-b border-gray-200">
+              <th class="py-3 pr-4 font-medium text-gray-500">Feature</th>
+              <th class="px-4 py-3 font-semibold text-fimil-600">Fimil</th>
+              {competitors.map((c) => <th class="px-4 py-3 font-medium text-gray-500">{c}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -165,54 +151,54 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
                   <tr>
                     <td
                       colspan="5"
-                      class="pt-6 pb-2 font-heading text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
+                      class="pt-6 pb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase"
                     >
                       {category.name}
                     </td>
                   </tr>
                   {category.rows.map((row) => (
-                    <tr class="border-b border-gray-100 dark:border-gray-800/50">
-                      <td class="py-3 pr-4 text-gray-900 dark:text-white">{row.feature}</td>
+                    <tr class="border-b border-gray-100">
+                      <td class="py-3 pr-4 text-gray-900">{row.feature}</td>
                       <td class="px-4 py-3">
                         {row.fimil ? (
-                          <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                          <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
                         ) : (
-                          <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                          <span class="text-gray-300" aria-label="No">
                             &mdash;
                           </span>
                         )}
                       </td>
                       <td class="px-4 py-3">
                         {row.sonarqube ? (
-                          <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                          <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
                         ) : (
-                          <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                          <span class="text-gray-300" aria-label="No">
                             &mdash;
                           </span>
                         )}
                       </td>
                       <td class="px-4 py-3">
                         {row.snyk ? (
-                          <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                          <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
                         ) : (
-                          <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                          <span class="text-gray-300" aria-label="No">
                             &mdash;
                           </span>
                         )}
                       </td>
                       <td class="px-4 py-3">
                         {row.github ? (
-                          <span class="text-green-600 dark:text-green-400" aria-label="Yes">
+                          <span class="text-green-600" aria-label="Yes">
                             &#x2713;
                           </span>
                         ) : (
-                          <span class="text-gray-300 dark:text-gray-600" aria-label="No">
+                          <span class="text-gray-300" aria-label="No">
                             &mdash;
                           </span>
                         )}
@@ -231,40 +217,24 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
         {
           categories.map((category) => (
             <div>
-              <h3 class="mb-3 font-heading text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500">
+              <h3 class="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
                 {category.name}
               </h3>
               <div class="space-y-3">
                 {category.rows.map((row) => (
-                  <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                    <div class="mb-2 font-medium text-gray-900 dark:text-white">{row.feature}</div>
+                  <div class="rounded-lg border border-gray-200 bg-white p-4">
+                    <div class="mb-2 font-medium text-gray-900">{row.feature}</div>
                     <div class="grid grid-cols-2 gap-2 text-sm">
-                      <span
-                        class:list={[
-                          row.fimil ? 'text-green-600 dark:text-green-400' : 'text-gray-400',
-                        ]}
-                      >
+                      <span class:list={[row.fimil ? 'text-green-600' : 'text-gray-400']}>
                         Fimil: {row.fimil ? 'Yes' : 'No'}
                       </span>
-                      <span
-                        class:list={[
-                          row.sonarqube ? 'text-green-600 dark:text-green-400' : 'text-gray-400',
-                        ]}
-                      >
+                      <span class:list={[row.sonarqube ? 'text-green-600' : 'text-gray-400']}>
                         SonarQube: {row.sonarqube ? 'Yes' : 'No'}
                       </span>
-                      <span
-                        class:list={[
-                          row.snyk ? 'text-green-600 dark:text-green-400' : 'text-gray-400',
-                        ]}
-                      >
+                      <span class:list={[row.snyk ? 'text-green-600' : 'text-gray-400']}>
                         Snyk: {row.snyk ? 'Yes' : 'No'}
                       </span>
-                      <span
-                        class:list={[
-                          row.github ? 'text-green-600 dark:text-green-400' : 'text-gray-400',
-                        ]}
-                      >
+                      <span class:list={[row.github ? 'text-green-600' : 'text-gray-400']}>
                         GitHub AS: {row.github ? 'Yes' : 'No'}
                       </span>
                     </div>
@@ -279,14 +249,10 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub AS'] as const;
   </section>
 
   {/* Why Fimil */}
-  <section
-    class="border-t border-gray-200/60 bg-gray-50 py-20 dark:border-gray-800/60 dark:bg-gray-900"
-  >
+  <section class="border-t border-gray-200 bg-gray-50 py-20">
     <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-      <h2 class="font-heading text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Why Fimil?
-      </h2>
-      <div class="mt-6 space-y-4 text-gray-600 dark:text-gray-400">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Why Fimil?</h2>
+      <div class="mt-6 space-y-4 text-gray-600">
         <p>
           Most security platforms either lock you into proprietary scanners or give you raw output
           from a single tool. Fimil takes a different approach: orchestrate the best open-source
