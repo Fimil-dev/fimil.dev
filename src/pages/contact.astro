@@ -9,7 +9,7 @@ import Hero from '@/components/Hero.astro';
 >
   <Hero
     headline="Get in Touch"
-    subheadline="Have a question, want a demo, or interested in a partnership? We'd love to hear from you."
+    subheadline="Have questions about Fimil? We'd love to hear from you. Send us a message and we'll respond within 24 hours."
   />
 
   <section class="py-20">
@@ -17,6 +17,9 @@ import Hero from '@/components/Hero.astro';
       {/* Contact form */}
       <div>
         <h2 class="text-xl font-bold tracking-tight text-gray-900">Send Us a Message</h2>
+        <p class="mt-4 text-gray-600">
+          Fill out the form below and we'll get back to you as soon as possible.
+        </p>
         <form id="contact-form" class="mt-6 space-y-5">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
@@ -87,22 +90,26 @@ import Hero from '@/components/Hero.astro';
         {/* Book a Demo */}
         <div class="rounded-2xl bg-gray-50 p-8">
           <h3 class="text-lg font-semibold text-gray-900">Book a Demo</h3>
+          <p class="mt-4 text-sm text-gray-600">
+            Want to see Fimil in action? Schedule a personalized demo with our team. We'll walk you
+            through:
+          </p>
           <ul class="mt-4 space-y-3 text-sm text-gray-600">
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 text-fimil-500">&#x2713;</span>
-              See how Fimil orchestrates 12+ scanners
+              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
+              How Fimil orchestrates multiple security scanners
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 text-fimil-500">&#x2713;</span>
-              Learn about intelligent noise reduction
+              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
+              Our intelligent noise reduction and prioritization
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 text-fimil-500">&#x2713;</span>
-              Explore Git provider integrations
+              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
+              Git integrations and CI/CD pipeline setup
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 text-fimil-500">&#x2713;</span>
-              Discuss enterprise and self-hosted options
+              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
+              Enterprise features and self-hosted deployment
             </li>
           </ul>
           <div class="mt-6">
@@ -163,7 +170,8 @@ import Hero from '@/components/Hero.astro';
     })
       .then(function (res) {
         if (!res.ok) throw new Error('Request failed');
-        status.textContent = "Message sent! We'll get back to you soon.";
+        status.textContent =
+          "Message Sent! Thank you for reaching out. We'll get back to you within 24 hours.";
         status.className = 'text-sm text-green-600';
         status.classList.remove('hidden');
         form.reset();

@@ -12,9 +12,14 @@ const jsonLd = {
   '@type': 'Organization',
   name: 'Fimil',
   url: 'https://fimil.dev',
-  logo: 'https://fimil.dev/logo.svg',
+  logo: 'https://fimil.dev/logos/logo-icon-color.svg',
   description:
-    'Unified application security platform. Orchestrate 12+ open-source scanners behind a single dashboard.',
+    'Unified application security platform that orchestrates 12+ open-source security scanners into one dashboard.',
+  sameAs: [
+    'https://github.com/fimil',
+    'https://twitter.com/fimil',
+    'https://linkedin.com/company/fimil',
+  ],
 };
 
 const stats = [
@@ -71,25 +76,25 @@ const featureSections = [
 const pricingPlans = [
   {
     name: 'Free',
-    price: '$0',
+    price: 0,
     description: 'For individual developers',
-    features: ['3 repos', '10 scans/month', 'All scanner types'],
+    features: ['3 repositories', '10 scans/month', 'All scanner types'],
     cta: { label: 'Join Waitlist', href: '/#waitlist' },
     highlighted: false,
   },
   {
     name: 'Team',
-    price: '$49',
+    price: 49,
     description: 'For growing teams',
-    features: ['10 repos', '100 scans/month', 'Slack & API access'],
+    features: ['10 repositories', '100 scans/month', 'Slack & API access'],
     cta: { label: 'Join Waitlist', href: '/#waitlist' },
     highlighted: true,
   },
   {
     name: 'Business',
-    price: '$199',
+    price: 199,
     description: 'For larger organizations',
-    features: ['50 repos', 'Auto-triage rules', 'Priority support'],
+    features: ['50 repositories', 'Auto-triage rules', 'Priority support'],
     cta: { label: 'Contact Sales', href: '/contact' },
     highlighted: false,
   },
@@ -108,22 +113,22 @@ const pricingPlans = [
   </Hero>
 
   {/* 2. Stats section */}
-  <section class="bg-fimil-50 py-16">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+  <section class="bg-fimil-50 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Built for Modern Development Teams
         </h2>
-        <p class="mt-3 text-base text-gray-600">
+        <p class="mt-4 text-lg text-gray-600">
           Everything you need to secure your applications at scale.
         </p>
       </div>
-      <div class="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4">
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {
           stats.map((stat) => (
-            <div class="scroll-hidden text-center">
-              <div class="text-3xl font-bold text-fimil-600">{stat.value}</div>
-              <div class="mt-1 text-sm text-gray-600">{stat.label}</div>
+            <div class="text-center">
+              <div class="text-4xl font-bold text-fimil-600 sm:text-5xl">{stat.value}</div>
+              <div class="mt-2 text-sm text-gray-600">{stat.label}</div>
             </div>
           ))
         }
@@ -132,12 +137,12 @@ const pricingPlans = [
   </section>
 
   {/* 3. Trust Badges */}
-  <section class="bg-gray-50 py-16">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <h2 class="text-center text-lg font-semibold tracking-tight text-gray-500">
+  <section class="bg-gray-50 py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
         Powered by best-in-class open source tools
-      </h2>
-      <div class="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-6">
+      </p>
+      <div class="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
         {
           trustTools.map((tool) => (
             <TrustBadge name={tool.name} description={tool.description} icon={tool.icon} />
@@ -148,15 +153,17 @@ const pricingPlans = [
   </section>
 
   {/* 4. Social proof */}
-  <section class="py-16">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-      <p class="text-sm font-semibold tracking-widest text-fimil-600 uppercase">
-        Currently in Private Beta
-      </p>
-      <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-        Powered by open-source tools trusted by millions of developers &mdash; Semgrep, Trivy,
-        Gitleaks, Checkov, and more.
-      </p>
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="text-sm font-semibold tracking-wider text-fimil-600 uppercase">
+          Currently in Private Beta
+        </p>
+        <p class="mt-2 text-lg text-gray-600">
+          Powered by open-source tools trusted by millions of developers &mdash; Semgrep, Trivy,
+          Gitleaks, Checkov, and more.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -174,7 +181,7 @@ const pricingPlans = [
   }
 
   {/* 6. Explore All Features link */}
-  <div class="py-10 text-center">
+  <div class="py-8 text-center">
     <a
       href="/features"
       class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"
@@ -184,15 +191,15 @@ const pricingPlans = [
   </div>
 
   {/* 7. Pricing Preview */}
-  <section class="bg-gray-50 py-16 sm:py-20">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Simple, Transparent Pricing
         </h2>
-        <p class="mt-3 text-base text-gray-600">Join the waitlist. Upgrade as you grow.</p>
+        <p class="mt-4 text-lg text-gray-600">Start free, upgrade as you grow. No hidden fees.</p>
       </div>
-      <div class="mt-12 grid gap-8 md:grid-cols-3">
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {
           pricingPlans.map((plan) => (
             <PricingCard
@@ -206,7 +213,7 @@ const pricingPlans = [
           ))
         }
       </div>
-      <div class="mt-10 text-center">
+      <div class="mt-8 text-center">
         <a
           href="/pricing"
           class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"

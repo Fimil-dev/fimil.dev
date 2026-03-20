@@ -10,11 +10,11 @@ interface Props {
 const { title, description, iconRight = true, bgGray = false, iconEmoji } = Astro.props;
 ---
 
-<section class:list={['py-16 sm:py-20', bgGray ? 'bg-gray-50' : 'bg-white']}>
+<section class:list={['py-16 sm:py-24', bgGray ? 'bg-gray-50' : 'bg-white']}>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div
       class:list={[
-        'scroll-hidden flex flex-col items-center gap-8 lg:flex-row lg:gap-16',
+        'scroll-hidden flex flex-col items-center gap-12 lg:flex-row lg:gap-16',
         !iconRight && 'lg:flex-row-reverse',
       ]}
     >
