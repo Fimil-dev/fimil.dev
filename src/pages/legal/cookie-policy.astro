@@ -1,11 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Cookie Policy',
+  url: 'https://fimil.dev/legal/cookie-policy',
+  publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
+  dateModified: '2026-03-01',
+};
 ---
 
 <BaseLayout
   title="Cookie Policy — Fimil"
   description="How Fimil uses cookies and similar technologies."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Legal', href: '/legal' }, { label: 'Cookie Policy' }]} />
   <article class="py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <a href="/legal" class="text-sm text-fimil-600 hover:text-fimil-700">&larr; Legal</a>

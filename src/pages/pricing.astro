@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import PricingCard from '@/components/PricingCard.astro';
 import CTASection from '@/components/CTASection.astro';
 
@@ -178,6 +179,7 @@ const jsonLd = {
   description="Start free with 3 repos and 10 scans/month. Team ($49/mo), Business ($199/mo), and Enterprise plans with self-hosted deployment. All scanner types included on every plan."
   jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Pricing' }]} />
   {/* Header */}
   <section class="bg-gradient-to-b from-fimil-50 to-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

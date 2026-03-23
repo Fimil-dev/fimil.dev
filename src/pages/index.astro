@@ -107,7 +107,7 @@ const pricingPlans = [
     headline="12 Security Scanners. One Dashboard. Zero Noise."
     subheadline="Fimil orchestrates best-in-class open-source security tools into a single view \u2014 so your team fixes what matters and ignores the rest."
     primaryCta={{ label: 'Join Waitlist', href: '/#waitlist' }}
-    secondaryCta={{ label: 'See Features', href: '/features' }}
+    secondaryCta={{ label: 'Explore Security Features', href: '/features' }}
   >
     <DashboardMockup />
   </Hero>
@@ -184,9 +184,10 @@ const pricingPlans = [
   <div class="py-8 text-center">
     <a
       href="/features"
+      data-astro-prefetch="load"
       class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"
     >
-      Explore All Features &rarr;
+      Explore SAST, SCA &amp; IaC Scanning Features &rarr;
     </a>
   </div>
 
@@ -216,9 +217,10 @@ const pricingPlans = [
       <div class="mt-8 text-center">
         <a
           href="/pricing"
+          data-astro-prefetch="load"
           class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"
         >
-          See All Plans & Features &rarr;
+          Compare Free, Team &amp; Enterprise Plans &rarr;
         </a>
       </div>
     </div>
