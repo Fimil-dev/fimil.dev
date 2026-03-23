@@ -25,9 +25,17 @@ const jsonLd = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
+  dateModified: post.data.date.toISOString(),
+  wordCount,
+  ...(post.data.tags.length > 0 && { keywords: post.data.tags.join(', ') }),
   author: {
     '@type': 'Person',
     name: post.data.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
   },
 };
 ---
