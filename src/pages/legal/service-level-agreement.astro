@@ -1,11 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Service Level Agreement',
+  url: 'https://fimil.dev/legal/service-level-agreement',
+  publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
+  dateModified: '2026-03-01',
+};
 ---
 
 <BaseLayout
   title="Service Level Agreement — Fimil"
   description="Fimil's uptime guarantees and support commitments."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Legal', href: '/legal' }, { label: 'Service Level Agreement' }]} />
   <article class="py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <a href="/legal" class="text-sm text-fimil-600 hover:text-fimil-700">&larr; Legal</a>

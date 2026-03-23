@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import FeatureCard from '@/components/FeatureCard.astro';
 import CTASection from '@/components/CTASection.astro';
 
@@ -123,6 +124,7 @@ const jsonLd = {
   description="Comprehensive application security with Semgrep, Trivy, Gitleaks, Checkov, and more. Priority scoring, EPSS enrichment, reachability analysis, auto-triage, and CI/CD integration."
   jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Features' }]} />
   {/* Header */}
   <section class="bg-gradient-to-b from-fimil-50 to-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

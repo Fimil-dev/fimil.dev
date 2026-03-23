@@ -1,8 +1,25 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Hero from '@/components/Hero.astro';
 import TrustBadge from '@/components/TrustBadge.astro';
 import CTASection from '@/components/CTASection.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Fimil',
+  url: 'https://fimil.dev/about',
+  description: "Learn about Fimil's mission to unify application security.",
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
+    logo: 'https://fimil.dev/logo-icon-color.svg',
+    founder: { '@type': 'Person', name: 'Ethan', jobTitle: 'Founder' },
+    foundingDate: '2025',
+  },
+};
 
 const scanners = [
   { name: 'Semgrep', description: 'SAST', icon: '\u{1F50D}' },
@@ -68,7 +85,9 @@ const values = [
 <BaseLayout
   title="About \u2014 Fimil"
   description="Learn about Fimil's mission to unify application security with intelligent orchestration of open-source scanners."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'About' }]} />
   <Hero
     headline="Building the Future of Application Security"
     subheadline="We believe security should be accessible, actionable, and integrated into every developer's workflow."
@@ -105,9 +124,10 @@ const values = [
         </p>
         <p>
           Today, Fimil helps development teams worldwide find and fix vulnerabilities faster. We
-          integrate SAST, SCA, secrets detection, IaC scanning, and container security into one
-          unified dashboard &mdash; reducing noise by 90% and helping teams focus on the issues that
-          matter most.
+          integrate SAST, SCA, secrets detection, IaC scanning, and container security into <a
+            href="/features"
+            class="text-fimil-600 hover:text-fimil-700">one unified dashboard</a
+          > &mdash; reducing noise by 90% and helping teams focus on the issues that matter most.
         </p>
       </div>
     </div>
@@ -152,8 +172,9 @@ const values = [
         <p>
           We don't try to replace these tools &mdash; we orchestrate them. Fimil runs each scanner
           in an isolated container, normalizes the output into a common format, deduplicates across
-          tools, and applies intelligent prioritization. The result is a single view that's greater
-          than the sum of its parts.
+          tools, and applies <a href="/compare" class="text-fimil-600 hover:text-fimil-700"
+            >intelligent prioritization</a
+          >. The result is a single view that's greater than the sum of its parts.
         </p>
         <p>
           This philosophy means you always get the latest and greatest from the security community,

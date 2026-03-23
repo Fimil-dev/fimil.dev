@@ -1,24 +1,48 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Hero from '@/components/Hero.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Fimil Blog',
+  url: 'https://fimil.dev/blog',
+  description:
+    'Application security insights, product updates, and engineering deep-dives from the Fimil team.',
+  publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
+  ...(posts.length > 0 && {
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((post, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `https://fimil.dev/blog/${post.id}`,
+        name: post.data.title,
+      })),
+    },
+  }),
+};
 ---
 
 <BaseLayout
   title="Blog — Fimil"
   description="Application security insights, product updates, and engineering deep-dives from the Fimil team."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Blog' }]} />
   <Hero
     headline="Blog"
     subheadline="Application security insights, product updates, and engineering deep-dives."
   />
 
-  <section class="py-20">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+  <section class="py-12 sm:py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-4xl lg:px-8">
       {
         posts.length > 0 ? (
           <div class="space-y-8">

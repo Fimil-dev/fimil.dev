@@ -1,7 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Hero from '@/components/Hero.astro';
 import CTASection from '@/components/CTASection.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Fimil vs SonarQube, Snyk, GitHub Advanced Security',
+  url: 'https://fimil.dev/compare',
+  description:
+    'See how Fimil compares to SonarQube, Snyk, and GitHub Advanced Security for application security.',
+  about: [
+    { '@type': 'SoftwareApplication', name: 'Fimil' },
+    { '@type': 'SoftwareApplication', name: 'SonarQube' },
+    { '@type': 'SoftwareApplication', name: 'Snyk' },
+    { '@type': 'SoftwareApplication', name: 'GitHub Advanced Security' },
+  ],
+};
 
 type ComparisonRow = {
   feature: string;
@@ -147,7 +163,9 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
 <BaseLayout
   title="Compare — Fimil"
   description="See how Fimil compares to SonarQube, Snyk, and GitHub Advanced Security for application security."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Compare' }]} />
   <Hero
     headline="How Fimil Compares"
     subheadline="Most security platforms are point solutions. Fimil is a unified platform that orchestrates the best open-source scanners and eliminates the noise."
@@ -338,8 +356,10 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
       <div class="mt-6 space-y-4 text-gray-600">
         <p>
           Other platforms build their own proprietary scanners. Fimil takes a different approach: we
-          orchestrate the best open-source tools the security community has already built. This
-          means you get best-in-class detection without vendor lock-in.
+          <a href="/features" class="text-fimil-600 hover:text-fimil-700"
+            >orchestrate the best open-source tools</a
+          > the security community has already built. This means you get best-in-class detection without
+          vendor lock-in.
         </p>
         <p>
           The real problem isn't finding vulnerabilities &mdash; it's finding the right ones.
@@ -348,9 +368,12 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
           actually matter.
         </p>
         <p>
-          And unlike most alternatives, Fimil gives you the choice: run it as a cloud service or
-          deploy on your own infrastructure. Your source code stays ephemeral &mdash; cloned,
-          scanned, deleted. Never persisted, never shared.
+          And unlike most alternatives, Fimil gives you the choice: run it as a <a
+            href="/pricing"
+            class="text-fimil-600 hover:text-fimil-700"
+            data-astro-prefetch="load">cloud service</a
+          > or deploy on your own infrastructure. Your source code stays ephemeral &mdash; cloned, scanned,
+          deleted. Never persisted, never shared.
         </p>
       </div>
     </div>

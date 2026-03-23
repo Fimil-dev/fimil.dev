@@ -1,12 +1,32 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Hero from '@/components/Hero.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact Fimil',
+  url: 'https://fimil.dev/contact',
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
+    contactPoint: [
+      { '@type': 'ContactPoint', email: 'sales@fimil.dev', contactType: 'sales' },
+      { '@type': 'ContactPoint', email: 'support@fimil.dev', contactType: 'customer support' },
+      { '@type': 'ContactPoint', email: 'security@fimil.dev', contactType: 'security' },
+    ],
+  },
+};
 ---
 
 <BaseLayout
   title="Contact — Fimil"
   description="Get in touch with the Fimil team. Questions about features, pricing, partnerships, or support."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Contact' }]} />
   <Hero
     headline="Get in Touch"
     subheadline="Have questions about Fimil? We'd love to hear from you. Send us a message and we'll respond within 24 hours."

@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Terms of Service',
+  url: 'https://fimil.dev/legal/terms-of-service',
+  publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
+  dateModified: '2026-03-01',
+};
 ---
 
-<BaseLayout title="Terms of Service — Fimil" description="Terms of service for the Fimil platform.">
+<BaseLayout
+  title="Terms of Service — Fimil"
+  description="Terms of service for the Fimil platform."
+  jsonLd={jsonLd}
+>
+  <Breadcrumbs items={[{ label: 'Legal', href: '/legal' }, { label: 'Terms of Service' }]} />
   <article class="py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <a href="/legal" class="text-sm text-fimil-600 hover:text-fimil-700">&larr; Legal</a>

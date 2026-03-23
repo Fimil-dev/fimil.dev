@@ -1,0 +1,47 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+const fullItems = [{ label: 'Home', href: '/' }, ...items];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: fullItems.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: `https://fimil.dev${item.href}` } : {}),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<nav aria-label="Breadcrumb" class="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
+  <ol class="flex items-center gap-1.5 text-sm text-gray-500">
+    {
+      fullItems.map((item, i) => (
+        <li class="flex items-center gap-1.5">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {item.href ? (
+            <a href={item.href} class="transition-colors hover:text-fimil-600">
+              {item.label}
+            </a>
+          ) : (
+            <span class="font-medium text-gray-900" aria-current="page">
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

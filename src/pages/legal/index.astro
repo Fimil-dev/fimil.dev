@@ -1,6 +1,15 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Legal — Fimil',
+  url: 'https://fimil.dev/legal',
+  publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
+};
 
 const documents = [
   {
@@ -49,7 +58,9 @@ const documents = [
 <BaseLayout
   title="Legal — Fimil"
   description="Legal documents, policies, and agreements for the Fimil platform."
+  jsonLd={jsonLd}
 >
+  <Breadcrumbs items={[{ label: 'Legal' }]} />
   <Hero headline="Legal" subheadline="Our policies, terms, and agreements." />
 
   <section class="py-20">
