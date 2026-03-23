@@ -7,20 +7,28 @@ import FeatureSection from '@/components/FeatureSection.astro';
 import PricingCard from '@/components/PricingCard.astro';
 import WaitlistForm from '@/components/WaitlistForm.astro';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Fimil',
-  url: 'https://fimil.dev',
-  logo: 'https://fimil.dev/logos/logo-icon-color.svg',
-  description:
-    'Unified application security platform that orchestrates 12+ open-source security scanners into one dashboard.',
-  sameAs: [
-    'https://github.com/fimil',
-    'https://twitter.com/fimil',
-    'https://linkedin.com/company/fimil',
-  ],
-};
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
+    logo: 'https://fimil.dev/logo-icon-color.svg',
+    description:
+      'Unified application security platform that orchestrates 12+ open-source security scanners into one dashboard.',
+    sameAs: [
+      'https://github.com/fimil',
+      'https://twitter.com/fimil',
+      'https://linkedin.com/company/fimil',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Fimil',
+    url: 'https://fimil.dev',
+  },
+];
 
 const stats = [
   { value: '12+', label: 'Security Scanners' },
