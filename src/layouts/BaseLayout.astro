@@ -58,7 +58,13 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
 
     {/* Font preloads */}
-    <link rel="preload" href="/fonts/ibm-plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     {/* JSON-LD */}
     {
