@@ -64,6 +64,35 @@ const jsonLd = {
         </section>
 
         <section>
+          <h2 class="text-xl font-semibold text-gray-900">
+            4a. AI processing (Anthropic)
+          </h2>
+          <p class="mt-2">
+            Fimil uses Anthropic's Claude models to power AI-assisted security features
+            (AI Pentest agent reasoning, finding triage and explanation, code remediation
+            suggestions, finding chat). When you run an AI Pentest against an authorized target,
+            <strong>response data returned by your target — including any third-party data the
+            target surfaces during exploitation</strong> (e.g., cross-account fields revealed by
+            a Broken Object-Level Authorization vulnerability) — is processed through
+            Anthropic's API as part of the agent's reasoning loop. Per-policy
+            <code>agent_runtime_redaction</code> can mitigate this with a fidelity trade-off;
+            persistence-time redaction always applies. See our <a
+              href="https://trust.fimil.dev"
+              class="text-fimil-600"
+              target="_blank"
+              rel="noopener">Trust Center</a
+            > subprocessors list and Anthropic's <a
+              href="https://www.anthropic.com/legal/privacy"
+              class="text-fimil-600"
+              target="_blank"
+              rel="noopener">privacy policy</a
+            > for retention terms. Self-host customers may route AI inference through their own
+            provider (Bedrock, Vertex, private deployment) to keep data in-region —
+            see the self-host LLM retention policy in the operator docs.
+          </p>
+        </section>
+
+        <section>
           <h2 class="text-xl font-semibold text-gray-900">5. Your Rights</h2>
           <p class="mt-2">
             Depending on your jurisdiction, you may have rights to access, correct, delete, or port
