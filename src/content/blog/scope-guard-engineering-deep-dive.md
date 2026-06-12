@@ -8,7 +8,7 @@ tags: [engineering, ai-safety, ai-pentest]
 
 The pentest engine inside Fimil is an LLM agent with a tool belt. It can read a target's responses, reason about what it sees, craft a payload, and fire the next request — all without a human in the loop. That is exactly what makes it useful across [15 attack vectors](/pentest), and exactly what kept me up at night while I built it.
 
-An agent that can issue HTTP requests is an agent that can do real damage if it wanders. So before I wrote a single line of the reasoning loop, I wrote the thing that sits between the agent and the network. We call it the scope guard. This post is about why it exists, what each layer prevents, and the design decisions I would defend in a security review.
+An agent that can issue HTTP requests is an agent that can do real damage if it wanders. So before I wrote a single line of the reasoning loop, I wrote the thing that sits between the agent and the network. I call it the scope guard. This post is about why it exists, what each layer prevents, and the design decisions I would defend in a security review.
 
 ## The nightmare scenario
 
@@ -18,7 +18,7 @@ Picture the failure modes, because they are not hypothetical:
 - The agent follows a link off the customer's domain and starts crawling a third-party CDN, an analytics host, someone else's API.
 - A `DELETE` looks like a perfectly reasonable thing to try against a REST endpoint, so the agent tries it, and now there is missing data that nobody authorized it to remove.
 - The agent gets into a tight retry loop and hammers a production host into the ground.
-- A hostname on the allowlist resolves to `169.254.169.254` or `10.0.0.5`, and suddenly the pentester is attacking the cloud metadata endpoint or our own internal network.
+- A hostname on the allowlist resolves to `169.254.169.254` or `10.0.0.5`, and suddenly the pentester is attacking the cloud metadata endpoint or my own internal network.
 
 Here is the thing I want to be blunt about: **you cannot prevent any of this with a system prompt.** Writing "be careful, stay in scope, do not be destructive" into the agent's instructions is not a control. It is a suggestion to a non-deterministic system that an attacker gets to influence through the very responses you are asking it to read. A control is something the agent cannot talk its way past because it never gets a vote. That is the entire design philosophy of the scope guard.
 
@@ -44,7 +44,7 @@ request_metadata_check(method, url):
 
 **DNS pinning plus private-range rejection (rebinding and SSRF against ourselves).** This is the layer I am proudest of. When a host first comes up, the guard resolves it once via `getaddrinfo`, validates the resolved IP, and pins it for the connection's lifetime. The request then goes to the pinned IP with the `Host` header restored for virtual-host routing and the SNI hostname preserved so TLS cert validation still works. The validation rejects RFC1918 space, CGNAT, loopback, link-local (which covers the `169.254.169.254` metadata IP), the named cloud-metadata hostnames, and — this part matters — IPv4-mapped and IPv4-compatible IPv6 addresses, so nobody bypasses the v4 rules by wrapping an address in v6. Pinning the IP for the connection lifetime is what defeats DNS rebinding: the name cannot resolve to something friendly during the check and something internal during the fetch.
 
-**Response-size truncation.** Bodies are cut at `max_response_bytes` (1 MB default) at the request layer, before the bytes ever reach the agent's context window or a candidate evidence blob. A target cannot blow up a run — or our token bill — by returning a gigabyte.
+**Response-size truncation.** Bodies are cut at `max_response_bytes` (1 MB default) at the request layer, before the bytes ever reach the agent's context window or a candidate evidence blob. A target cannot blow up a run — or my token bill — by returning a gigabyte.
 
 Each rejection raises a typed exception (`OffScopeRefused`, `DestructiveBlocked`, `PrivateOrMetadataIp`, and friends) so the agent loop and the validator can branch deterministically. None of them propagate out as crashes; they become audit rows, which I will come back to.
 
@@ -78,4 +78,4 @@ Honesty about the edges: destructive testing is opt-in and I am keeping it that 
 
 The open question for the field is the same one I keep circling: as these agents get more capable, the gap between "what the model wants to do" and "what the model is permitted to do" only matters if the permission layer is genuinely outside the model's reach. I built the scope guard on the assumption that the agent is smart, adversarial inputs are everywhere, and the only durable controls are the ones the model cannot argue with.
 
-If you want the rest of the architecture, the [pentest engine overview](/pentest) and our [security page](/security) go deeper on the threat model and the deployment story.
+If you want the rest of the architecture, the [pentest engine overview](/pentest) and the [security page](/security) go deeper on the threat model and the deployment story.

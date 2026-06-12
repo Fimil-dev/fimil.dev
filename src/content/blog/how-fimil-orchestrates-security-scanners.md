@@ -1,12 +1,12 @@
 ---
-title: 'How Fimil Orchestrates 16 Open-Source Security Scanners'
+title: 'How Fimil Orchestrates 15 Open-Source Security Scanners'
 description: "A technical deep-dive into Fimil's scanner orchestration architecture: ephemeral Docker containers, output normalization, cross-tool deduplication, and intelligent prioritization with EPSS and reachability analysis."
 date: 2026-03-09
-author: 'Ethan'
+author: 'Ethan Aldrich'
 tags: ['engineering', 'scanners', 'architecture']
 ---
 
-When I tell people that Fimil runs 16 security scanners on every repository, the first question is usually: "Doesn't that produce an overwhelming number of results?" The short answer is no — and the reason comes down to how we orchestrate, normalize, and deduplicate across tools.
+When I tell people that Fimil runs 15 security scanners on every repository, the first question is usually: "Doesn't that produce an overwhelming number of results?" The short answer is no — and the reason comes down to how Fimil orchestrates, normalizes, and deduplicates across tools.
 
 This post walks through the technical architecture behind Fimil's scan pipeline, from the moment you trigger a scan to the moment prioritized findings appear in your dashboard.
 
@@ -131,7 +131,7 @@ This is where the magic happens — and it's the stage that delivers most of Fim
 
 ### The Duplication Problem
 
-When you run 16 scanners on the same codebase, you get a lot of overlap:
+When you run 15 scanners on the same codebase, you get a lot of overlap:
 
 - **Trivy and Grype** both scan dependency manifests for known CVEs. They often find the exact same vulnerability in the exact same package version.
 - **Trivy and OSV-Scanner** pull from different vulnerability databases but frequently overlap on well-known CVEs.

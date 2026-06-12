@@ -14,7 +14,7 @@ const jsonLd = {
   name: 'Fimil Blog',
   url: 'https://fimil.dev/blog',
   description:
-    'Application security insights, product updates, and engineering deep-dives from the Fimil team.',
+    'Application security insights, product updates, and engineering deep-dives from the engineer building Fimil.',
   publisher: { '@type': 'Organization', name: 'Fimil', url: 'https://fimil.dev' },
   ...(posts.length > 0 && {
     mainEntity: {
@@ -32,7 +32,7 @@ const jsonLd = {
 
 <BaseLayout
   title="Blog — Fimil"
-  description="Application security insights, product updates, and engineering deep-dives from the Fimil team."
+  description="Application security insights, product updates, and engineering deep-dives from the engineer building Fimil."
   jsonLd={jsonLd}
 >
   <Breadcrumbs items={[{ label: 'Blog' }]} />
@@ -57,6 +57,7 @@ const jsonLd = {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
+                      timeZone: 'UTC',
                     })}
                   </time>
                   <h2 class="mt-2 text-xl font-semibold text-ink">{post.data.title}</h2>

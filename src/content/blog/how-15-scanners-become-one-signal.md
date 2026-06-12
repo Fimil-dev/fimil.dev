@@ -1,6 +1,6 @@
 ---
-title: 'How 16 scanners become one signal: fingerprints, finding groups, and priority math'
-description: 'Run two scanners on one repo and most findings are duplicates. How Fimil fingerprints, groups, and scores findings so 16 scanners produce one ranked list.'
+title: 'How 15 scanners become one signal: fingerprints, finding groups, and priority math'
+description: 'Run two scanners on one repo and most findings are duplicates. How Fimil fingerprints, groups, and scores findings so 15 scanners produce one ranked list.'
 date: 2026-06-12
 author: Ethan Aldrich
 tags: [engineering, deduplication, prioritization]
@@ -10,7 +10,7 @@ Here is an experiment you can run in ten minutes. Pick any Node.js repository wi
 
 Most of the entries are the same. Both tools pull from overlapping vulnerability databases — NVD, the GitHub Advisory Database, OSV — so the same `lodash` prototype-pollution CVE shows up in both outputs, with different severity labels, different field names, and sometimes a GHSA ID in one where the other reports the CVE. To a human, it is obviously one issue. To a dashboard that ingests both files naively, it is two findings. Add OSV-Scanner as a third opinion and it is three.
 
-Fimil runs [16 integrated scanners](/platform). If each one dumped its raw output into a shared list, the platform would be a noise amplifier — strictly worse than running one tool. The whole value of orchestrating that many scanners depends on collapsing their outputs into one deduplicated, correlated, ranked list. This post walks through how that works.
+Fimil runs [15 open-source scanners plus an autonomous pentest agent](/platform). If each one dumped its raw output into a shared list, the platform would be a noise amplifier — strictly worse than running one tool. The whole value of orchestrating that many scanners depends on collapsing their outputs into one deduplicated, correlated, ranked list. This post walks through how that works.
 
 ## Normalize first, fingerprint second
 
@@ -74,6 +74,6 @@ Every action a rule takes is written down twice: a triage audit log row recordin
 
 ## The pipeline, end to end
 
-Sixteen scanners, one signal: normalize every output into one schema, fingerprint on the attributes that identify the issue rather than the tool, merge matching fingerprints into finding groups, correlate related groups across categories, score each group, double the score when reachability is proven, and let auto-triage rules clear the known noise with a full audit trail behind them.
+Fifteen scanners, one signal: normalize every output into one schema, fingerprint on the attributes that identify the issue rather than the tool, merge matching fingerprints into finding groups, correlate related groups across categories, score each group, double the score when reachability is proven, and let auto-triage rules clear the known noise with a full audit trail behind them.
 
 None of the individual scanners changed. What changed is that their disagreement about formats, severity scales, and identifiers stops being your problem. The full pipeline — and the scanners feeding it — is laid out on the [platform page](/platform).

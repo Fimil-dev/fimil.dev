@@ -2,7 +2,7 @@
 title: 'SAST vs SCA vs Secrets Detection vs IaC Scanning: A Practical Guide'
 description: 'A practical breakdown of the five categories of application security testing — SAST, SCA, secrets detection, IaC scanning, and container security. What each one catches, when you need it, and how they work together.'
 date: 2026-03-16
-author: 'Fimil Team'
+author: 'Ethan Aldrich'
 tags: ['guides', 'application-security', 'sast', 'sca', 'secrets-detection', 'iac']
 ---
 

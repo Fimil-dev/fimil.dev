@@ -24,7 +24,7 @@ const jsonLd = [
     url: 'https://fimil.dev',
     logo: 'https://fimil.dev/logo-icon-color.svg',
     description:
-      'Application security platform that finds, proves, and fixes: an autonomous pentest agent plus 16 integrated scanners, with confirmed findings delivered as proof and pull requests.',
+      'Application security platform that finds, proves, and fixes: an autonomous pentest agent plus 15 open-source scanners, with confirmed findings delivered as proof and pull requests.',
     sameAs: ['https://github.com/Fimil-dev'],
   },
   {
@@ -40,17 +40,17 @@ const terminalLines: TerminalLine[] = [
   { type: 'ok', text: 'semgrep        14 findings', delay: 500 },
   { type: 'ok', text: 'trivy          31 findings' },
   { type: 'ok', text: 'gitleaks        2 findings' },
-  { type: 'out', text: '+ 13 more scanners' },
+  { type: 'out', text: '+ 12 more scanners' },
   { type: 'ok', text: 'deduplicated   47 raw → 9 findings', delay: 500 },
   { type: 'crit', text: 'SQLi api/users.py:84 — exploit replayed 2/2', delay: 600 },
   { type: 'ok', text: 'fix PR #482 opened', delay: 500 },
 ];
 
 const stats = [
-  { value: '16', label: 'Integrated scanners', href: '/features' },
+  { value: '15', label: 'Open-source scanners + 1 agent', href: '/features' },
   { value: '15', label: 'Pentest attack vectors', href: '/pentest' },
-  { value: '100+', label: 'CWE auto-fix handlers', href: '/platform' },
-  { value: '13', label: 'MCP tools for AI assistants', href: '/platform' },
+  { value: '75+', label: 'CWE auto-fix handlers', href: '/platform' },
+  { value: '40+', label: 'MCP tools for AI assistants', href: '/platform' },
 ];
 
 const workflow: { icon: IconName; title: string; description: string }[] = [
@@ -62,7 +62,7 @@ const workflow: { icon: IconName; title: string; description: string }[] = [
   {
     icon: 'message-square',
     title: 'Notifications',
-    description: 'Slack, email, Telegram, PagerDuty, and custom webhooks.',
+    description: 'Slack, email, and custom webhooks, with per-user preferences.',
   },
   {
     icon: 'terminal',
@@ -72,7 +72,7 @@ const workflow: { icon: IconName; title: string; description: string }[] = [
   {
     icon: 'bot',
     title: 'MCP server',
-    description: 'Thirteen tools so your AI assistant can run scans, triage, and remediation.',
+    description: 'More than 40 tools so your AI assistant can run scans, triage, and remediation.',
   },
   {
     icon: 'workflow',
@@ -98,7 +98,7 @@ const pricingPlans = [
     name: 'Free',
     price: 0 as const,
     description: 'For individual developers',
-    features: ['3 repositories', '10 scans/month', 'All scanner types'],
+    features: ['3 repositories', '10 scans/month', 'Email notifications'],
     cta: { label: 'Get early access', href: '/#waitlist' },
     highlighted: false,
   },
@@ -120,7 +120,7 @@ const pricingPlans = [
       'Auto-triage & auto-fix PRs',
       'Priority support',
     ],
-    cta: { label: 'Contact Sales', href: '/contact' },
+    cta: { label: 'Get early access', href: '/#waitlist' },
     highlighted: false,
   },
 ];
@@ -131,7 +131,7 @@ const pricingPlans = [
   <Hero
     layout="split"
     headline="Finds it. Proves it. Fixes it."
-    subheadline="Fimil pentests your running app with an autonomous agent, validates every finding by replaying the exploit, and opens the fix PR — on top of 16 integrated scanners covering code, dependencies, containers, IaC, secrets, and cloud."
+    subheadline="Fimil pentests your running app with an autonomous agent, validates every finding by replaying the exploit, and opens the fix PR — on top of 15 open-source scanners covering code, dependencies, containers, IaC, secrets, and cloud."
     primaryCta={{ label: 'Get early access', href: '/#waitlist' }}
     secondaryCta={{ label: 'See the pentest agent', href: '/pentest' }}
   >
@@ -155,7 +155,7 @@ const pricingPlans = [
     <FeatureSplit
       eyebrow="finds"
       title="One scan, every layer."
-      description="Sixteen scanners across SAST, SCA, containers, secrets, IaC, DAST, CSPM, and SBOM run as one pipeline. Cross-scanner fingerprinting collapses the same CVE found by Trivy and Grype into a single finding — with every source credited."
+      description="Fifteen open-source scanners across SAST, SCA, containers, secrets, IaC, DAST, CSPM, and SBOM run as one pipeline. Cross-scanner fingerprinting collapses the same CVE found by Trivy and Grype into a single finding — with every source credited."
       icon="layers"
       link={{ label: 'How the pipeline works', href: '/platform' }}
     >
@@ -182,7 +182,7 @@ const pricingPlans = [
     <FeatureSplit
       eyebrow="fixes"
       title="The finding is the pull request."
-      description="Semver-aware dependency bumps across 7+ ecosystems, Terraform/CloudFormation/Kubernetes fixes, code fixes from 100+ CWE handlers, and advisory fix PRs opened from confirmed pentest findings — each one a ready-to-merge diff."
+      description="Semver-aware dependency bumps across 7+ ecosystems, Terraform/CloudFormation/Kubernetes fixes, code fixes from 75+ CWE-specific handlers across eight languages, and advisory fix PRs opened from confirmed pentest findings — each one a ready-to-merge diff."
       icon="git-pull-request"
       link={{ label: 'See the remediation engine', href: '/platform' }}
     >
@@ -256,7 +256,7 @@ const pricingPlans = [
   <Section variant="panel">
     <SectionHeading
       eyebrow="built on open source"
-      title="Sixteen scanners. One orchestrator."
+      title="Fifteen scanners. One agent. One orchestrator."
       lead="Fimil orchestrates best-in-class open-source scanners — and adds the layers they can't: validation, correlation, and remediation."
     />
     <LogoWall />

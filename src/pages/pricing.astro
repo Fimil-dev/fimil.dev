@@ -181,7 +181,7 @@ const faqs = [
   },
   {
     q: 'What compliance frameworks do you support?',
-    a: 'Findings map to CIS Benchmarks, SOC 2, PCI DSS, HIPAA, and ISO 27001 controls — including per-vector mappings on AI Pentest findings — for use as audit evidence.',
+    a: 'Platform compliance reports map findings to CIS Benchmarks, SOC 2, PCI DSS, HIPAA, and ISO 27001 controls. AI Pentest findings additionally carry per-vector SOC 2 and PCI DSS control mappings.',
   },
 ];
 
@@ -330,33 +330,41 @@ const jsonLd = {
                     <td class="px-4 py-3 text-center">
                       {typeof row[key] === 'boolean' ? (
                         row[key] ? (
-                          <svg
-                            class="mx-auto h-5 w-5 text-low"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
+                          <>
+                            <svg
+                              class="mx-auto h-5 w-5 text-low"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              aria-hidden="true"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span class="sr-only">Included</span>
+                          </>
                         ) : (
-                          <svg
-                            class="mx-auto h-5 w-5 text-edge-bright"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
+                          <>
+                            <svg
+                              class="mx-auto h-5 w-5 text-ink-faint"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              aria-hidden="true"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            <span class="sr-only">Not included</span>
+                          </>
                         )
                       ) : (
                         <span class="text-sm text-ink">{row[key]}</span>
@@ -372,14 +380,13 @@ const jsonLd = {
 
       {/* Mobile plan selector */}
       <div class="mt-12 sm:hidden">
-        <div class="flex rounded-lg border border-edge bg-panel p-1" role="tablist">
+        <div class="flex rounded-lg border border-edge bg-panel p-1">
           {
             planLabels.map((label, i) => (
               <button
                 class="comparison-tab flex-1 rounded-md px-2 py-2 text-xs font-medium text-ink-soft transition-colors hover:text-ink"
                 data-tab-index={i}
-                role="tab"
-                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-pressed={i === 0 ? 'true' : 'false'}
               >
                 {label}
               </button>
@@ -392,7 +399,6 @@ const jsonLd = {
               <div
                 class:list={['comparison-panel space-y-1', i === 0 ? '' : 'hidden']}
                 data-panel-index={i}
-                role="tabpanel"
               >
                 {comparisonData.map((row, index) => (
                   <div
@@ -404,33 +410,41 @@ const jsonLd = {
                     <span class="text-sm">
                       {typeof row[key] === 'boolean' ? (
                         row[key] ? (
-                          <svg
-                            class="h-5 w-5 text-low"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
+                          <>
+                            <svg
+                              class="h-5 w-5 text-low"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              aria-hidden="true"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span class="sr-only">Included</span>
+                          </>
                         ) : (
-                          <svg
-                            class="h-5 w-5 text-edge-bright"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
+                          <>
+                            <svg
+                              class="h-5 w-5 text-ink-faint"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              aria-hidden="true"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            <span class="sr-only">Not included</span>
+                          </>
                         )
                       ) : (
                         <span class="font-medium text-ink">{row[key]}</span>
@@ -497,11 +511,11 @@ const jsonLd = {
         tabs.forEach(function (t) {
           t.classList.remove('bg-raised', 'text-ink');
           t.classList.add('text-ink-soft');
-          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('aria-pressed', 'false');
         });
         tab.classList.add('bg-raised', 'text-ink');
         tab.classList.remove('text-ink-soft');
-        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('aria-pressed', 'true');
 
         panels.forEach(function (p) {
           p.classList.add('hidden');

@@ -10,7 +10,7 @@ export const GET: APIRoute = async (context) => {
   return rss({
     title: 'Fimil Blog',
     description:
-      'Application security insights, product updates, and engineering deep-dives from the Fimil team.',
+      'Application security insights, product updates, and engineering deep-dives from the engineer building Fimil.',
     site: context.site!,
     items: posts.map((post) => ({
       title: post.data.title,

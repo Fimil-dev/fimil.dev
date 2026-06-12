@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'Application security that finds, proves, and fixes. An autonomous pentest agent plus 16 integrated scanners, with every confirmed finding delivered as proof and a pull request.',
+  description = 'Application security that finds, proves, and fixes. An autonomous pentest agent plus 15 open-source scanners, with every confirmed finding delivered as proof and a pull request.',
   ogImage = '/og-default.png',
   canonicalPath,
   noindex = false,
@@ -98,8 +98,14 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
     }
   </head>
   <body class="min-h-screen bg-ground text-ink">
+    <a
+      href="#main"
+      class="sr-only z-[60] rounded-lg bg-fimil-400 px-4 py-2 text-sm font-medium text-[#0a0e14] focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+    >
+      Skip to content
+    </a>
     <Header />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer />

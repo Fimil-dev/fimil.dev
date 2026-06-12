@@ -58,7 +58,18 @@ const textClasses: Record<TerminalLine['type'], string> = {
     <span class="ml-2 font-mono text-xs text-ink-faint">{title}</span>
   </div>
 
-  <div class="overflow-x-auto p-4 font-mono text-[13px] leading-6 whitespace-pre sm:p-5">
+  {
+    /* Static transcript for assistive tech — the visual lines are animated and
+      hidden mid-replay, so the always-present copy lives here */
+  }
+  <p class="sr-only">
+    Terminal transcript: {lines.map((line) => line.text.trim()).join('. ')}
+  </p>
+
+  <div
+    class="overflow-x-auto p-4 font-mono text-[13px] leading-6 whitespace-pre sm:p-5"
+    aria-hidden="true"
+  >
     {
       lines.map((line) => (
         <div data-line data-type={line.type}>
@@ -94,7 +105,18 @@ const textClasses: Record<TerminalLine['type'], string> = {
     window.__fimilTerminalInit = true;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    document.querySelectorAll('[data-terminal="animate"]').forEach(function (term) {
+    // Defer to DOMContentLoaded so every terminal on the page exists before we
+    // query — inline scripts execute as soon as the FIRST instance is parsed.
+    function init() {
+      document.querySelectorAll('[data-terminal="animate"]').forEach(setUpTerminal);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    function setUpTerminal(term) {
       const dataEl = term.querySelector('script[data-terminal-script]');
       if (!dataEl) return;
       let lines;
@@ -160,6 +182,6 @@ const textClasses: Record<TerminalLine['type'], string> = {
         { threshold: 0.3 },
       );
       observer.observe(term);
-    });
+    }
   })();
 </script>

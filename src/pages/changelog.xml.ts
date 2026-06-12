@@ -12,6 +12,7 @@ export const GET: APIRoute = async (context) => {
     description:
       'What has shipped in Fimil: scanners, the AI pentest engine, auto-remediation, and platform updates.',
     site: context.site!,
+    trailingSlash: false,
     items: entries.map((entry) => ({
       title: entry.data.title,
       description: entry.data.description,

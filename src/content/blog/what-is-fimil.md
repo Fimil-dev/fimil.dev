@@ -1,8 +1,8 @@
 ---
 title: 'What Is Fimil? A Unified Approach to Application Security'
-description: "Fimil orchestrates 16 open-source security scanners into a single dashboard, cutting through alert noise so your team fixes what matters. Here's why we built it and how it works."
+description: "Fimil orchestrates 15 open-source security scanners into a single dashboard, cutting through alert noise so your team fixes what matters. Here's why I built it and how it works."
 date: 2026-03-02
-author: 'Ethan'
+author: 'Ethan Aldrich'
 tags: ['product', 'application-security', 'announcement']
 ---
 
@@ -31,13 +31,13 @@ Neither outcome is acceptable when you're responsible for the security of produc
 
 ## What Fimil Actually Does
 
-Fimil is a platform that [orchestrates open-source security scanners](/features) behind a single, unified dashboard. Instead of replacing the scanners you already trust, we run them for you and make sense of the results.
+Fimil is a platform that [orchestrates open-source security scanners](/features) behind a single, unified dashboard. Instead of replacing the scanners you already trust, Fimil runs them for you and makes sense of the results.
 
 Here's the high-level workflow:
 
 1. **Connect your repositories.** Link your GitHub, GitLab, or Bitbucket accounts. Fimil discovers your repos and their tech stacks automatically.
 
-2. **Scan.** Fimil detects what languages, frameworks, and infrastructure-as-code you're using, then runs the appropriate combination of scanners. Each scanner runs in an isolated Docker container with no network access — your code is cloned, scanned, and deleted. We never persist your source code.
+2. **Scan.** Fimil detects what languages, frameworks, and infrastructure-as-code you're using, then runs the appropriate combination of scanners. Each scanner runs in an isolated Docker container with no network access — your code is cloned, scanned, and deleted. Fimil never persists your source code.
 
 3. **Normalize and deduplicate.** Scanner outputs are parsed into a common format. Findings that appear across multiple tools (like the same CVE found by both Trivy and Grype) are merged into a single finding, not listed twice.
 
@@ -63,7 +63,7 @@ Fimil is built for development teams that care about security but don't want it 
 
 ## The Scanners Under the Hood
 
-Fimil currently orchestrates [16 open-source security scanners](/features) across five categories, including:
+Fimil currently orchestrates [15 open-source security scanners](/features) across eight categories, including:
 
 <ul class="tool-grid">
 <li><strong>Semgrep</strong> — SAST for 30+ languages</li>
@@ -80,7 +80,7 @@ Fimil currently orchestrates [16 open-source security scanners](/features) acros
 <li><strong>Syft</strong> — SBOM generation</li>
 </ul>
 
-Each scanner is selected because it's best-in-class at what it does. We don't build our own proprietary scanner — we believe the open-source community has already solved the detection problem. Our job is orchestration, normalization, and prioritization.
+Each scanner is selected because it's best-in-class at what it does. I don't build proprietary scanners — the open-source community has already solved the detection problem. My job is orchestration, normalization, and prioritization.
 
 ---
 
@@ -88,11 +88,11 @@ Each scanner is selected because it's best-in-class at what it does. We don't bu
 
 There are other application security platforms out there. [Here's how Fimil compares](/compare) to tools like SonarQube, Snyk, and GitHub Advanced Security:
 
-**We orchestrate, we don't reinvent.** Most competitors build their own proprietary scanning engines. That means you're locked into their detection capabilities and their update cycle. Fimil uses the same open-source scanners that millions of developers already trust. When Semgrep ships a new rule pack, you get it immediately.
+**Orchestrate, don't reinvent.** Most competitors build their own proprietary scanning engines. That means you're locked into their detection capabilities and their update cycle. Fimil uses the same open-source scanners that millions of developers already trust. When Semgrep ships a new rule pack, you get it immediately.
 
-**We're obsessed with noise reduction.** Running 16 scanners simultaneously would normally mean 16x the alert volume. Fimil's deduplication engine uses content-based fingerprinting to identify when multiple tools find the same issue, and merges them into a single finding.
+**Obsessive noise reduction.** Running 15 scanners simultaneously would normally mean 15x the alert volume. Fimil's deduplication engine uses content-based fingerprinting to identify when multiple tools find the same issue, and merges them into a single finding.
 
-**Your code stays ephemeral.** Some platforms require you to upload source code to their cloud infrastructure. Fimil clones your repository into an isolated container, runs the scan, and deletes the source code. Nothing is persisted. Nothing is shared. For teams that can't send code to third parties, we also offer [self-hosted deployment](/pricing).
+**Your code stays ephemeral.** Some platforms require you to upload source code to their cloud infrastructure. Fimil clones your repository into an isolated container, runs the scan, and deletes the source code. Nothing is persisted. Nothing is shared. For teams that can't send code to third parties, there's also [self-hosted deployment](/pricing).
 
 **Two modes for two audiences.** Security engineers want granular detail — CVE IDs, CVSS vectors, affected code paths. Engineering managers want a high-level summary — "are we getting better or worse?" Fimil's Simple and Advanced view modes serve both audiences from the same data.
 
@@ -100,7 +100,7 @@ There are other application security platforms out there. [Here's how Fimil comp
 
 Fimil runs as a cloud service at [app.fimil.dev](https://app.fimil.dev) or as a self-hosted deployment on your own infrastructure.
 
-**Fimil Cloud** is multi-tenant SaaS with plans starting at free. You connect your repos, we handle the infrastructure. Scans run on our compute, findings stay in our managed database, and you access everything through the web dashboard or API.
+**Fimil Cloud** is multi-tenant SaaS with plans starting at free. You connect your repos; Fimil handles the infrastructure. Scans run on managed compute, findings stay in a managed database, and you access everything through the web dashboard or API.
 
 **Fimil Enterprise** is a licensed self-hosted deployment for teams that need full control. Same platform, same features, but running on your Kubernetes cluster. Your source code never touches external infrastructure. Air-gapped deployments are supported.
 
@@ -112,6 +112,6 @@ Both deployment models support the same API, the same CLI tool, and the same CI/
 
 Fimil is currently in early access, onboarding teams in waves. You can [get early access](/#waitlist), or [contact me](/contact) to schedule a demo.
 
-If you want to see the full feature breakdown, check out our [features page](/features). If you're curious about pricing, we have a [transparent pricing page](/pricing) with details on what's included at each tier.
+If you want to see the full feature breakdown, check out the [features page](/features). If you're curious about pricing, there's a [transparent pricing page](/pricing) with details on what's included at each tier.
 
-We're building Fimil because we believe application security should be accessible to every development team — not just the ones with dedicated security engineering headcount. If you've ever felt overwhelmed by the number of security tools you're supposed to be running, we built this for you.
+I'm building Fimil because application security should be accessible to every development team — not just the ones with dedicated security engineering headcount. If you've ever felt overwhelmed by the number of security tools you're supposed to be running, I built this for you.

@@ -55,6 +55,7 @@ const navLinks = [
         class="rounded-lg p-2 text-ink-soft hover:text-ink"
         aria-label="Open menu"
         aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path
@@ -72,9 +73,6 @@ const navLinks = [
       </button>
     </div>
   </nav>
-
-  {/* Mobile backdrop */}
-  <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/50 md:hidden"></div>
 
   {/* Mobile menu */}
   <div id="mobile-menu" class="hidden border-t border-edge bg-overlay md:hidden">
@@ -106,6 +104,13 @@ const navLinks = [
     </div>
   </div>
 </header>
+
+{
+  /* Mobile backdrop — must live OUTSIDE <header>: backdrop-blur on the header
+    makes it the containing block for fixed descendants, which would paint
+    this overlay on top of the open menu and swallow every tap */
+}
+<div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/50 md:hidden"></div>
 
 <script is:inline>
   (function () {

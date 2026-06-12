@@ -40,7 +40,7 @@ const fixSurfaces = [
   {
     title: 'Code',
     description:
-      '100+ CWE handlers across Python, JavaScript, Go, Java, C#, Ruby, and Rust — parameterized queries, output encoding, safe deserialization.',
+      '75+ CWE-specific handlers across Python, JavaScript, Go, Java, C#, Ruby, Rust, and PHP — parameterized queries, output encoding, safe deserialization.',
   },
   {
     title: 'Secrets',
@@ -58,8 +58,7 @@ const entryPoints: { icon: IconName; title: string; description: string }[] = [
   {
     icon: 'message-square',
     title: 'Notifications',
-    description:
-      'Slack, email, Telegram, PagerDuty, and custom webhooks with per-user preferences.',
+    description: 'Slack, email, and custom webhooks with per-user preferences.',
   },
   {
     icon: 'terminal',
@@ -71,7 +70,7 @@ const entryPoints: { icon: IconName; title: string; description: string }[] = [
     icon: 'bot',
     title: 'MCP server',
     description:
-      'Thirteen tools covering scans, findings, triage, remediation, reports, pentest runs, and webhooks.',
+      'More than 40 tools covering scans, findings, triage, remediation, reports, pentest runs, and webhooks.',
   },
   {
     icon: 'workflow',
@@ -96,7 +95,7 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="How Fimil Works — 16 Scanners, Dedup, Prioritization, Auto-Remediation | Fimil"
+  title="How Fimil Works — Scanner Orchestration, Dedup, Prioritization, Auto-Remediation | Fimil"
   description="From git push to merged fix: scanner orchestration, cross-scanner dedup, a 70/15/10/5 priority formula, call-graph reachability, auto-triage, and fix PRs."
   ogImage="/og-platform.png"
   jsonLd={jsonLd}
@@ -117,8 +116,8 @@ const jsonLd = {
   <Section variant="panel">
     <SectionHeading
       eyebrow="stage 01 · scan"
-      title="Sixteen scanners, one orchestrator."
-      lead="Each scanner runs in an isolated environment; outputs normalize into a single finding schema. SAST, SCA, containers, SBOM, secrets, IaC, DAST, CSPM — plus the AI Pentest Agent."
+      title="Fifteen scanners plus the agent, one orchestrator."
+      lead="Each scanner runs in an isolated environment; outputs normalize into a single finding schema. SAST, SCA, containers, SBOM, secrets, IaC, DAST, CSPM — and the AI Pentest Agent alongside them."
     />
     <LogoWall />
   </Section>
@@ -271,7 +270,7 @@ const jsonLd = {
 
   <CTASection
     headline="See the whole pipeline on your own repos."
-    description="Connect a repo, run a scan, and watch 16 scanners become one signal."
+    description="Connect a repo, run a scan, and watch fifteen scanners become one signal."
     cta={{ label: 'Get early access', href: '/#waitlist' }}
   />
 </BaseLayout>
