@@ -1,0 +1,38 @@
+---
+// Hand-rolled diff renderer for marketing mockups — exact control over
+// gutters and row tints that Shiki's diff transform doesn't give.
+interface DiffLine {
+  type: 'add' | 'del' | 'ctx';
+  text: string;
+}
+
+interface Props {
+  lines: DiffLine[];
+  class?: string | undefined;
+}
+
+const { lines, class: className } = Astro.props;
+
+const rowStyles = {
+  add: 'bg-[#2ea04326] text-[#7ee787]',
+  del: 'bg-[#f8514926] text-[#ffa198]',
+  ctx: 'text-ink-soft',
+};
+
+const gutters = { add: '+', del: '-', ctx: ' ' };
+---
+
+<div
+  class:list={['overflow-x-auto bg-code-bg font-mono text-xs leading-6 sm:text-[13px]', className]}
+>
+  {
+    lines.map((line) => (
+      <div class:list={['flex whitespace-pre', rowStyles[line.type]]}>
+        <span class="w-8 shrink-0 text-center select-none" aria-hidden="true">
+          {gutters[line.type]}
+        </span>
+        <span class="pr-4">{line.text}</span>
+      </div>
+    ))
+  }
+</div>

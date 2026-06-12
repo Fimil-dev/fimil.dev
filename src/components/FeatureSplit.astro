@@ -1,0 +1,74 @@
+---
+// Alternating text + visual section content. The visual slot is always a real
+// mockup or code block — never a decorative box.
+import Icon from '@/components/Icon.astro';
+import type { IconName } from '@/lib/icons';
+
+interface Props {
+  title: string;
+  description: string;
+  icon?: IconName | undefined;
+  eyebrow?: string | undefined;
+  reverse?: boolean | undefined;
+  bullets?: string[] | undefined;
+  link?: { label: string; href: string } | undefined;
+}
+
+const { title, description, icon, eyebrow, reverse = false, bullets, link } = Astro.props;
+const hasVisual = Astro.slots.has('default');
+---
+
+<div
+  class:list={[
+    'scroll-hidden flex flex-col items-center gap-12 lg:gap-16',
+    hasVisual ? (reverse ? 'lg:flex-row-reverse' : 'lg:flex-row') : 'mx-auto max-w-3xl',
+  ]}
+>
+  <div class="flex-1">
+    {
+      icon && (
+        <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-fimil-400/20 bg-fimil-400/10">
+          <Icon name={icon} class="h-6 w-6 text-fimil-400" />
+        </div>
+      )
+    }
+    {
+      eyebrow && (
+        <p class="mt-6 font-mono text-sm tracking-widest text-fimil-400 uppercase">{eyebrow}</p>
+      )
+    }
+    <h3 class="mt-4 text-3xl font-bold tracking-tight text-ink sm:text-4xl">{title}</h3>
+    <p class="mt-4 text-lg leading-8 text-ink-soft">{description}</p>
+    {
+      bullets && bullets.length > 0 && (
+        <ul class="mt-6 space-y-2.5">
+          {bullets.map((bullet) => (
+            <li class="flex items-start gap-2.5 text-sm text-ink-soft">
+              <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-low" />
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      link && (
+        <a
+          href={link.href}
+          class="mt-6 inline-flex items-center gap-1 text-base font-medium text-fimil-400 transition-colors hover:text-fimil-300"
+        >
+          {link.label}
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      )
+    }
+  </div>
+
+  {
+    hasVisual && (
+      <div class="flex w-full flex-1 items-center justify-center lg:w-auto">
+        <slot />
+      </div>
+    )
+  }
+</div>

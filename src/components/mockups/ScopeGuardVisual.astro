@@ -1,0 +1,53 @@
+---
+// Scope-guard containment visual: the allowlist on top, a request log with a
+// blocked off-scope request below.
+import Icon from '@/components/Icon.astro';
+
+const requests = [
+  { method: 'GET', url: 'staging.acme.dev/api/v1/orders', allowed: true },
+  { method: 'POST', url: 'staging.acme.dev/api/v1/search', allowed: true },
+  { method: 'GET', url: 'evil-cdn.example.com/payload.js', allowed: false },
+];
+---
+
+<div class="max-w-md overflow-hidden rounded-xl border border-edge bg-panel">
+  <div class="border-b border-edge px-4 py-3">
+    <div class="flex items-center gap-2">
+      <Icon name="lock" class="h-4 w-4 text-fimil-400" />
+      <span class="text-sm font-semibold text-ink">Scope guard</span>
+    </div>
+    <div class="mt-2.5 space-y-1 font-mono text-[12px] text-ink-soft">
+      <p>
+        <span class="text-ink-faint">allowlist:</span> staging.acme.dev, *.api.acme.dev
+      </p>
+      <p><span class="text-ink-faint">rate:</span> ≤ 5 req/s per host</p>
+      <p><span class="text-ink-faint">verbs:</span> DELETE/PATCH gated · kill switch armed</p>
+      <p><span class="text-ink-faint">dns:</span> pinned · RFC1918 + metadata IPs rejected</p>
+    </div>
+  </div>
+  <div>
+    {
+      requests.map((req) => (
+        <div class="flex items-center gap-2 border-b border-edge px-4 py-2 last:border-b-0">
+          {req.allowed ? (
+            <Icon name="check" class="h-3.5 w-3.5 shrink-0 text-low" />
+          ) : (
+            <Icon name="x" class="h-3.5 w-3.5 shrink-0 text-critical" />
+          )}
+          <span class="w-10 shrink-0 font-mono text-[11px] text-ink-faint">{req.method}</span>
+          <span
+            class:list={[
+              'truncate font-mono text-[11px]',
+              req.allowed ? 'text-ink-soft' : 'text-critical line-through',
+            ]}
+          >
+            {req.url}
+          </span>
+          {!req.allowed && (
+            <span class="badge-critical ml-auto hidden sm:inline-flex">blocked · audited</span>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</div>

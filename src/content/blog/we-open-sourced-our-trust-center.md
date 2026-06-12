@@ -130,4 +130,4 @@ The repo is at [github.com/Fimil-dev/trust-center](https://github.com/Fimil-dev/
 
 ---
 
-_Fimil is a unified application security platform that orchestrates 12+ open-source scanners into a single dashboard. We're currently in private beta — [join the waitlist](https://fimil.dev/#waitlist) for early access._
+_Fimil is an application security platform that finds, proves, and fixes: 16 integrated scanners plus an autonomous pentest agent that validates findings by replaying exploits. We're currently in early access — [join the waitlist](https://fimil.dev/#waitlist) for early access._

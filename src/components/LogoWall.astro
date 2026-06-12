@@ -1,0 +1,28 @@
+---
+// All 16 scanners as text-mark chips. Source of truth:
+// fimil/api/src/fimil/scanners/implementations/
+import ToolChip from '@/components/ToolChip.astro';
+
+const tools = [
+  { name: 'Semgrep', category: 'SAST' },
+  { name: 'Bandit', category: 'SAST · Python' },
+  { name: 'Gosec', category: 'SAST · Go' },
+  { name: 'Trivy', category: 'SCA' },
+  { name: 'Grype', category: 'SCA' },
+  { name: 'OSV-Scanner', category: 'SCA' },
+  { name: 'Trivy Image', category: 'Containers' },
+  { name: 'Syft', category: 'SBOM' },
+  { name: 'Gitleaks', category: 'Secrets' },
+  { name: 'TruffleHog', category: 'Secrets' },
+  { name: 'Checkov', category: 'IaC' },
+  { name: 'Hadolint', category: 'IaC · Docker' },
+  { name: 'OWASP ZAP', category: 'DAST' },
+  { name: 'Nuclei', category: 'DAST' },
+  { name: 'Prowler', category: 'CSPM' },
+  { name: 'Pentest Agent', category: 'AI Pentest', accent: true },
+];
+---
+
+<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+  {tools.map((tool) => <ToolChip name={tool.name} category={tool.category} accent={tool.accent} />)}
+</div>

@@ -1,11 +1,20 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
-import DashboardMockup from '@/components/DashboardMockup.astro';
-import TrustBadge from '@/components/TrustBadge.astro';
-import FeatureSection from '@/components/FeatureSection.astro';
+import TerminalDemo from '@/components/TerminalDemo.astro';
+import Section from '@/components/Section.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import StatBlock from '@/components/StatBlock.astro';
+import FeatureSplit from '@/components/FeatureSplit.astro';
+import FindingsTableMockup from '@/components/mockups/FindingsTableMockup.astro';
+import PentestAgentMockup from '@/components/mockups/PentestAgentMockup.astro';
+import FixPrMockup from '@/components/mockups/FixPrMockup.astro';
+import LogoWall from '@/components/LogoWall.astro';
 import PricingCard from '@/components/PricingCard.astro';
 import WaitlistForm from '@/components/WaitlistForm.astro';
+import Icon from '@/components/Icon.astro';
+import type { IconName } from '@/lib/icons';
+import type { TerminalLine } from '@/components/TerminalDemo.astro';
 
 const jsonLd = [
   {
@@ -15,12 +24,8 @@ const jsonLd = [
     url: 'https://fimil.dev',
     logo: 'https://fimil.dev/logo-icon-color.svg',
     description:
-      'Unified application security platform that orchestrates 12+ open-source security scanners into one dashboard.',
-    sameAs: [
-      'https://github.com/fimil',
-      'https://twitter.com/fimil',
-      'https://linkedin.com/company/fimil',
-    ],
+      'Application security platform that finds, proves, and fixes: an autonomous pentest agent plus 16 integrated scanners, with confirmed findings delivered as proof and pull requests.',
+    sameAs: ['https://github.com/Fimil-dev'],
   },
   {
     '@context': 'https://schema.org',
@@ -30,210 +35,266 @@ const jsonLd = [
   },
 ];
 
+const terminalLines: TerminalLine[] = [
+  { type: 'cmd', text: 'fimil scan ./api' },
+  { type: 'ok', text: 'semgrep        14 findings', delay: 500 },
+  { type: 'ok', text: 'trivy          31 findings' },
+  { type: 'ok', text: 'gitleaks        2 findings' },
+  { type: 'out', text: '+ 13 more scanners' },
+  { type: 'ok', text: 'deduplicated   47 raw → 9 findings', delay: 500 },
+  { type: 'crit', text: 'SQLi api/users.py:84 — exploit replayed 2/2', delay: 600 },
+  { type: 'ok', text: 'fix PR #482 opened', delay: 500 },
+];
+
 const stats = [
-  { value: '12+', label: 'Security Scanners' },
-  { value: '90%', label: 'Noise Reduction vs. Running Tools Separately' },
-  { value: '5 min', label: 'To First Scan' },
-  { value: '24/7', label: 'Automated Scanning' },
+  { value: '16', label: 'Integrated scanners', href: '/features' },
+  { value: '15', label: 'Pentest attack vectors', href: '/pentest' },
+  { value: '100+', label: 'CWE auto-fix handlers', href: '/platform' },
+  { value: '13', label: 'MCP tools for AI assistants', href: '/platform' },
 ];
 
-const trustTools = [
-  { icon: '\u{1F50D}', name: 'Semgrep', description: 'SAST' },
-  { icon: '\u{1F4E6}', name: 'Trivy', description: 'SCA & Container' },
-  { icon: '\u{1F511}', name: 'Gitleaks', description: 'Secrets' },
-  { icon: '\u{2705}', name: 'Checkov', description: 'IaC' },
-  { icon: '\u{1F40D}', name: 'Bandit', description: 'Python Security' },
-  { icon: '\u{1F433}', name: 'Hadolint', description: 'Dockerfile' },
+const workflow: { icon: IconName; title: string; description: string }[] = [
+  {
+    icon: 'git-branch',
+    title: 'GitHub, GitLab & Bitbucket',
+    description: 'OAuth connect, webhooks, PR checks, and commit status on every push.',
+  },
+  {
+    icon: 'message-square',
+    title: 'Notifications',
+    description: 'Slack, email, Telegram, PagerDuty, and custom webhooks.',
+  },
+  {
+    icon: 'terminal',
+    title: 'CLI',
+    description: 'Pre-commit gate and CI integration for shift-left scanning.',
+  },
+  {
+    icon: 'bot',
+    title: 'MCP server',
+    description: 'Thirteen tools so your AI assistant can run scans, triage, and remediation.',
+  },
+  {
+    icon: 'workflow',
+    title: 'Kubernetes operator',
+    description: 'Declarative installs and upgrades for self-hosted clusters.',
+  },
+  {
+    icon: 'server',
+    title: 'SaaS or self-hosted',
+    description: 'Fimil Cloud, or run the whole platform inside your own network.',
+  },
 ];
 
-const featureSections = [
-  {
-    title: 'Unified Dashboard',
-    description:
-      'Stop context-switching between a dozen security tools. Fimil unifies all your security scanners into a single, actionable view. Know exactly what to fix and where.',
-    iconRight: true,
-    bgGray: false,
-    iconEmoji: '\u{1F4CA}',
-  },
-  {
-    title: 'Auto-Remediation (One-Click Fixes)',
-    description:
-      'Most tools find bugs \u2014 Fimil fixes them. Get automatic dependency bumps, IaC configuration fixes, and AI-generated patches delivered as ready-to-merge pull requests.',
-    iconRight: false,
-    bgGray: true,
-    iconEmoji: '\u{1F527}',
-  },
-  {
-    title: 'EPSS-Enhanced Prioritization',
-    description:
-      'Not just severity \u2014 Fimil uses exploit prediction scores, reachability analysis, and finding age to surface the issues that actually matter. Fix the 3 critical issues first, ignore the rest.',
-    iconRight: true,
-    bgGray: false,
-    iconEmoji: '\u{1F3AF}',
-  },
-  {
-    title: 'AI Triage Assistant',
-    description:
-      'Plain-language explanations of CVEs, automatic triage suggestions, and executive-ready summaries. Makes security accessible to everyone on the team \u2014 not just security engineers.',
-    iconRight: false,
-    bgGray: true,
-    iconEmoji: '\u{1F916}',
-  },
+const priorityFactors = [
+  { label: 'severity', weight: 70, color: 'bg-critical' },
+  { label: 'age', weight: 15, color: 'bg-medium' },
+  { label: 'reachability', weight: 10, color: 'bg-low' },
+  { label: 'EPSS', weight: 5, color: 'bg-fimil-400' },
 ];
 
 const pricingPlans = [
   {
     name: 'Free',
-    price: 0,
+    price: 0 as const,
     description: 'For individual developers',
     features: ['3 repositories', '10 scans/month', 'All scanner types'],
-    cta: { label: 'Join Waitlist', href: '/#waitlist' },
+    cta: { label: 'Get early access', href: '/#waitlist' },
     highlighted: false,
   },
   {
     name: 'Team',
-    price: 49,
+    price: 49 as const,
     description: 'For growing teams',
-    features: ['10 repositories', '100 scans/month', 'Slack & API access'],
-    cta: { label: 'Join Waitlist', href: '/#waitlist' },
+    features: ['10 repositories', '100 scans/month', 'Slack, API access & SBOM export'],
+    cta: { label: 'Get early access', href: '/#waitlist' },
     highlighted: true,
   },
   {
     name: 'Business',
-    price: 199,
+    price: 199 as const,
     description: 'For larger organizations',
-    features: ['50 repositories', '500 scans/month', 'Auto-triage rules', 'Priority support'],
+    features: [
+      '50 repositories',
+      '500 scans/month',
+      'Auto-triage & auto-fix PRs',
+      'Priority support',
+    ],
     cta: { label: 'Contact Sales', href: '/contact' },
     highlighted: false,
   },
 ];
 ---
 
-<BaseLayout title="Fimil \u2014 Unified Application Security Platform" jsonLd={jsonLd}>
-  {/* 1. Hero with DashboardMockup */}
+<BaseLayout title="Fimil — Finds. Proves. Fixes." jsonLd={jsonLd}>
+  {/* 1. Hero with terminal demo */}
   <Hero
-    headline="12 Security Scanners. One Dashboard. Zero Noise."
-    subheadline="Fimil orchestrates best-in-class open-source security tools into a single view \u2014 so your team fixes what matters and ignores the rest."
-    primaryCta={{ label: 'Join Waitlist', href: '/#waitlist' }}
-    secondaryCta={{ label: 'Explore Security Features', href: '/features' }}
+    layout="split"
+    headline="Finds it. Proves it. Fixes it."
+    subheadline="Fimil pentests your running app with an autonomous agent, validates every finding by replaying the exploit, and opens the fix PR — on top of 16 integrated scanners covering code, dependencies, containers, IaC, secrets, and cloud."
+    primaryCta={{ label: 'Get early access', href: '/#waitlist' }}
+    secondaryCta={{ label: 'See the pentest agent', href: '/pentest' }}
   >
-    <DashboardMockup />
+    <TerminalDemo lines={terminalLines} title="~/acme/api" />
   </Hero>
 
-  {/* 2. Stats section */}
-  <section class="bg-fimil-50 py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Built for Modern Development Teams
-        </h2>
-        <p class="mt-4 text-lg text-gray-600">
-          Everything you need to secure your applications at scale.
-        </p>
-      </div>
-      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          stats.map((stat) => (
-            <div class="text-center">
-              <div class="text-4xl font-bold text-fimil-600 sm:text-5xl">{stat.value}</div>
-              <div class="mt-2 text-sm text-gray-600">{stat.label}</div>
-            </div>
-          ))
-        }
-      </div>
+  {/* 2. Mechanics stat strip */}
+  <Section variant="panel" spacing="md">
+    <SectionHeading
+      eyebrow="what's inside"
+      title="No adjectives. Just the numbers."
+      lead="Every number links to the page that proves it."
+    />
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {stats.map((stat) => <StatBlock value={stat.value} label={stat.label} href={stat.href} />)}
     </div>
-  </section>
+  </Section>
 
-  {/* 3. Trust Badges */}
-  <section class="bg-gray-50 py-12 sm:py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <p class="text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
-        Powered by best-in-class open source tools
-      </p>
-      <div class="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
-        {
-          trustTools.map((tool) => (
-            <TrustBadge name={tool.name} description={tool.description} icon={tool.icon} />
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  {/* 4. Social proof */}
-  <section class="py-12 sm:py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-semibold tracking-wider text-fimil-600 uppercase">
-          Currently in Private Beta
-        </p>
-        <p class="mt-2 text-lg text-gray-600">
-          Powered by open-source tools trusted by millions of developers &mdash; Semgrep, Trivy,
-          Gitleaks, Checkov, and more.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  {/* 5. Alternating feature sections */}
-  {
-    featureSections.map((section) => (
-      <FeatureSection
-        title={section.title}
-        description={section.description}
-        iconRight={section.iconRight}
-        bgGray={section.bgGray}
-        iconEmoji={section.iconEmoji}
-      />
-    ))
-  }
-
-  {/* 6. Explore All Features link */}
-  <div class="py-8 text-center">
-    <a
-      href="/features"
-      data-astro-prefetch="load"
-      class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"
+  {/* 3. FINDS */}
+  <Section>
+    <FeatureSplit
+      eyebrow="finds"
+      title="One scan, every layer."
+      description="Sixteen scanners across SAST, SCA, containers, secrets, IaC, DAST, CSPM, and SBOM run as one pipeline. Cross-scanner fingerprinting collapses the same CVE found by Trivy and Grype into a single finding — with every source credited."
+      icon="layers"
+      link={{ label: 'How the pipeline works', href: '/platform' }}
     >
-      Explore SAST, SCA &amp; IaC Scanning Features &rarr;
-    </a>
-  </div>
+      <FindingsTableMockup />
+    </FeatureSplit>
+  </Section>
 
-  {/* 7. Pricing Preview */}
-  <section class="py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Simple, Transparent Pricing
-        </h2>
-        <p class="mt-4 text-lg text-gray-600">Start free, upgrade as you grow. No hidden fees.</p>
-      </div>
-      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          pricingPlans.map((plan) => (
-            <PricingCard
-              name={plan.name}
-              price={plan.price}
-              description={plan.description}
-              features={plan.features}
-              cta={plan.cta}
-              highlighted={plan.highlighted}
-            />
-          ))
-        }
-      </div>
-      <div class="mt-8 text-center">
-        <a
-          href="/pricing"
-          data-astro-prefetch="load"
-          class="inline-flex items-center gap-1 text-base font-medium text-fimil-600 transition-colors hover:text-fimil-700"
+  {/* 4. PROVES */}
+  <Section variant="panel">
+    <FeatureSplit
+      eyebrow="proves"
+      title="No finding ships without a working exploit."
+      description="The pentest agent doesn't pattern-match — it attacks across 15 vectors, and a validator replays every candidate exploit before it reaches your dashboard. Each confirmed finding exports a PoC and a copy-paste curl reproduction."
+      icon="shield-check"
+      reverse
+      link={{ label: 'Meet the pentest agent', href: '/pentest' }}
+    >
+      <PentestAgentMockup />
+    </FeatureSplit>
+  </Section>
+
+  {/* 5. FIXES */}
+  <Section>
+    <FeatureSplit
+      eyebrow="fixes"
+      title="The finding is the pull request."
+      description="Semver-aware dependency bumps across 7+ ecosystems, Terraform/CloudFormation/Kubernetes fixes, code fixes from 100+ CWE handlers, and advisory fix PRs opened from confirmed pentest findings — each one a ready-to-merge diff."
+      icon="git-pull-request"
+      link={{ label: 'See the remediation engine', href: '/platform' }}
+    >
+      <FixPrMockup />
+    </FeatureSplit>
+  </Section>
+
+  {/* 6. One signal — priority score breakdown */}
+  <Section variant="panel">
+    <FeatureSplit
+      eyebrow="one signal"
+      title="A priority score you can audit."
+      description="Not a black box: 70% severity, 15% age, 10% reachability, 5% EPSS. Call-graph reachability looks past direct-vs-transitive to whether the vulnerable function is actually called — and shows you the call chain."
+      icon="target"
+      reverse
+    >
+      <div class="w-full max-w-md rounded-xl border border-edge bg-panel p-5">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold text-ink">Priority score</span>
+          <span class="font-mono text-2xl font-bold text-fimil-400">94</span>
+        </div>
+        <div class="mt-3 flex h-2.5 w-full gap-0.5 overflow-hidden rounded-full">
+          {
+            priorityFactors.map((f) => (
+              <span class:list={[f.color, 'h-full']} style={`width: ${f.weight}%`} />
+            ))
+          }
+        </div>
+        <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          {
+            priorityFactors.map((f) => (
+              <span class="flex items-center gap-1.5 font-mono text-[11px] text-ink-soft">
+                <span class:list={[f.color, 'h-2 w-2 rounded-full']} />
+                {f.label} {f.weight}%
+              </span>
+            ))
+          }
+        </div>
+        <div
+          class="mt-4 overflow-x-auto rounded-md border border-edge bg-code-bg px-3 py-2 font-mono text-[11px] whitespace-nowrap text-ink-soft"
         >
-          Compare Free, Team, Business &amp; Enterprise Plans &rarr;
-        </a>
+          handler.py:42 → utils/parse.py:18 → lodash.merge() <span class="badge-low ml-1"
+            >reachable</span
+          >
+        </div>
       </div>
-    </div>
-  </section>
+    </FeatureSplit>
+  </Section>
 
-  {/* 8. Waitlist form */}
+  {/* 7. Workflow grid */}
+  <Section>
+    <SectionHeading
+      eyebrow="workflow"
+      title="Meet your code where it lives."
+      lead="Six ways into the platform — none of them require changing how you ship."
+    />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        workflow.map((item) => (
+          <div class="scroll-hidden rounded-2xl border border-edge bg-panel p-6 transition-colors hover:border-edge-bright hover:bg-raised">
+            <Icon name={item.icon} class="h-5 w-5 text-fimil-400" />
+            <h3 class="mt-4 text-lg font-semibold text-ink">{item.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-ink-soft">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* 8. Scanner wall */}
+  <Section variant="panel">
+    <SectionHeading
+      eyebrow="built on open source"
+      title="Sixteen scanners. One orchestrator."
+      lead="Fimil orchestrates best-in-class open-source scanners — and adds the layers they can't: validation, correlation, and remediation."
+    />
+    <LogoWall />
+  </Section>
+
+  {/* 9. Pricing teaser */}
+  <Section>
+    <SectionHeading
+      eyebrow="pricing"
+      title="Start free. Pay for what you scan."
+      lead="AI Pentest is usage-based on paid plans — you pay per confirmed finding, and false positives are credited."
+    />
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        pricingPlans.map((plan) => (
+          <PricingCard
+            name={plan.name}
+            price={plan.price}
+            description={plan.description}
+            features={plan.features}
+            cta={plan.cta}
+            highlighted={plan.highlighted}
+          />
+        ))
+      }
+    </div>
+    <div class="mt-8 text-center">
+      <a
+        href="/pricing"
+        data-astro-prefetch="load"
+        class="inline-flex items-center gap-1 text-base font-medium text-fimil-400 transition-colors hover:text-fimil-300"
+      >
+        Compare all plans &amp; the AI Pentest add-on
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </Section>
+
+  {/* 10. Waitlist */}
   <WaitlistForm />
 </BaseLayout>

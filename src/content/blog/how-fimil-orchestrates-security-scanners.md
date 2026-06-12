@@ -1,12 +1,12 @@
 ---
-title: 'How Fimil Orchestrates 12+ Open-Source Security Scanners'
+title: 'How Fimil Orchestrates 16 Open-Source Security Scanners'
 description: "A technical deep-dive into Fimil's scanner orchestration architecture: ephemeral Docker containers, output normalization, cross-tool deduplication, and intelligent prioritization with EPSS and reachability analysis."
 date: 2026-03-09
 author: 'Ethan'
 tags: ['engineering', 'scanners', 'architecture']
 ---
 
-When I tell people that Fimil runs 12+ security scanners on every repository, the first question is usually: "Doesn't that produce an overwhelming number of results?" The short answer is no — and the reason comes down to how we orchestrate, normalize, and deduplicate across tools.
+When I tell people that Fimil runs 16 security scanners on every repository, the first question is usually: "Doesn't that produce an overwhelming number of results?" The short answer is no — and the reason comes down to how we orchestrate, normalize, and deduplicate across tools.
 
 This post walks through the technical architecture behind Fimil's scan pipeline, from the moment you trigger a scan to the moment prioritized findings appear in your dashboard.
 
@@ -127,11 +127,11 @@ Severity normalization is particularly important. Semgrep uses `ERROR`/`WARNING`
 
 ## Stage 5: Deduplicate
 
-This is where the magic happens — and it's the stage that delivers the 90% noise reduction we advertise.
+This is where the magic happens — and it's the stage that delivers most of Fimil's noise reduction.
 
 ### The Duplication Problem
 
-When you run 12 scanners on the same codebase, you get a lot of overlap:
+When you run 16 scanners on the same codebase, you get a lot of overlap:
 
 - **Trivy and Grype** both scan dependency manifests for known CVEs. They often find the exact same vulnerability in the exact same package version.
 - **Trivy and OSV-Scanner** pull from different vulnerability databases but frequently overlap on well-known CVEs.
@@ -221,7 +221,7 @@ For teams that require even stronger guarantees, [Fimil Enterprise](/pricing) ru
 
 The orchestration architecture is designed to be extensible. Adding a new scanner requires implementing three methods (`should_run`, `get_docker_command`, `parse_output`) and registering the scanner. The container isolation model means any tool that can run in Docker and produce JSON output can be integrated.
 
-We're continuously evaluating new open-source scanners to add to the pipeline. The community builds incredible security tools — our job is to make them work together.
+We're continuously evaluating new open-source scanners to add to the pipeline. The community builds incredible security tools — our job is to make them work together. The pipeline now also extends beyond scanning: Fimil includes an [autonomous AI pentest agent](/pentest) that validates findings by replaying exploits against your running application.
 
 ---
 

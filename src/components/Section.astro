@@ -1,0 +1,23 @@
+---
+interface Props {
+  variant?: 'ground' | 'panel' | undefined;
+  spacing?: 'md' | 'lg' | undefined;
+  id?: string | undefined;
+  class?: string | undefined;
+}
+
+const { variant = 'ground', spacing = 'lg', id, class: className } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    spacing === 'lg' ? 'py-16 sm:py-24' : 'py-12 sm:py-16',
+    variant === 'panel' && 'border-y border-edge bg-panel',
+    className,
+  ]}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <slot />
+  </div>
+</section>

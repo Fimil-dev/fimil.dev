@@ -1,0 +1,57 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+  entry: CollectionEntry<'changelog'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const categoryBadge: Record<string, string> = {
+  feature: 'badge-accent',
+  improvement: 'badge-low',
+  fix: 'badge-medium',
+  security: 'badge-critical',
+};
+
+// Month-level dates: shipped milestones are dated by month, so the UI never
+// implies a day-level precision the source data doesn't have.
+const dateLabel = entry.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+});
+---
+
+<article id={entry.id} class="scroll-hidden relative pb-12 pl-8 last:pb-0">
+  <div
+    class="absolute top-1.5 left-0 h-3 w-3 rounded-full border-2 border-fimil-400 bg-ground"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="flex flex-wrap items-center gap-3">
+    <time datetime={entry.data.date.toISOString()} class="font-mono text-xs text-ink-faint">
+      {dateLabel}
+    </time>
+    <span class={categoryBadge[entry.data.category]}>{entry.data.category}</span>
+  </div>
+  <h2 class="mt-2 text-xl font-semibold text-ink">{entry.data.title}</h2>
+  <p class="mt-2 text-sm leading-6 text-ink-soft">{entry.data.description}</p>
+  <div class="prose mt-2 text-[15px]">
+    <Content />
+  </div>
+  {
+    entry.data.link && (
+      <a
+        href={entry.data.link}
+        class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-fimil-400 transition-colors hover:text-fimil-300"
+      >
+        Learn more
+        <Icon name="arrow-right" class="h-3.5 w-3.5" />
+      </a>
+    )
+  }
+</article>

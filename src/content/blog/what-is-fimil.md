@@ -1,6 +1,6 @@
 ---
 title: 'What Is Fimil? A Unified Approach to Application Security'
-description: "Fimil orchestrates 12+ open-source security scanners into a single dashboard, cutting through alert noise so your team fixes what matters. Here's why we built it and how it works."
+description: "Fimil orchestrates 16 open-source security scanners into a single dashboard, cutting through alert noise so your team fixes what matters. Here's why we built it and how it works."
 date: 2026-03-02
 author: 'Ethan'
 tags: ['product', 'application-security', 'announcement']
@@ -45,7 +45,9 @@ Here's the high-level workflow:
 
 5. **Present and act.** You get a single dashboard showing your security posture across all repositories. Filter by severity, category, scanner, or status. Get fix suggestions. Set up auto-triage rules to handle known patterns automatically.
 
-The goal is simple: instead of managing 12 tools and 2,000 alerts, you manage one dashboard and the 15 findings that actually matter.
+Fimil also now includes an [autonomous AI pentest agent](/pentest) that validates findings by replaying exploits against your running application.
+
+The goal is simple: instead of managing 16 tools and 2,000 alerts, you manage one dashboard and the 15 findings that actually matter.
 
 ---
 
@@ -61,7 +63,7 @@ Fimil is built for development teams that care about security but don't want it 
 
 ## The Scanners Under the Hood
 
-Fimil currently orchestrates [12+ open-source security scanners](/features) across five categories:
+Fimil currently orchestrates [16 open-source security scanners](/features) across five categories, including:
 
 <ul class="tool-grid">
 <li><strong>Semgrep</strong> — SAST for 30+ languages</li>
@@ -88,7 +90,7 @@ There are other application security platforms out there. [Here's how Fimil comp
 
 **We orchestrate, we don't reinvent.** Most competitors build their own proprietary scanning engines. That means you're locked into their detection capabilities and their update cycle. Fimil uses the same open-source scanners that millions of developers already trust. When Semgrep ships a new rule pack, you get it immediately.
 
-**We're obsessed with noise reduction.** Running 12 scanners simultaneously would normally mean 12x the alert volume. Fimil's deduplication engine uses content-based fingerprinting to identify when multiple tools find the same issue, and merges them into a single finding. In practice, this reduces alert volume by about 90% compared to running the tools separately.
+**We're obsessed with noise reduction.** Running 16 scanners simultaneously would normally mean 16x the alert volume. Fimil's deduplication engine uses content-based fingerprinting to identify when multiple tools find the same issue, and merges them into a single finding.
 
 **Your code stays ephemeral.** Some platforms require you to upload source code to their cloud infrastructure. Fimil clones your repository into an isolated container, runs the scan, and deletes the source code. Nothing is persisted. Nothing is shared. For teams that can't send code to third parties, we also offer [self-hosted deployment](/pricing).
 
@@ -108,7 +110,7 @@ Both deployment models support the same API, the same CLI tool, and the same CI/
 
 ## Getting Started
 
-Fimil is currently in private beta. You can [join the waitlist](/#waitlist) to get early access, or [contact our team](/contact) to schedule a demo.
+Fimil is currently in early access, onboarding teams in waves. You can [get early access](/#waitlist), or [contact me](/contact) to schedule a demo.
 
 If you want to see the full feature breakdown, check out our [features page](/features). If you're curious about pricing, we have a [transparent pricing page](/pricing) with details on what's included at each tier.
 

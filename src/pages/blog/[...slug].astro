@@ -49,11 +49,11 @@ const jsonLd = {
   <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.data.title }]} />
   <article class="py-12 sm:py-16 lg:py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-4xl lg:px-8">
-      <header class="mb-10 border-b border-gray-200 pb-10">
-        <a href="/blog" class="text-sm text-fimil-600 transition-colors hover:text-fimil-700">
+      <header class="mb-10 border-b border-edge pb-10">
+        <a href="/blog" class="text-sm text-fimil-400 transition-colors hover:text-fimil-300">
           &larr; Back to Blog
         </a>
-        <div class="mt-4 flex items-center gap-3 text-sm text-gray-500">
+        <div class="mt-4 flex items-center gap-3 font-mono text-sm text-ink-faint">
           <time datetime={post.data.date.toISOString()}>
             {
               post.data.date.toLocaleDateString('en-US', {
@@ -66,17 +66,15 @@ const jsonLd = {
           <span aria-hidden="true">&middot;</span>
           <span>{readingTime} min read</span>
         </div>
-        <h1 class="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h1 class="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
           {post.data.title}
         </h1>
-        <p class="mt-2 text-sm text-gray-500">By {post.data.author}</p>
+        <p class="mt-2 text-sm text-ink-faint">By {post.data.author}</p>
         {
           post.data.tags.length > 0 && (
             <div class="mt-4 flex flex-wrap gap-2">
               {post.data.tags.map((tag) => (
-                <span class="rounded-full bg-fimil-50 px-2.5 py-0.5 text-xs font-medium text-fimil-700">
-                  {tag}
-                </span>
+                <span class="badge-accent">{tag}</span>
               ))}
             </div>
           )
@@ -85,8 +83,8 @@ const jsonLd = {
 
       {
         tocHeadings.length > 2 && (
-          <nav class="mb-10 rounded-xl border border-gray-200 bg-gray-50 p-6">
-            <p class="text-sm font-semibold tracking-wider text-gray-500 uppercase">
+          <nav class="mb-10 rounded-xl border border-edge bg-panel p-6">
+            <p class="font-mono text-sm font-semibold tracking-wider text-ink-faint uppercase">
               In this article
             </p>
             <ol class="mt-3 space-y-2">
@@ -94,7 +92,7 @@ const jsonLd = {
                 <li>
                   <a
                     href={`#${heading.slug}`}
-                    class="text-sm text-gray-600 transition-colors hover:text-fimil-600"
+                    class="text-sm text-ink-soft transition-colors hover:text-fimil-400"
                   >
                     {heading.text}
                   </a>
@@ -106,15 +104,15 @@ const jsonLd = {
       }
 
       <div
-        class="prose prose-gray prose-a:text-fimil-600 max-w-none [&>p:first-child]:text-lg [&>p:first-child]:leading-relaxed [&>p:first-child]:text-gray-500"
+        class="prose max-w-none [&>p:first-child]:text-lg [&>p:first-child]:leading-relaxed [&>p:first-child]:text-ink"
       >
         <Content />
       </div>
 
-      <footer class="mt-16 border-t border-gray-200 pt-8">
+      <footer class="mt-16 border-t border-edge pt-8">
         <a
           href="/blog"
-          class="inline-flex items-center gap-1 text-sm font-medium text-fimil-600 transition-colors hover:text-fimil-700"
+          class="inline-flex items-center gap-1 text-sm font-medium text-fimil-400 transition-colors hover:text-fimil-300"
         >
           &larr; More from the Fimil Blog
         </a>

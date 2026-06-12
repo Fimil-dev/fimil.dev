@@ -2,106 +2,154 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import FeatureCard from '@/components/FeatureCard.astro';
+import Section from '@/components/Section.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
 import CTASection from '@/components/CTASection.astro';
+import Button from '@/components/Button.astro';
+import Icon from '@/components/Icon.astro';
+import type { IconName } from '@/lib/icons';
 
-const scanningFeatures = [
+type Feature = { title: string; description: string; icon?: IconName };
+
+const scanningFeatures: Feature[] = [
   {
     title: 'SAST',
+    icon: 'file-code',
     description:
-      'Static Application Security Testing with Semgrep, Bandit, and Gosec. Find vulnerabilities in your source code before deployment.',
+      'Static analysis with Semgrep, Bandit, and Gosec. Find injection, crypto, and logic flaws in source before deployment.',
   },
   {
     title: 'SCA',
+    icon: 'package',
     description:
-      'Software Composition Analysis with Trivy, Grype, and OSV-Scanner. Identify vulnerable dependencies across all ecosystems.',
+      'Dependency scanning with Trivy, Grype, and OSV-Scanner across every major ecosystem — deduplicated into one finding per CVE.',
   },
   {
-    title: 'Secrets Detection',
+    title: 'Secrets detection',
+    icon: 'key',
     description:
-      'Find exposed API keys, passwords, and credentials with Gitleaks and TruffleHog. Prevent data breaches before they happen.',
+      'Gitleaks and TruffleHog find exposed API keys, passwords, and tokens — with rotation guidance per secret type.',
   },
   {
-    title: 'IaC Security',
+    title: 'IaC security',
+    icon: 'sliders',
     description:
-      'Scan Terraform, CloudFormation, Kubernetes manifests, and Dockerfiles with Checkov and Hadolint for misconfigurations.',
+      'Checkov and Hadolint scan Terraform, CloudFormation, Kubernetes manifests, and Dockerfiles for misconfigurations.',
   },
   {
-    title: 'Container Scanning',
+    title: 'Container scanning',
+    icon: 'container',
     description:
-      'Analyze container images for vulnerabilities with Trivy. Secure your Docker images before pushing to production.',
+      'Trivy analyzes images layer by layer — base image CVEs, stale packages, bad configs.',
   },
   {
-    title: 'SBOM Generation',
+    title: 'DAST',
+    icon: 'globe',
     description:
-      "Generate Software Bill of Materials with Syft. Know exactly what's in your applications for compliance and security.",
-  },
-];
-
-const intelligenceFeatures = [
-  {
-    title: 'Priority Scoring',
-    description:
-      'Weighted scoring based on severity, age, reachability, and EPSS. Focus on the issues most likely to be exploited.',
+      'OWASP ZAP and Nuclei probe your running app from outside: missing headers, exposed panels, known-template vulnerabilities.',
   },
   {
-    title: 'Reachability Analysis',
+    title: 'CSPM',
+    icon: 'cloud',
     description:
-      'Distinguish between direct and transitive dependencies. Prioritize vulnerabilities in code you actually use.',
+      'Prowler audits AWS, Azure, and GCP accounts for cloud misconfigurations — correlated with the IaC that caused them.',
   },
   {
-    title: 'EPSS Enrichment',
+    title: 'SBOM generation',
+    icon: 'list-checks',
     description:
-      'Exploit Prediction Scoring System integration. Know which CVEs are being actively exploited in the wild.',
-  },
-  {
-    title: 'Auto-Triage',
-    description:
-      'Create rules to automatically classify findings as false positives, accepted risks, or confirmed vulnerabilities.',
+      'Syft generates CycloneDX and SPDX software bills of materials per scan, stored and exportable for compliance.',
   },
 ];
 
-const workflowFeatures = [
+const intelligenceFeatures: Feature[] = [
   {
-    title: 'Scanner Profiles',
+    title: 'Cross-scanner dedup',
     description:
-      'Create reusable scanner configurations for different project types. Python, Node.js, Go, Java — optimize for your stack.',
+      'Fingerprints collapse the same issue found by multiple scanners into one finding with every source credited.',
   },
   {
-    title: 'Fix Suggestions',
+    title: 'Finding groups',
     description:
-      'Get actionable remediation guidance. Package upgrades, code fixes, and configuration changes — all in one place.',
+      'Four correlation types link related findings: same-location, code + vulnerable dep, IaC + container, shared CVE/CWE.',
   },
   {
-    title: 'Scan Policies',
+    title: 'Priority scoring',
     description:
-      'Define thresholds for blocking deployments. Fail CI builds when critical findings exceed your tolerance.',
+      'An auditable composite: 70% severity, 15% age, 10% reachability, 5% EPSS — published weights, no black box.',
   },
   {
-    title: 'Diff-Aware Scanning',
+    title: 'Call-graph reachability',
     description:
-      'PR scans compare against the base branch. See only new findings, not the entire backlog.',
+      'Walks your code to the vulnerable function and shows the call chain with a confidence rating — beyond direct vs. transitive.',
+  },
+  {
+    title: 'EPSS enrichment',
+    description:
+      'Exploit Prediction Scoring System data on every CVE — know what is being exploited in the wild.',
+  },
+  {
+    title: 'Auto-triage rules',
+    description:
+      'Match on rule id, CVE, package, path, or title; first match wins; every transition lands in an audit trail.',
   },
 ];
 
-const integrationFeatures = [
+const remediationFeatures: Feature[] = [
   {
-    title: 'GitHub Integration',
-    description:
-      'OAuth connection, automatic repository sync, PR check runs, and commit status updates. Works with GitHub Enterprise.',
+    title: 'Dependency fix PRs',
+    description: 'Semver-aware bumps across 7+ ecosystems with upgrade-confidence scoring.',
   },
   {
-    title: 'GitLab Integration',
-    description:
-      'Connect GitLab.com or self-hosted instances. Merge request scanning with inline comments.',
+    title: 'IaC fix PRs',
+    description: 'Terraform, CloudFormation, and Kubernetes fixes, validated after patching.',
   },
   {
-    title: 'Bitbucket Integration',
-    description: 'Bitbucket Cloud support with pull request scanning and build status updates.',
+    title: 'Code fix PRs',
+    description: '100+ CWE handlers across Python, JS, Go, Java, C#, Ruby, and Rust.',
+  },
+  {
+    title: 'Pentest advisory PRs',
+    description:
+      'Confirmed agent findings open a PR with the PoC, curl repro, and remediation guidance.',
+  },
+];
+
+const workflowFeatures: Feature[] = [
+  {
+    title: 'PR checks',
+    description:
+      'GitHub check runs, GitLab and Bitbucket commit status — block merges on your policy.',
+  },
+  {
+    title: 'Diff-aware scanning',
+    description: 'PR scans compare against the base branch: only new findings, not the backlog.',
+  },
+  {
+    title: 'Scan policies',
+    description: 'Severity thresholds that fail CI builds when findings exceed your tolerance.',
+  },
+  {
+    title: 'Scanner profiles',
+    description:
+      'Reusable configurations per stack — Python, Node, Go, Java — tuned once, used everywhere.',
+  },
+  {
+    title: 'CLI',
+    description: 'Pre-commit gate and CI commands with retry-safe API access.',
+  },
+  {
+    title: 'MCP server',
+    description:
+      'Thirteen tools for AI assistants: scans, findings, triage, remediation, reports, pentest.',
+  },
+  {
+    title: 'Kubernetes operator',
+    description: 'Declarative installs for self-hosted clusters via custom resources.',
   },
   {
     title: 'Notifications',
-    description:
-      'Email and Slack notifications for scan results, critical findings, and weekly digests. Stay informed, not overwhelmed.',
+    description: 'Slack, email, Telegram, PagerDuty, and webhooks with per-user preferences.',
   },
 ];
 
@@ -116,98 +164,134 @@ const jsonLd = {
     price: '0',
     priceCurrency: 'USD',
   },
+  featureList: [
+    'SAST',
+    'SCA',
+    'Secrets detection',
+    'IaC security',
+    'Container scanning',
+    'DAST',
+    'CSPM',
+    'SBOM generation',
+    'AI pentest agent',
+    'Cross-scanner deduplication',
+    'Priority scoring',
+    'Call-graph reachability',
+    'Auto-triage rules',
+    'Auto-remediation PRs',
+  ].join(', '),
 };
 ---
 
 <BaseLayout
-  title="Security Scanning Features — SAST, SCA, Secrets, IaC, Container | Fimil"
-  description="Comprehensive application security with Semgrep, Trivy, Gitleaks, Checkov, and more. Priority scoring, EPSS enrichment, reachability analysis, auto-triage, and CI/CD integration."
+  title="Security Features — SAST, SCA, DAST, CSPM, Secrets, IaC, SBOM | Fimil"
+  description="The full capability reference: 16 scanners across 8 categories, an AI pentest agent, the intelligence layer, the remediation engine, and every integration."
   jsonLd={jsonLd}
 >
   <Breadcrumbs items={[{ label: 'Features' }]} />
   {/* Header */}
-  <section class="bg-gradient-to-b from-fimil-50 to-white py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <section class="relative overflow-hidden py-16 sm:py-24">
+    <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-3xl text-center">
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          Everything You Need for Application Security
+        <p class="font-mono text-sm tracking-widest text-fimil-400 uppercase">spec sheet</p>
+        <h1 class="mt-4 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+          Everything Fimil does, on one page.
         </h1>
-        <p class="mt-6 text-lg text-gray-600">
-          One platform to orchestrate, analyze, and act on security findings across your entire
-          codebase.
+        <p class="mt-6 text-lg text-ink-soft">
+          The dense version. For the story, read <a
+            href="/platform"
+            class="text-fimil-400 transition-colors hover:text-fimil-300">how the pipeline works</a
+          > or meet <a href="/pentest" class="text-fimil-400 transition-colors hover:text-fimil-300"
+            >the pentest agent</a
+          >.
         </p>
       </div>
     </div>
   </section>
 
-  {/* Comprehensive Security Scanning */}
-  <section class="py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-          Comprehensive Security Scanning
-        </h2>
-        <p class="mt-2 text-lg text-gray-600">
-          Industry-leading open source tools, unified under one roof.
-        </p>
-      </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {scanningFeatures.map((f) => <FeatureCard title={f.title} description={f.description} />)}
-      </div>
+  {/* Scanning */}
+  <Section>
+    <SectionHeading
+      align="left"
+      eyebrow="scanning"
+      title="Eight scanning categories"
+      lead="Sixteen open-source scanners, isolated runs, one normalized output schema."
+    />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        scanningFeatures.map((f) => (
+          <FeatureCard title={f.title} description={f.description} icon={f.icon} />
+        ))
+      }
     </div>
-  </section>
+  </Section>
 
-  {/* Intelligent Prioritization */}
-  <section class="bg-gray-50 py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">Intelligent Prioritization</h2>
-        <p class="mt-2 text-lg text-gray-600">Cut through the noise. Focus on what matters.</p>
+  {/* AI Pentest summary */}
+  <Section variant="panel" spacing="md">
+    <div
+      class="flex flex-col items-start gap-6 rounded-2xl border border-fimil-400/30 bg-ground p-8 lg:flex-row lg:items-center"
+    >
+      <div class="flex-1">
+        <p class="font-mono text-sm tracking-widest text-fimil-400 uppercase">flagship</p>
+        <h2 class="mt-2 text-2xl font-bold text-ink">AI Pentest Agent</h2>
+        <ul class="mt-4 space-y-2">
+          <li class="flex items-start gap-2.5 text-sm text-ink-soft">
+            <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-low" />
+            15 attack vectors, from SQLi and IDOR to SSTI and JWT attacks
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-ink-soft">
+            <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-low" />
+            Every finding replay-validated before it is reported
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-ink-soft">
+            <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-low" />
+            PoC + curl reproduction export, compliance mappings, advisory fix PRs
+          </li>
+        </ul>
       </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          intelligenceFeatures.map((f) => (
-            <FeatureCard title={f.title} description={f.description} />
-          ))
-        }
-      </div>
+      <Button href="/pentest" size="lg">Meet the agent</Button>
     </div>
-  </section>
+  </Section>
 
-  {/* Developer Workflow */}
-  <section class="py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">Developer Workflow</h2>
-        <p class="mt-2 text-lg text-gray-600">Security that fits into how you already work.</p>
-      </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {workflowFeatures.map((f) => <FeatureCard title={f.title} description={f.description} />)}
-      </div>
+  {/* Intelligence */}
+  <Section>
+    <SectionHeading align="left" eyebrow="intelligence" title="One signal, not sixteen feeds" />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {intelligenceFeatures.map((f) => <FeatureCard title={f.title} description={f.description} />)}
     </div>
-  </section>
+  </Section>
 
-  {/* Integrations */}
-  <section class="bg-gray-50 py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">Integrations</h2>
-        <p class="mt-2 text-lg text-gray-600">Connect your tools. Automate your security.</p>
-      </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          integrationFeatures.map((f) => (
-            <FeatureCard title={f.title} description={f.description} />
-          ))
-        }
-      </div>
+  {/* Remediation */}
+  <Section variant="panel">
+    <SectionHeading align="left" eyebrow="remediation" title="Fixes as pull requests" />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {remediationFeatures.map((f) => <FeatureCard title={f.title} description={f.description} />)}
     </div>
-  </section>
+  </Section>
 
-  {/* CTA */}
+  {/* Workflow & integrations */}
+  <Section>
+    <SectionHeading align="left" eyebrow="workflow" title="Workflow & integrations" />
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {workflowFeatures.map((f) => <FeatureCard title={f.title} description={f.description} />)}
+    </div>
+  </Section>
+
+  {/* Deployment */}
+  <Section variant="panel" spacing="md">
+    <div class="mx-auto max-w-3xl text-center">
+      <SectionHeading
+        eyebrow="deployment"
+        title="Fimil Cloud or self-hosted"
+        lead="Multi-tenant SaaS with usage-based pentest billing, or licensed single-tenant in your own network — including air-gapped installs."
+      />
+    </div>
+  </Section>
+
   <CTASection
-    headline="See Fimil in Action"
-    description="Join the waitlist to start scanning your repositories. No credit card required."
-    cta={{ label: 'Join Waitlist', href: '/#waitlist' }}
+    headline="See it against your own repos."
+    description="Get early access and run your first scan. No credit card required."
+    cta={{ label: 'Get early access', href: '/#waitlist' }}
   />
 </BaseLayout>

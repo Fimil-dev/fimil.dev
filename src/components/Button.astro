@@ -1,0 +1,37 @@
+---
+// Single source of truth for button styling. The primary recipe is inverted
+// (light accent bg, near-black text) because white text on fimil-500/600
+// fails WCAG AA against dark surfaces.
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | undefined;
+  size?: 'md' | 'lg' | undefined;
+  class?: string | undefined;
+}
+
+const { href, variant = 'primary', size = 'md', class: className } = Astro.props;
+
+const variantClasses = {
+  primary: 'bg-fimil-400 font-medium text-[#0a0e14] transition-colors hover:bg-fimil-300',
+  secondary:
+    'border border-edge-bright bg-panel font-medium text-ink transition-colors hover:bg-raised',
+  ghost: 'font-medium text-ink-soft transition-colors hover:text-ink',
+};
+
+const sizeClasses = {
+  md: 'px-4 py-2 text-sm',
+  lg: 'min-w-[160px] px-6 py-3 text-base',
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-block rounded-lg text-center',
+    variantClasses[variant],
+    sizeClasses[size],
+    className,
+  ]}
+>
+  <slot />
+</a>
