@@ -7,11 +7,23 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
-    author: z.string().default('Fimil Team'),
+    author: z.string().default('Ethan Aldrich'),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     ogImage: z.string().optional(),
   }),
 });
 
-export const collections = { blog };
+const changelog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    category: z.enum(['feature', 'improvement', 'fix', 'security']).default('improvement'),
+    link: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, changelog };

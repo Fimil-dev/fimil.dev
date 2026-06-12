@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Hero from '@/components/Hero.astro';
+import ChangelogEntry from '@/components/ChangelogEntry.astro';
+
+const entries = (await getCollection('changelog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Fimil Changelog',
+  url: 'https://fimil.dev/changelog',
+  description:
+    'What has shipped in Fimil: scanners, the AI pentest engine, remediation, and platform updates.',
+};
+---
+
+<BaseLayout
+  title="Changelog | Fimil"
+  description="What has shipped in Fimil: scanners, the AI pentest engine, auto-remediation, and platform updates."
+  ogImage="/og-changelog.png"
+  jsonLd={jsonLd}
+>
+  <Breadcrumbs items={[{ label: 'Changelog' }]} />
+  <Hero
+    headline="Changelog"
+    subheadline="What's shipped, dated by month. This log starts with the platform's existing capabilities and tracks everything from here."
+  />
+
+  <section class="py-12 sm:py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="border-l border-edge pl-4">
+        {entries.map((entry) => <ChangelogEntry entry={entry} />)}
+      </div>
+      <p class="mt-10 text-sm text-ink-faint">
+        Subscribe via <a
+          href="/changelog.xml"
+          class="text-fimil-400 transition-colors hover:text-fimil-300">RSS</a
+        > or read the <a href="/blog" class="text-fimil-400 transition-colors hover:text-fimil-300"
+          >blog</a
+        > for deep-dives.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

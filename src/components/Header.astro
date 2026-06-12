@@ -1,32 +1,29 @@
 ---
 const navLinks = [
-  { label: 'Features', href: '/features' },
-  { label: 'Compare', href: '/compare' },
+  { label: 'Platform', href: '/platform' },
+  { label: 'Pentest', href: '/pentest' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Changelog', href: '/changelog' },
   { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];
 ---
 
-<header class="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-lg">
+<header class="sticky top-0 z-50 border-b border-edge bg-ground/80 backdrop-blur-lg">
   <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
     {/* Logo */}
     <a href="/" class="flex items-center gap-2">
       <img src="/logo-icon-color.svg" alt="" class="h-10 w-10" />
-      <span
-        class="text-2xl font-semibold tracking-wide text-gray-900"
-        style="font-family: 'IBM Plex Mono', monospace">fimil</span
-      >
+      <span class="font-mono text-2xl font-semibold tracking-wide text-ink">fimil</span>
     </a>
 
     {/* Desktop nav */}
-    <div class="hidden items-center gap-10 md:flex">
+    <div class="hidden items-center gap-8 md:flex">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
+            class="text-base font-medium text-ink-soft transition-colors hover:text-ink"
           >
             {link.label}
           </a>
@@ -38,15 +35,15 @@ const navLinks = [
     <div class="hidden items-center gap-3 md:flex">
       <a
         href="https://app.fimil.dev/auth/login"
-        class="text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
+        class="text-base font-medium text-ink-soft transition-colors hover:text-ink"
       >
         Sign In
       </a>
       <a
         href="/#waitlist"
-        class="rounded-lg bg-fimil-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-fimil-700"
+        class="rounded-lg bg-fimil-400 px-4 py-2 text-sm font-medium text-[#0a0e14] transition-colors hover:bg-fimil-300"
       >
-        Join Waitlist
+        Get early access
       </a>
     </div>
 
@@ -55,9 +52,10 @@ const navLinks = [
       <button
         id="mobile-menu-btn"
         type="button"
-        class="rounded-lg p-2 text-gray-600 hover:text-gray-900"
+        class="rounded-lg p-2 text-ink-soft hover:text-ink"
         aria-label="Open menu"
         aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path
@@ -76,39 +74,43 @@ const navLinks = [
     </div>
   </nav>
 
-  {/* Mobile backdrop */}
-  <div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/25 md:hidden"></div>
-
   {/* Mobile menu */}
-  <div id="mobile-menu" class="hidden border-t border-gray-100 bg-white md:hidden">
+  <div id="mobile-menu" class="hidden border-t border-edge bg-overlay md:hidden">
     <div class="space-y-1 px-4 py-4">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+            class="block rounded-lg px-3 py-2 text-base font-medium text-ink-soft hover:bg-raised hover:text-ink"
           >
             {link.label}
           </a>
         ))
       }
-      <div class="mt-4 flex flex-col gap-2 border-t border-gray-100 pt-4">
+      <div class="mt-4 flex flex-col gap-2 border-t border-edge pt-4">
         <a
           href="https://app.fimil.dev/auth/login"
-          class="rounded-lg px-3 py-2 text-center text-base font-medium text-gray-600 transition-colors hover:text-gray-900"
+          class="rounded-lg px-3 py-2 text-center text-base font-medium text-ink-soft transition-colors hover:text-ink"
         >
           Sign In
         </a>
         <a
           href="/#waitlist"
-          class="rounded-lg bg-fimil-600 px-3 py-2 text-center text-base font-medium text-white transition-colors hover:bg-fimil-700"
+          class="rounded-lg bg-fimil-400 px-3 py-2 text-center text-base font-medium text-[#0a0e14] transition-colors hover:bg-fimil-300"
         >
-          Join Waitlist
+          Get early access
         </a>
       </div>
     </div>
   </div>
 </header>
+
+{
+  /* Mobile backdrop — must live OUTSIDE <header>: backdrop-blur on the header
+    makes it the containing block for fixed descendants, which would paint
+    this overlay on top of the open menu and swallow every tap */
+}
+<div id="mobile-backdrop" class="fixed inset-0 z-40 hidden bg-black/50 md:hidden"></div>
 
 <script is:inline>
   (function () {

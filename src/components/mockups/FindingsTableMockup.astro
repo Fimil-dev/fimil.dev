@@ -1,0 +1,114 @@
+---
+// Findings list mockup with realistic data — dedup chips, EPSS bars,
+// reachability tags. Pure CSS, no client JS.
+import MockupWindow from '@/components/MockupWindow.astro';
+
+interface Finding {
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  title: string;
+  meta: string;
+  epss: number | null;
+  reachability: 'reachable' | 'transitive' | null;
+  sources: string;
+  merged: boolean;
+}
+
+const findings: Finding[] = [
+  {
+    severity: 'critical',
+    title: 'SQL injection in user search',
+    meta: 'api/users.py:84 · CWE-89',
+    epss: 0.91,
+    reachability: 'reachable',
+    sources: 'semgrep + pentest-agent',
+    merged: true,
+  },
+  {
+    severity: 'critical',
+    title: 'AWS access key committed',
+    meta: 'services/deploy.ts:12 · AKIA···REDACTED',
+    epss: null,
+    reachability: null,
+    sources: 'gitleaks + trufflehog',
+    merged: true,
+  },
+  {
+    severity: 'high',
+    title: 'Command injection in lodash',
+    meta: 'CVE-2021-23337 · lodash@4.17.20 · package-lock.json',
+    epss: 0.42,
+    reachability: 'transitive',
+    sources: 'trivy + grype + osv',
+    merged: true,
+  },
+  {
+    severity: 'medium',
+    title: 'S3 bucket allows public read',
+    meta: 'infra/storage.tf:33 · CKV_AWS_20',
+    epss: null,
+    reachability: null,
+    sources: 'checkov',
+    merged: false,
+  },
+  {
+    severity: 'low',
+    title: 'Outdated base image packages',
+    meta: 'Dockerfile · debian:bookworm-slim',
+    epss: 0.04,
+    reachability: null,
+    sources: 'trivy-image',
+    merged: false,
+  },
+];
+---
+
+<MockupWindow variant="browser" title="app.fimil.dev/findings">
+  <div class="flex items-center gap-2 border-b border-edge px-4 py-3">
+    <span class="text-sm font-semibold text-ink">Findings</span>
+    <span class="badge-info">9 of 47 shown</span>
+    <span class="badge-accent hidden sm:inline-flex">dedup: 12 sources merged</span>
+  </div>
+  <div>
+    {
+      findings.map((f) => (
+        <div class="flex items-center gap-3 border-b border-edge px-4 py-2.5 last:border-b-0">
+          <span class:list={[`badge-${f.severity}`, 'w-[4.5rem] justify-center']}>
+            {f.severity}
+          </span>
+          <div class="min-w-0 flex-1">
+            <div class="truncate text-[13px] font-medium text-ink">{f.title}</div>
+            <div class="truncate font-mono text-[11px] text-ink-faint">{f.meta}</div>
+          </div>
+          <div class="hidden w-20 lg:block">
+            {f.epss !== null ? (
+              <div class="flex items-center gap-1.5">
+                <span class="font-mono text-[11px] text-ink-soft">{f.epss.toFixed(2)}</span>
+                <span class="h-1 w-6 overflow-hidden rounded-full bg-raised">
+                  <span
+                    class="block h-full rounded-full bg-fimil-400"
+                    style={`width: ${Math.round(f.epss * 100)}%`}
+                  />
+                </span>
+              </div>
+            ) : (
+              <span class="font-mono text-[11px] text-ink-faint">—</span>
+            )}
+          </div>
+          <div class="hidden w-24 md:block">
+            {f.reachability ? (
+              <span class={f.reachability === 'reachable' ? 'badge-low' : 'badge-info'}>
+                {f.reachability}
+              </span>
+            ) : (
+              <span class="font-mono text-[11px] text-ink-faint">—</span>
+            )}
+          </div>
+          <div class="hidden w-44 text-right sm:block">
+            <span class="font-mono text-[11px] text-ink-soft">{f.sources}</span>
+            {f.merged && <span class="ml-1 font-mono text-[11px] text-fimil-400">⇒ 1</span>}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</MockupWindow>

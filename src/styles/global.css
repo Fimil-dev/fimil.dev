@@ -3,6 +3,7 @@
 
 @theme {
   --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
 
   --color-fimil-50: #f0f9ff;
   --color-fimil-100: #e0f2fe;
@@ -15,33 +16,134 @@
   --color-fimil-800: #075985;
   --color-fimil-900: #0c4a6e;
 
-  --color-critical: #ef4444;
-  --color-high: #f97316;
-  --color-medium: #f59e0b;
-  --color-low: #22c55e;
-  --color-info: #6b7280;
+  /* Surfaces — blue-tinted dark layers */
+  --color-ground: #0a0e14;
+  --color-panel: #0f141c;
+  --color-raised: #151c26;
+  --color-overlay: #1a2330;
+
+  /* Borders */
+  --color-edge: #1c2532;
+  --color-edge-bright: #2b3850;
+
+  /* Text */
+  --color-ink: #e6edf3;
+  --color-ink-soft: #9aa7b4;
+  --color-ink-faint: #7d8a96;
+
+  /* Accent */
+  --color-accent: var(--color-fimil-400);
+
+  /* Severity — lifted for dark backgrounds */
+  --color-critical: #f87171;
+  --color-high: #fb923c;
+  --color-medium: #fbbf24;
+  --color-low: #4ade80;
+  --color-info: #94a3b8;
+
+  /* Code */
+  --color-code-bg: #0d1117;
 }
 
-html {
-  scroll-behavior: smooth;
+:root {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   font-family: var(--font-body);
+  background-color: var(--color-ground);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scroll animations */
-.scroll-hidden {
+:focus-visible {
+  outline: 2px solid var(--color-fimil-400);
+  outline-offset: 2px;
+}
+
+/* Severity badges — shared by mockups, changelog tags, pricing meter */
+.badge-critical,
+.badge-high,
+.badge-medium,
+.badge-low,
+.badge-info,
+.badge-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  white-space: nowrap;
+}
+
+.badge-critical {
+  background: color-mix(in oklab, var(--color-critical) 14%, transparent);
+  color: var(--color-critical);
+  border: 1px solid color-mix(in oklab, var(--color-critical) 35%, transparent);
+}
+
+.badge-high {
+  background: color-mix(in oklab, var(--color-high) 14%, transparent);
+  color: var(--color-high);
+  border: 1px solid color-mix(in oklab, var(--color-high) 35%, transparent);
+}
+
+.badge-medium {
+  background: color-mix(in oklab, var(--color-medium) 14%, transparent);
+  color: var(--color-medium);
+  border: 1px solid color-mix(in oklab, var(--color-medium) 35%, transparent);
+}
+
+.badge-low {
+  background: color-mix(in oklab, var(--color-low) 14%, transparent);
+  color: var(--color-low);
+  border: 1px solid color-mix(in oklab, var(--color-low) 35%, transparent);
+}
+
+.badge-info {
+  background: color-mix(in oklab, var(--color-info) 14%, transparent);
+  color: var(--color-info);
+  border: 1px solid color-mix(in oklab, var(--color-info) 35%, transparent);
+}
+
+.badge-accent {
+  background: color-mix(in oklab, var(--color-fimil-400) 14%, transparent);
+  color: var(--color-fimil-300);
+  border: 1px solid color-mix(in oklab, var(--color-fimil-400) 35%, transparent);
+}
+
+/* Hero grid texture — pure CSS, masked radial fade */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--color-edge) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-edge) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* Scroll animations — gated behind the .js class (set by an inline script in
+   BaseLayout) so content stays visible without JavaScript */
+.js .scroll-hidden {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(12px);
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
 }
 
-.scroll-visible {
+.js .scroll-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -118,11 +220,29 @@ body {
   animation: marketing-fade-in 0.4s ease both;
 }
 
-/* Blog prose — full typography system */
+/* Terminal caret blink */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .terminal-caret {
+    animation: caret-blink 1s step-end infinite;
+  }
+}
+
+/* Blog prose — full typography system (dark) */
 .prose {
   font-size: 1.0625rem;
   line-height: 1.85;
-  color: #374151;
+  color: var(--color-ink-soft);
 }
 
 .prose > *:first-child {
@@ -137,14 +257,15 @@ body {
 
 /* Links */
 .prose a {
+  color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: var(--color-fimil-200);
+  text-decoration-color: var(--color-fimil-500);
   transition: text-decoration-color 0.15s;
 }
 
 .prose a:hover {
-  text-decoration-color: var(--color-fimil-600);
+  text-decoration-color: var(--color-fimil-300);
 }
 
 /* Headings */
@@ -152,11 +273,11 @@ body {
   font-size: 1.625em;
   font-weight: 700;
   line-height: 1.3;
-  color: var(--color-fimil-700);
+  color: var(--color-ink);
   margin-top: 3em;
   margin-bottom: 1.25em;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--color-fimil-100);
+  border-bottom: 1px solid var(--color-edge);
   letter-spacing: -0.02em;
 }
 
@@ -164,7 +285,7 @@ body {
   font-size: 1.25em;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--color-fimil-800);
+  color: var(--color-ink);
   margin-top: 2.5em;
   margin-bottom: 0.75em;
   border-left: 3px solid var(--color-fimil-400);
@@ -175,7 +296,7 @@ body {
   font-size: 0.875em;
   font-weight: 600;
   line-height: 1.5;
-  color: var(--color-fimil-600);
+  color: var(--color-fimil-400);
   margin-top: 1.75em;
   margin-bottom: 0.5em;
   text-transform: uppercase;
@@ -185,7 +306,7 @@ body {
 /* Bold */
 .prose strong {
   font-weight: 600;
-  color: #111827;
+  color: var(--color-ink);
 }
 
 /* Lists */
@@ -217,7 +338,7 @@ body {
 /* Blockquotes */
 .prose blockquote {
   border-left: 3px solid var(--color-fimil-400);
-  background-color: var(--color-fimil-50);
+  background-color: var(--color-panel);
   border-radius: 0 0.5rem 0.5rem 0;
   padding: 1.25rem 1.5rem;
   margin-top: 2em;
@@ -231,12 +352,14 @@ body {
 
 /* Inline code */
 .prose :not(pre) > code {
-  background-color: var(--color-fimil-50);
-  border: 1px solid var(--color-fimil-100);
+  background-color: var(--color-raised);
+  border: 1px solid var(--color-edge);
   border-radius: 0.25rem;
   padding: 0.125rem 0.375rem;
+  font-family: var(--font-mono);
   font-size: 0.875em;
   font-weight: 500;
+  color: var(--color-ink);
 }
 
 .prose :not(pre) > code::before,
@@ -247,7 +370,8 @@ body {
 /* Code blocks */
 .prose pre {
   border-radius: 0.75rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-edge);
+  background-color: var(--color-code-bg) !important;
   margin-top: 1.75em;
   margin-bottom: 1.75em;
   padding: 1rem 1.25rem;
@@ -262,7 +386,7 @@ body {
   margin-top: 3rem;
   margin-bottom: 3rem;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-fimil-200), transparent);
+  background: linear-gradient(to right, transparent, var(--color-edge-bright), transparent);
 }
 
 /* Tables — wrap for horizontal scroll on mobile */
@@ -279,26 +403,26 @@ body {
   font-size: 0.9375em;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-edge);
   min-width: 28rem;
 }
 
 .prose thead th {
-  background-color: var(--color-fimil-50);
+  background-color: var(--color-panel);
   font-weight: 600;
   text-align: left;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e5e7eb;
-  color: #111827;
+  border-bottom: 1px solid var(--color-edge);
+  color: var(--color-ink);
 }
 
 .prose tbody td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-edge);
 }
 
 .prose tbody tr:nth-child(even) {
-  background-color: #f9fafb;
+  background-color: color-mix(in oklab, var(--color-raised) 50%, transparent);
 }
 
 /* Images */
@@ -310,8 +434,8 @@ body {
 
 /* Info card for use in blog markdown */
 .info-card {
-  border: 1px solid var(--color-fimil-200);
-  background-color: var(--color-fimil-50);
+  border: 1px solid var(--color-edge);
+  background-color: var(--color-panel);
   border-radius: 0.75rem;
   padding: 1.25rem 1.5rem;
   margin-top: 1.5em;
@@ -347,15 +471,15 @@ body {
 }
 
 .tool-grid li {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-edge);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   margin: 0;
-  background: white;
+  background: var(--color-panel);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-hidden {
+  .js .scroll-hidden {
     opacity: 1;
     transform: none;
     transition: none;

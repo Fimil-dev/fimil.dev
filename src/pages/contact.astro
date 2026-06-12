@@ -19,66 +19,48 @@ const jsonLd = {
     ],
   },
 };
+
+const inputClasses =
+  'mt-1 block w-full rounded-lg border border-edge-bright bg-ground px-4 py-2.5 text-sm text-ink transition placeholder:text-ink-faint focus:border-fimil-400 focus:outline-none';
 ---
 
 <BaseLayout
   title="Contact — Fimil"
-  description="Get in touch with the Fimil team. Questions about features, pricing, partnerships, or support."
+  description="Get in touch about features, pricing, partnerships, or support. You'll get a reply from Ethan — usually within a business day."
   jsonLd={jsonLd}
 >
   <Breadcrumbs items={[{ label: 'Contact' }]} />
   <Hero
     headline="Get in Touch"
-    subheadline="Have questions about Fimil? We'd love to hear from you. Send us a message and we'll respond within 24 hours."
+    subheadline="Questions about Fimil? You'll get a reply from Ethan — the person who builds it — usually within a business day."
   />
 
   <section class="py-20">
     <div class="mx-auto grid max-w-5xl gap-12 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
       {/* Contact form */}
       <div>
-        <h2 class="text-xl font-bold tracking-tight text-gray-900">Send Us a Message</h2>
-        <p class="mt-4 text-gray-600">
-          Fill out the form below and we'll get back to you as soon as possible.
+        <h2 class="text-xl font-bold tracking-tight text-ink">Send a Message</h2>
+        <p class="mt-4 text-ink-soft">
+          Fill out the form below and I'll get back to you as soon as possible.
         </p>
         <form id="contact-form" class="mt-6 space-y-5">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
-            />
+            <label for="name" class="block text-sm font-medium text-ink-soft">Name</label>
+            <input type="text" id="name" name="name" required class={inputClasses} />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
-            />
+            <label for="email" class="block text-sm font-medium text-ink-soft">Email</label>
+            <input type="email" id="email" name="email" required class={inputClasses} />
           </div>
           <div>
-            <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
-            />
+            <label for="company" class="block text-sm font-medium text-ink-soft">Company</label>
+            <input type="text" id="company" name="company" class={inputClasses} />
           </div>
           <div>
-            <label for="inquiry_type" class="block text-sm font-medium text-gray-700"
+            <label for="inquiry_type" class="block text-sm font-medium text-ink-soft"
               >Inquiry Type</label
             >
-            <select
-              id="inquiry_type"
-              name="inquiry_type"
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
-            >
+            <select id="inquiry_type" name="inquiry_type" class={inputClasses}>
               <option value="general">General</option>
               <option value="sales">Sales</option>
               <option value="support">Support</option>
@@ -86,56 +68,49 @@ const jsonLd = {
             </select>
           </div>
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              required
-              class="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 focus:border-fimil-500 focus:ring-fimil-500"
-            ></textarea>
+            <label for="message" class="block text-sm font-medium text-ink-soft">Message</label>
+            <textarea id="message" name="message" rows="4" required class={inputClasses}></textarea>
           </div>
           <button
             type="submit"
-            class="w-full rounded-lg bg-fimil-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-fimil-700 disabled:opacity-50"
+            class="w-full rounded-lg bg-fimil-400 px-6 py-3 text-sm font-medium text-[#0a0e14] transition-colors hover:bg-fimil-300 disabled:opacity-50"
           >
             Send Message
           </button>
-          <div id="form-status" class="hidden text-sm"></div>
+          <div id="form-status" role="status" class="hidden text-sm"></div>
         </form>
       </div>
 
       {/* Right column */}
       <div class="space-y-8">
         {/* Book a Demo */}
-        <div class="rounded-2xl bg-gray-50 p-8">
-          <h3 class="text-lg font-semibold text-gray-900">Book a Demo</h3>
-          <p class="mt-4 text-sm text-gray-600">
-            Want to see Fimil in action? Schedule a personalized demo with our team. We'll walk you
-            through:
+        <div class="rounded-2xl border border-edge bg-panel p-8">
+          <h3 class="text-lg font-semibold text-ink">Book a Demo</h3>
+          <p class="mt-4 text-sm text-ink-soft">
+            Want to see Fimil in action? Schedule a walkthrough of:
           </p>
-          <ul class="mt-4 space-y-3 text-sm text-gray-600">
+          <ul class="mt-4 space-y-3 text-sm text-ink-soft">
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
-              How Fimil orchestrates multiple security scanners
+              <span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-400"></span>
+              The AI pentest agent — discovery, validated exploits, PoC export
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
-              Our intelligent noise reduction and prioritization
+              <span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-400"></span>
+              How fifteen scanners deduplicate into one prioritized signal
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
-              Git integrations and CI/CD pipeline setup
+              <span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-400"></span>
+              Auto-fix PRs for dependencies, IaC, and code
             </li>
             <li class="flex items-start gap-2">
-              <span class="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-600"></span>
+              <span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-fimil-400"></span>
               Enterprise features and self-hosted deployment
             </li>
           </ul>
           <div class="mt-6">
             <a
               href="mailto:sales@fimil.dev?subject=Demo%20Request"
-              class="inline-block w-full rounded-lg bg-fimil-600 px-6 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-fimil-700"
+              class="inline-block w-full rounded-lg bg-fimil-400 px-6 py-3 text-center text-sm font-medium text-[#0a0e14] transition-colors hover:bg-fimil-300"
             >
               Schedule a Demo
             </a>
@@ -143,22 +118,41 @@ const jsonLd = {
         </div>
 
         {/* Contact Information */}
-        <div class="rounded-2xl border border-gray-200 bg-white p-8">
-          <h3 class="text-lg font-semibold text-gray-900">Contact Information</h3>
-          <div class="mt-4 space-y-3 text-sm text-gray-600">
+        <div class="rounded-2xl border border-edge bg-panel p-8">
+          <h3 class="text-lg font-semibold text-ink">Contact Information</h3>
+          <div class="mt-4 space-y-3 text-sm text-ink-soft">
             <p>
-              <span class="font-medium text-gray-900">Sales:</span>
-              <a href="mailto:sales@fimil.dev" class="ml-1 text-fimil-600">sales@fimil.dev</a>
+              <span class="font-medium text-ink">Sales:</span>
+              <a href="mailto:sales@fimil.dev" class="ml-1 text-fimil-400 hover:text-fimil-300"
+                >sales@fimil.dev</a
+              >
             </p>
             <p>
-              <span class="font-medium text-gray-900">Support:</span>
-              <a href="mailto:support@fimil.dev" class="ml-1 text-fimil-600">support@fimil.dev</a>
+              <span class="font-medium text-ink">Support:</span>
+              <a href="mailto:support@fimil.dev" class="ml-1 text-fimil-400 hover:text-fimil-300"
+                >support@fimil.dev</a
+              >
             </p>
             <p>
-              <span class="font-medium text-gray-900">Security:</span>
-              <a href="mailto:security@fimil.dev" class="ml-1 text-fimil-600">security@fimil.dev</a>
+              <span class="font-medium text-ink">Security:</span>
+              <a href="mailto:security@fimil.dev" class="ml-1 text-fimil-400 hover:text-fimil-300"
+                >security@fimil.dev</a
+              >
             </p>
           </div>
+        </div>
+
+        {/* Security disclosures */}
+        <div class="rounded-2xl border border-fimil-400/30 bg-panel p-8">
+          <h3 class="text-lg font-semibold text-ink">Security disclosures</h3>
+          <p class="mt-3 text-sm leading-6 text-ink-soft">
+            Found a vulnerability in Fimil itself? Responsible disclosure is welcome and credited —
+            see the <a href="/security" class="text-fimil-400 hover:text-fimil-300">security page</a
+            > and email <a
+              href="mailto:security@fimil.dev"
+              class="text-fimil-400 hover:text-fimil-300">security@fimil.dev</a
+            >.
+          </p>
         </div>
       </div>
     </div>
@@ -191,14 +185,14 @@ const jsonLd = {
       .then(function (res) {
         if (!res.ok) throw new Error('Request failed');
         status.textContent =
-          "Message Sent! Thank you for reaching out. We'll get back to you within 24 hours.";
-        status.className = 'text-sm text-green-600';
+          "Message Sent! Thank you for reaching out. You'll hear back within a business day.";
+        status.className = 'text-sm text-low';
         status.classList.remove('hidden');
         form.reset();
       })
       .catch(function () {
         status.textContent = 'Something went wrong. Please email us directly.';
-        status.className = 'text-sm text-red-600';
+        status.className = 'text-sm text-critical';
         status.classList.remove('hidden');
       })
       .finally(function () {

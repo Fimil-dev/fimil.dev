@@ -10,7 +10,7 @@ const jsonLd = {
   name: 'Fimil vs SonarQube, Snyk, GitHub Advanced Security',
   url: 'https://fimil.dev/compare',
   description:
-    'See how Fimil compares to SonarQube, Snyk, and GitHub Advanced Security for application security.',
+    'An honest comparison of Fimil with SonarQube, Snyk, and GitHub Advanced Security — including the rows where they win.',
   about: [
     { '@type': 'SoftwareApplication', name: 'Fimil' },
     { '@type': 'SoftwareApplication', name: 'SonarQube' },
@@ -19,13 +19,15 @@ const jsonLd = {
   ],
 };
 
-type ComparisonRow = {
+type CellValue = boolean | string;
+
+interface ComparisonRow {
   feature: string;
-  fimil: boolean | string;
-  sonarqube: boolean | string;
-  snyk: boolean | string;
-  github: boolean | string;
-};
+  fimil: CellValue;
+  sonarqube: CellValue;
+  snyk: CellValue;
+  github: CellValue;
+}
 
 type ComparisonCategory = {
   name: string;
@@ -44,13 +46,7 @@ const categories: ComparisonCategory[] = [
         snyk: true,
         github: true,
       },
-      {
-        feature: 'Secrets Detection',
-        fimil: true,
-        sonarqube: false,
-        snyk: false,
-        github: true,
-      },
+      { feature: 'Secrets Detection', fimil: true, sonarqube: false, snyk: false, github: true },
       { feature: 'IaC Scanning', fimil: true, sonarqube: false, snyk: true, github: false },
       {
         feature: 'Container Image Scanning',
@@ -59,13 +55,15 @@ const categories: ComparisonCategory[] = [
         snyk: true,
         github: false,
       },
+      { feature: 'DAST', fimil: true, sonarqube: false, snyk: 'Add-on', github: false },
       {
-        feature: 'SBOM Generation',
+        feature: 'CSPM (Cloud Posture)',
         fimil: true,
         sonarqube: false,
-        snyk: true,
+        snyk: false,
         github: false,
       },
+      { feature: 'SBOM Generation', fimil: true, sonarqube: false, snyk: true, github: true },
       {
         feature: 'Multi-Scanner Orchestration',
         fimil: true,
@@ -83,10 +81,51 @@ const categories: ComparisonCategory[] = [
     ],
   },
   {
-    name: 'Intelligence & Prioritization',
+    name: 'Autonomous Pentest',
+    rows: [
+      { feature: 'AI Pentest Agent', fimil: true, sonarqube: false, snyk: false, github: false },
+      {
+        feature: 'Exploit-Validated Findings',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: false,
+      },
+      {
+        feature: 'PoC + curl Reproduction',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: false,
+      },
+      {
+        feature: 'Authenticated Testing with TOTP MFA',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: false,
+      },
+      {
+        feature: 'OpenAPI / GraphQL-Aware Discovery',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: false,
+      },
+      {
+        feature: 'Fix PR from Confirmed Finding',
+        fimil: true,
+        sonarqube: false,
+        snyk: false,
+        github: false,
+      },
+    ],
+  },
+  {
+    name: 'Intelligence & Remediation',
     rows: [
       { feature: 'Priority Scoring', fimil: true, sonarqube: true, snyk: true, github: false },
-      { feature: 'EPSS Enrichment', fimil: true, sonarqube: false, snyk: true, github: false },
+      { feature: 'EPSS Enrichment', fimil: true, sonarqube: false, snyk: true, github: true },
       {
         feature: 'Reachability Analysis',
         fimil: true,
@@ -94,8 +133,22 @@ const categories: ComparisonCategory[] = [
         snyk: true,
         github: false,
       },
-      { feature: 'Auto-Triage Rules', fimil: true, sonarqube: false, snyk: false, github: false },
-      { feature: 'Fix Suggestions', fimil: true, sonarqube: true, snyk: true, github: true },
+      {
+        feature: 'Auto-Triage Rules + Audit Trail',
+        fimil: true,
+        sonarqube: false,
+        snyk: 'Partial',
+        github: false,
+      },
+      { feature: 'Dependency Fix PRs', fimil: true, sonarqube: false, snyk: true, github: true },
+      {
+        feature: 'Code Fix Suggestions',
+        fimil: true,
+        sonarqube: 'Partial',
+        snyk: true,
+        github: true,
+      },
+      { feature: 'IaC Fix PRs', fimil: true, sonarqube: false, snyk: false, github: false },
       {
         feature: 'PR / Diff-Aware Scanning',
         fimil: true,
@@ -103,82 +156,107 @@ const categories: ComparisonCategory[] = [
         snyk: true,
         github: true,
       },
-      {
-        feature: 'Compliance Mapping',
-        fimil: true,
-        sonarqube: false,
-        snyk: true,
-        github: false,
-      },
+      { feature: 'Compliance Mapping', fimil: true, sonarqube: false, snyk: true, github: false },
     ],
   },
   {
     name: 'Deployment & Pricing',
     rows: [
       { feature: 'Cloud (SaaS)', fimil: true, sonarqube: true, snyk: true, github: true },
-      { feature: 'Self-Hosted', fimil: true, sonarqube: true, snyk: false, github: false },
+      { feature: 'Self-Hosted', fimil: true, sonarqube: true, snyk: false, github: 'GHES' },
       {
         feature: 'Air-Gapped Deployment',
         fimil: true,
         sonarqube: true,
         snyk: false,
-        github: false,
+        github: 'GHES',
       },
       {
         feature: 'Free Tier',
         fimil: true,
-        sonarqube: 'Community' as string,
+        sonarqube: 'Community',
         snyk: true,
-        github: false,
+        github: 'Public repos',
       },
       {
-        feature: 'Open Source Scanners',
+        feature: 'Open-Source Scanners',
         fimil: true,
-        sonarqube: 'Partial' as string,
+        sonarqube: 'Partial',
         snyk: false,
         github: false,
       },
-      { feature: 'GitHub Integration', fimil: true, sonarqube: true, snyk: true, github: true },
-      { feature: 'GitLab Integration', fimil: true, sonarqube: true, snyk: true, github: false },
+    ],
+  },
+  {
+    name: "Where they're stronger",
+    rows: [
       {
-        feature: 'Bitbucket Integration',
-        fimil: true,
-        sonarqube: true,
+        feature: 'Proprietary Vulnerability Research DB',
+        fimil: false,
+        sonarqube: false,
         snyk: true,
+        github: true,
+      },
+      { feature: 'IDE Plugins', fimil: false, sonarqube: true, snyk: true, github: true },
+      {
+        feature: 'Code Quality & Maintainability Analysis',
+        fimil: false,
+        sonarqube: true,
+        snyk: false,
         github: false,
       },
+      {
+        feature: 'First-Party Semantic SAST Engine',
+        fimil: 'Via Semgrep',
+        sonarqube: true,
+        snyk: true,
+        github: true,
+      },
+      {
+        feature: 'Native GitHub UI, Zero Setup',
+        fimil: false,
+        sonarqube: false,
+        snyk: false,
+        github: true,
+      },
+      { feature: 'Years in Market', fimil: false, sonarqube: true, snyk: true, github: true },
     ],
   },
 ];
 
 const summaryCards = [
-  { value: '12+ Scanners', description: '1 Dashboard' },
-  { value: '90% Noise', description: 'Reduction' },
-  { value: 'Self-Hosted', description: 'or Cloud' },
+  { value: '15 scanners + 1 agent', description: 'one signal' },
+  { value: 'Every pentest finding', description: 'replay-validated' },
+  { value: 'Fixes', description: 'delivered as PRs' },
 ];
 
-const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
+const columns = [
+  { key: 'fimil', label: 'Fimil' },
+  { key: 'sonarqube', label: 'SonarQube' },
+  { key: 'snyk', label: 'Snyk' },
+  { key: 'github', label: 'GitHub AS' },
+] as const;
 ---
 
 <BaseLayout
-  title="Compare — Fimil"
-  description="See how Fimil compares to SonarQube, Snyk, and GitHub Advanced Security for application security."
+  title="Fimil vs Snyk vs SonarQube vs GitHub Advanced Security (Honest Comparison)"
+  description="Side-by-side including where competitors win. Fimil adds what they lack: an exploit-validated AI pentest agent and fixes delivered as pull requests."
   jsonLd={jsonLd}
 >
   <Breadcrumbs items={[{ label: 'Compare' }]} />
   <Hero
-    headline="How Fimil Compares"
-    subheadline="Most security platforms are point solutions. Fimil is a unified platform that orchestrates the best open-source scanners and eliminates the noise."
+    headline="How Fimil compares — including where it doesn't win."
+    subheadline="The table below marks competitor strengths honestly, because an all-green column is how you know a comparison page is lying. Fimil's bet is different: validated exploits and fixes as PRs, not another findings feed."
   />
 
   {/* Summary cards */}
-  <section class="border-b border-gray-200 bg-white py-12">
+  <section class="border-y border-edge bg-panel py-12">
     <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
       {
         summaryCards.map((card) => (
-          <div class="scroll-hidden rounded-xl border border-fimil-200 bg-fimil-50 p-6 text-center">
-            <p class="text-2xl font-bold text-fimil-700">{card.value}</p>
-            <p class="mt-1 text-sm text-fimil-600">{card.description}</p>
+          <div class="scroll-hidden rounded-xl border border-edge bg-ground p-6 text-center">
+            <p class="text-2xl font-bold text-fimil-400">{card.value}</p>
+            <p class="mt-1 text-sm text-ink-soft">{card.description}</p>
           </div>
         ))
       }
@@ -192,10 +270,22 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
       <div class="hidden overflow-x-auto sm:block">
         <table class="w-full text-left text-sm">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="py-3 pr-4 font-medium text-gray-500">Feature</th>
-              <th class="px-4 py-3 font-semibold text-fimil-600">Fimil</th>
-              {competitors.map((c) => <th class="px-4 py-3 font-medium text-gray-500">{c}</th>)}
+            <tr class="border-b border-edge">
+              <th class="py-3 pr-4 font-medium text-ink-faint">Feature</th>
+              {
+                columns.map((col) => (
+                  <th
+                    class:list={[
+                      'px-4 py-3',
+                      col.key === 'fimil'
+                        ? 'font-semibold text-fimil-400'
+                        : 'font-medium text-ink-faint',
+                    ]}
+                  >
+                    {col.label}
+                  </th>
+                ))
+              }
             </tr>
           </thead>
           <tbody>
@@ -205,66 +295,32 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
                   <tr>
                     <td
                       colspan="5"
-                      class="pt-6 pb-2 text-xs font-semibold tracking-wider text-gray-400 uppercase"
+                      class="pt-6 pb-2 text-xs font-semibold tracking-wider text-ink-faint uppercase"
                     >
                       {category.name}
                     </td>
                   </tr>
                   {category.rows.map((row) => (
-                    <tr class="border-b border-gray-100">
-                      <td class="py-3 pr-4 text-gray-900">{row.feature}</td>
-                      <td class="px-4 py-3">
-                        {typeof row.fimil === 'string' ? (
-                          <span class="text-sm text-gray-700">{row.fimil}</span>
-                        ) : row.fimil ? (
-                          <span class="text-green-600" aria-label="Yes">
-                            &#x2713;
-                          </span>
-                        ) : (
-                          <span class="text-gray-300" aria-label="No">
-                            &mdash;
-                          </span>
-                        )}
-                      </td>
-                      <td class="px-4 py-3">
-                        {typeof row.sonarqube === 'string' ? (
-                          <span class="text-sm text-gray-700">{row.sonarqube}</span>
-                        ) : row.sonarqube ? (
-                          <span class="text-green-600" aria-label="Yes">
-                            &#x2713;
-                          </span>
-                        ) : (
-                          <span class="text-gray-300" aria-label="No">
-                            &mdash;
-                          </span>
-                        )}
-                      </td>
-                      <td class="px-4 py-3">
-                        {typeof row.snyk === 'string' ? (
-                          <span class="text-sm text-gray-700">{row.snyk}</span>
-                        ) : row.snyk ? (
-                          <span class="text-green-600" aria-label="Yes">
-                            &#x2713;
-                          </span>
-                        ) : (
-                          <span class="text-gray-300" aria-label="No">
-                            &mdash;
-                          </span>
-                        )}
-                      </td>
-                      <td class="px-4 py-3">
-                        {typeof row.github === 'string' ? (
-                          <span class="text-sm text-gray-700">{row.github}</span>
-                        ) : row.github ? (
-                          <span class="text-green-600" aria-label="Yes">
-                            &#x2713;
-                          </span>
-                        ) : (
-                          <span class="text-gray-300" aria-label="No">
-                            &mdash;
-                          </span>
-                        )}
-                      </td>
+                    <tr class="border-b border-edge">
+                      <td class="py-3 pr-4 text-ink">{row.feature}</td>
+                      {columns.map((col) => {
+                        const value = row[col.key];
+                        return (
+                          <td class="px-4 py-3">
+                            {typeof value === 'string' ? (
+                              <span class="text-sm text-ink-soft">{value}</span>
+                            ) : value ? (
+                              <span class="text-low" aria-label="Yes">
+                                &#x2713;
+                              </span>
+                            ) : (
+                              <span class="text-ink-faint" aria-label="No">
+                                &mdash;
+                              </span>
+                            )}
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </>
@@ -279,65 +335,30 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
         {
           categories.map((category) => (
             <div>
-              <h3 class="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+              <h3 class="mb-3 text-xs font-semibold tracking-wider text-ink-faint uppercase">
                 {category.name}
               </h3>
               <div class="space-y-3">
                 {category.rows.map((row) => (
-                  <div class="rounded-lg border border-gray-200 bg-white p-4">
-                    <div class="mb-2 font-medium text-gray-900">{row.feature}</div>
+                  <div class="rounded-lg border border-edge bg-panel p-4">
+                    <div class="mb-2 font-medium text-ink">{row.feature}</div>
                     <div class="grid grid-cols-2 gap-2 text-sm">
-                      <span
-                        class:list={[
-                          typeof row.fimil === 'string'
-                            ? 'text-gray-700'
-                            : row.fimil
-                              ? 'text-green-600'
-                              : 'text-gray-400',
-                        ]}
-                      >
-                        Fimil:{' '}
-                        {typeof row.fimil === 'string' ? row.fimil : row.fimil ? 'Yes' : 'No'}
-                      </span>
-                      <span
-                        class:list={[
-                          typeof row.sonarqube === 'string'
-                            ? 'text-gray-700'
-                            : row.sonarqube
-                              ? 'text-green-600'
-                              : 'text-gray-400',
-                        ]}
-                      >
-                        SonarQube:{' '}
-                        {typeof row.sonarqube === 'string'
-                          ? row.sonarqube
-                          : row.sonarqube
-                            ? 'Yes'
-                            : 'No'}
-                      </span>
-                      <span
-                        class:list={[
-                          typeof row.snyk === 'string'
-                            ? 'text-gray-700'
-                            : row.snyk
-                              ? 'text-green-600'
-                              : 'text-gray-400',
-                        ]}
-                      >
-                        Snyk: {typeof row.snyk === 'string' ? row.snyk : row.snyk ? 'Yes' : 'No'}
-                      </span>
-                      <span
-                        class:list={[
-                          typeof row.github === 'string'
-                            ? 'text-gray-700'
-                            : row.github
-                              ? 'text-green-600'
-                              : 'text-gray-400',
-                        ]}
-                      >
-                        GitHub AS:{' '}
-                        {typeof row.github === 'string' ? row.github : row.github ? 'Yes' : 'No'}
-                      </span>
+                      {columns.map((col) => {
+                        const value = row[col.key];
+                        return (
+                          <span
+                            class:list={[
+                              typeof value === 'string'
+                                ? 'text-ink-soft'
+                                : value
+                                  ? 'text-low'
+                                  : 'text-ink-faint',
+                            ]}
+                          >
+                            {col.label}: {typeof value === 'string' ? value : value ? 'Yes' : 'No'}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 ))}
@@ -350,38 +371,46 @@ const competitors = ['SonarQube', 'Snyk', 'GitHub Advanced Security'] as const;
   </section>
 
   {/* Why Fimil */}
-  <section class="border-t border-gray-200 bg-gray-50 py-20">
+  <section class="border-t border-edge bg-panel py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Why Fimil</h2>
-      <div class="mt-6 space-y-4 text-gray-600">
+      <h2 class="text-2xl font-bold tracking-tight text-ink">Why Fimil anyway</h2>
+      <div class="mt-6 space-y-4 text-ink-soft">
         <p>
-          Other platforms build their own proprietary scanners. Fimil takes a different approach: we
-          <a href="/features" class="text-fimil-600 hover:text-fimil-700"
-            >orchestrate the best open-source tools</a
-          > the security community has already built. This means you get best-in-class detection without
-          vendor lock-in.
+          Snyk, SonarQube, and GitHub Advanced Security are mature products with real strengths —
+          the table above concedes them. What none of them do is close the loop: they hand you a
+          list. Fimil <a href="/pentest" class="text-fimil-400 hover:text-fimil-300"
+            >validates exploitability with a working reproduction</a
+          > and <a href="/platform" class="text-fimil-400 hover:text-fimil-300"
+            >opens the pull request that fixes the finding</a
+          >.
         </p>
         <p>
-          The real problem isn't finding vulnerabilities &mdash; it's finding the right ones.
-          Running 12 scanners produces thousands of overlapping results. Fimil deduplicates across
-          tools, enriches with EPSS data, analyzes reachability, and surfaces only the findings that
-          actually matter.
+          The detection layer is deliberately not proprietary: Fimil orchestrates the best
+          open-source scanners — Semgrep, Trivy, Grype, Gitleaks, Checkov, ZAP, Nuclei, Prowler, and
+          more — then adds the layers they can't provide alone: cross-tool deduplication,
+          correlation, an auditable priority score, and remediation.
         </p>
         <p>
-          And unlike most alternatives, Fimil gives you the choice: run it as a <a
+          Compared to an annual manual pentest or PtaaS engagement: Fimil runs on demand, validates
+          continuously, and bills per confirmed finding instead of per day of consultant time. It is <em
+            >not</em
+          > a replacement for human red-teaming on novel business logic — it's the layer that makes sure
+          the well-understood vulnerability classes never reach them.
+        </p>
+        <p>
+          And unlike most alternatives, you choose the deployment: <a
             href="/pricing"
-            class="text-fimil-600 hover:text-fimil-700"
-            data-astro-prefetch="load">cloud service</a
-          > or deploy on your own infrastructure. Your source code stays ephemeral &mdash; cloned, scanned,
-          deleted. Never persisted, never shared.
+            class="text-fimil-400 hover:text-fimil-300"
+            data-astro-prefetch="load">cloud or self-hosted</a
+          >, including air-gapped. Your source stays ephemeral — cloned, scanned, deleted.
         </p>
       </div>
     </div>
   </section>
 
   <CTASection
-    headline="Ready to Replace Your Patchwork of Tools?"
-    description="Join the waitlist or schedule a demo to see Fimil in action."
-    cta={{ label: 'Join Waitlist', href: '/#waitlist' }}
+    headline="Ready to replace your patchwork of tools?"
+    description="Get early access and see what Fimil can prove against your own staging environment."
+    cta={{ label: 'Get early access', href: '/#waitlist' }}
   />
 </BaseLayout>

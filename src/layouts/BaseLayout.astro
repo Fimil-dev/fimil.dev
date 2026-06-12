@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'Unified application security platform. Orchestrate 12+ open-source scanners behind a single dashboard.',
+  description = 'Application security that finds, proves, and fixes. An autonomous pentest agent plus 15 open-source scanners, with every confirmed finding delivered as proof and a pull request.',
   ogImage = '/og-default.png',
   canonicalPath,
   noindex = false,
@@ -30,7 +30,8 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0284c7" />
+    <meta name="theme-color" content="#0a0e14" />
+    <meta name="color-scheme" content="dark" />
     <meta
       name="robots"
       content={noindex
@@ -39,10 +40,19 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
     />
     <meta name="generator" content={Astro.generator} />
 
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/logo-icon-color.png" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="application/rss+xml" title="Fimil Blog" href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Fimil Changelog"
+      href="/changelog.xml"
+    />
 
     {/* Open Graph */}
     <meta property="og:title" content={title} />
@@ -69,6 +79,13 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-mono-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     {/* JSON-LD */}
     {
@@ -80,9 +97,15 @@ const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site);
       )
     }
   </head>
-  <body class="min-h-screen bg-white text-gray-900">
+  <body class="min-h-screen bg-ground text-ink">
+    <a
+      href="#main"
+      class="sr-only z-[60] rounded-lg bg-fimil-400 px-4 py-2 text-sm font-medium text-[#0a0e14] focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+    >
+      Skip to content
+    </a>
     <Header />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer />

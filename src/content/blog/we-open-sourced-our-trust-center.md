@@ -2,7 +2,7 @@
 title: "We Open-Sourced Our Trust Center — Here's Why"
 description: "Fimil's Trust Center is now MIT-licensed and free for any startup to fork and deploy. One config file, no backend, no CMS. Here's why we built it and how you can use it."
 date: 2026-04-03
-author: 'Ethan'
+author: 'Ethan Aldrich'
 tags: ['open-source', 'compliance', 'trust-center', 'startups']
 ---
 
@@ -130,4 +130,4 @@ The repo is at [github.com/Fimil-dev/trust-center](https://github.com/Fimil-dev/
 
 ---
 
-_Fimil is a unified application security platform that orchestrates 12+ open-source scanners into a single dashboard. We're currently in private beta — [join the waitlist](https://fimil.dev/#waitlist) for early access._
+_Fimil is an application security platform that finds, proves, and fixes: 15 open-source scanners plus an autonomous pentest agent that validates findings by replaying exploits. Fimil is currently in early access — [get early access](https://fimil.dev/#waitlist)._

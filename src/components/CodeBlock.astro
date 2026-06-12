@@ -1,0 +1,42 @@
+---
+import { Code } from 'astro:components';
+import type { BundledLanguage } from 'shiki';
+import MockupWindow from '@/components/MockupWindow.astro';
+
+interface Props {
+  code: string;
+  lang: BundledLanguage | 'text';
+  title?: string | undefined;
+  frame?: boolean | undefined;
+}
+
+const { code, lang, title, frame = false } = Astro.props;
+---
+
+{
+  frame ? (
+    <MockupWindow title={title} variant="terminal">
+      <Code
+        code={code}
+        lang={lang}
+        theme="github-dark-default"
+        class="code-block !m-0 !rounded-none !border-0 p-4 text-sm"
+      />
+    </MockupWindow>
+  ) : (
+    <Code
+      code={code}
+      lang={lang}
+      theme="github-dark-default"
+      class="code-block rounded-xl border border-edge p-4 text-sm"
+    />
+  )
+}
+
+<style is:global>
+  .code-block {
+    background-color: var(--color-code-bg) !important;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+</style>

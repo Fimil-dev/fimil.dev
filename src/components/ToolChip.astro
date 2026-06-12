@@ -1,0 +1,21 @@
+---
+// Text-mark chip for a scanner — no third-party logos (trademark caution);
+// monospace marks fit the terminal aesthetic anyway.
+interface Props {
+  name: string;
+  category?: string | undefined;
+  accent?: boolean | undefined;
+}
+
+const { name, category, accent = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'flex flex-col items-center justify-center rounded-lg border px-3 py-2.5 text-center',
+    accent ? 'border-fimil-400/40 bg-fimil-400/5' : 'border-edge bg-panel',
+  ]}
+>
+  <span class:list={['font-mono text-sm', accent ? 'text-fimil-300' : 'text-ink']}>{name}</span>
+  {category && <span class="mt-0.5 text-xs text-ink-faint">{category}</span>}
+</div>

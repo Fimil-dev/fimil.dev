@@ -1,0 +1,135 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import FeatureSplit from '@/components/FeatureSplit.astro';
+import ScopeGuardVisual from '@/components/mockups/ScopeGuardVisual.astro';
+import Icon from '@/components/Icon.astro';
+import Button from '@/components/Button.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Security at Fimil',
+  url: 'https://fimil.dev/security',
+  description:
+    'How Fimil protects your code: ephemeral scan environments, output redaction, pentest agent containment, self-hosted options, and a live trust center.',
+};
+
+const practices = [
+  {
+    title: 'Ephemeral scan workspaces',
+    description:
+      'Each scanner runs in an isolated environment against a fresh clone of your repo. The workspace is torn down when the scan completes; Fimil stores findings and metadata, not your source.',
+  },
+  {
+    title: 'Output redaction',
+    description:
+      'Scanner and pentest output passes through redaction before storage — discovered secrets and sensitive values are masked in evidence, not persisted in the clear.',
+  },
+  {
+    title: 'Encrypted credentials',
+    description:
+      'Pentest login credentials and TOTP seeds are encrypted at rest and never echoed back through the API once set.',
+  },
+  {
+    title: 'Audit trails',
+    description:
+      'Triage transitions, pentest agent requests, and blocked off-scope attempts all land in audit logs you can inspect.',
+  },
+];
+---
+
+<BaseLayout
+  title="Security at Fimil — Posture, Scan Isolation, Agent Containment"
+  description="How Fimil protects your code: ephemeral scan environments, output redaction, pentest scope guard, self-hosted options, and a live trust center."
+  ogImage="/og-security.png"
+  jsonLd={jsonLd}
+>
+  <Breadcrumbs items={[{ label: 'Security' }]} />
+  <Hero
+    headline="Security of Fimil itself."
+    subheadline="A security product earns trust by showing its own posture. This page covers how Fimil handles your code and contains its agent — the live evidence lives on the trust center."
+    primaryCta={{ label: 'Visit the Trust Center', href: 'https://trust.fimil.dev' }}
+    secondaryCta={{ label: 'Report a vulnerability', href: '/legal/security-policy' }}
+  />
+
+  {/* How scans handle your code */}
+  <Section variant="panel">
+    <SectionHeading
+      eyebrow="your code"
+      title="How scans handle your source."
+      lead="The principle is simple: Fimil's product is findings, not a copy of your codebase."
+    />
+    <div class="grid gap-6 sm:grid-cols-2">
+      {
+        practices.map((practice) => (
+          <div class="scroll-hidden rounded-2xl border border-edge bg-ground p-6">
+            <h3 class="text-lg font-semibold text-ink">{practice.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-ink-soft">{practice.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* Agent containment */}
+  <Section>
+    <FeatureSplit
+      eyebrow="agent containment"
+      title="The pentest agent is autonomous — and leashed."
+      description="Every request the agent makes passes through a scope guard: a hostname allowlist it cannot leave, destructive HTTP verbs gated off by default, per-host rate limits, DNS pinning with RFC1918 and cloud-metadata IP rejection, and a kill switch checked continuously during the run. Blocked attempts are aborted and written to the audit log."
+      icon="lock"
+      link={{ label: 'The full pentest containment model', href: '/pentest' }}
+    >
+      <ScopeGuardVisual />
+    </FeatureSplit>
+  </Section>
+
+  {/* Deployment isolation */}
+  <Section variant="panel" spacing="md">
+    <div class="mx-auto max-w-3xl text-center">
+      <SectionHeading
+        eyebrow="deployment isolation"
+        title="Run it where your code never leaves."
+        lead="Fimil Enterprise deploys into your own Kubernetes cluster — including fully air-gapped installs with offline scanner images. If your threat model says code can't touch our cloud, don't send it to our cloud."
+      />
+      <Button href="/pricing" variant="secondary">Enterprise details</Button>
+    </div>
+  </Section>
+
+  {/* Disclosure */}
+  <Section spacing="md">
+    <div
+      class="mx-auto flex max-w-3xl flex-col items-start gap-6 rounded-2xl border border-edge bg-panel p-8 sm:flex-row sm:items-center"
+    >
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-ink">Found a vulnerability in Fimil?</h2>
+        <p class="mt-2 text-sm leading-6 text-ink-soft">
+          Responsible disclosure is welcome and credited. Email
+          <a href="mailto:security@fimil.dev" class="text-fimil-400 hover:text-fimil-300"
+            >security@fimil.dev</a
+          > — you'll get a reply from the person who wrote the code. Details in the
+          <a href="/legal/security-policy" class="text-fimil-400 hover:text-fimil-300"
+            >security policy</a
+          >.
+        </p>
+      </div>
+      <Icon name="shield" class="h-12 w-12 shrink-0 text-fimil-400/40" />
+    </div>
+  </Section>
+
+  {/* Trust center */}
+  <Section variant="panel" spacing="md">
+    <div class="mx-auto max-w-3xl text-center">
+      <SectionHeading
+        eyebrow="live evidence"
+        title="The trust center is the receipts."
+        lead="Compliance framework status, 40+ security controls with verification dates, subprocessors, policies, and pre-answered questionnaires (MVSP, CAIQ, VSA) — published openly, updated continuously, and open-sourced for other startups to fork."
+      />
+      <Button href="https://trust.fimil.dev" size="lg">trust.fimil.dev</Button>
+    </div>
+  </Section>
+</BaseLayout>

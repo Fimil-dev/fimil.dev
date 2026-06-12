@@ -1,0 +1,23 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  qualifier?: string | undefined;
+  href?: string | undefined;
+}
+
+const { value, label, qualifier, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'block rounded-xl border border-edge bg-panel p-6 text-center',
+    href && 'transition-colors hover:border-edge-bright hover:bg-raised',
+  ]}
+>
+  <div class="font-mono text-4xl font-bold text-ink sm:text-5xl">{value}</div>
+  <div class="mt-2 text-sm text-ink-soft">{label}</div>
+  {qualifier && <div class="mt-1 text-xs text-ink-faint">{qualifier}</div>}
+</Tag>

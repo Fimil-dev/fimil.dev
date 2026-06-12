@@ -2,7 +2,7 @@
 title: 'SAST vs SCA vs Secrets Detection vs IaC Scanning: A Practical Guide'
 description: 'A practical breakdown of the five categories of application security testing — SAST, SCA, secrets detection, IaC scanning, and container security. What each one catches, when you need it, and how they work together.'
 date: 2026-03-16
-author: 'Fimil Team'
+author: 'Ethan Aldrich'
 tags: ['guides', 'application-security', 'sast', 'sca', 'secrets-detection', 'iac']
 ---
 
@@ -238,7 +238,7 @@ Each scanning category catches a different class of vulnerability:
 
 None of these categories is a substitute for another. A codebase can have perfect SAST results (no injection vulnerabilities in your own code) while having critical SCA findings (a dependency with a known RCE) and leaked secrets in the git history. A comprehensive security testing strategy runs all five categories.
 
-The challenge, of course, is that running five categories of scanners — potentially 12+ individual tools — produces a massive volume of findings. Many of those findings are duplicates across tools, and the noise can be paralyzing.
+The challenge, of course, is that running five categories of scanners — potentially a dozen or more individual tools — produces a massive volume of findings. Many of those findings are duplicates across tools, and the noise can be paralyzing.
 
 > **Bottom line:** No single scanning category covers everything. A comprehensive strategy needs all five.
 

@@ -1,23 +1,26 @@
 ---
+import Icon from '@/components/Icon.astro';
+import type { IconName } from '@/lib/icons';
+
 interface Props {
   title: string;
   description: string;
-  icon?: string | undefined;
+  icon?: IconName | undefined;
 }
 
 const { title, description, icon } = Astro.props;
 ---
 
 <div
-  class="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-fimil-200 hover:shadow-lg"
+  class="rounded-2xl border border-edge bg-panel p-6 transition-colors hover:border-edge-bright hover:bg-raised"
 >
   {
     icon && (
-      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-fimil-100 text-fimil-600 transition-colors group-hover:bg-fimil-600 group-hover:text-white">
-        <span class="text-xl">{icon}</span>
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-fimil-400/20 bg-fimil-400/10">
+        <Icon name={icon} class="h-5 w-5 text-fimil-400" />
       </div>
     )
   }
-  <h3 class="mt-4 text-lg font-semibold text-gray-900">{title}</h3>
-  <p class="mt-2 text-sm leading-6 text-gray-600">{description}</p>
+  <h3 class="mt-4 text-lg font-semibold text-ink">{title}</h3>
+  <p class="mt-2 text-sm leading-6 text-ink-soft">{description}</p>
 </div>
