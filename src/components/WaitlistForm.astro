@@ -24,6 +24,17 @@
         action="https://app.fimil.dev/api/v1/waitlist"
         method="POST"
       >
+        {/* Honeypot: hidden from real users, ignored by screen readers; bots tend to fill it. */}
+        <div aria-hidden="true" class="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+          <label for="waitlist-website">Leave this field empty</label>
+          <input
+            id="waitlist-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
         <div>
           <label for="waitlist-email" class="sr-only">Email address</label>
           <input
@@ -74,12 +85,28 @@
     const form = document.getElementById('waitlist-form');
     const status = document.getElementById('waitlist-status');
 
+    // Client-side spam friction: hidden honeypot + minimum time-to-submit. Bots that
+    // auto-fill every field or POST instantly are silently no-op'd. Real backend
+    // rate-limiting is the server's job; this is only the client-side friction layer.
+    const MIN_SUBMIT_MS = 2000;
+    const renderedAt = Date.now();
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const data = new FormData(form);
+
+      // Silently no-op if the honeypot is filled or the form was submitted
+      // impossibly fast for a human. Fake "success" so bots get no signal.
+      if (data.get('website') || Date.now() - renderedAt < MIN_SUBMIT_MS) {
+        status.textContent = "You're on the list! We'll be in touch soon.";
+        status.className = 'text-sm text-low';
+        form.reset();
+        return;
+      }
+
       const body = {};
       data.forEach(function (value, key) {
-        if (value) body[key] = value;
+        if (key !== 'website' && value) body[key] = value;
       });
 
       const btn = form.querySelector('button[type="submit"]');
