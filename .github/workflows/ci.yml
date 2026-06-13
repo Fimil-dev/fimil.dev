@@ -48,6 +48,27 @@ jobs:
       - run: npm ci
       - run: npx vitest run
 
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      # Config builds + serves the site on :4322 and runs page/SEO/waitlist/contact specs.
+      # On local the form happy-paths intercept the API (no real submit), so this is CI-safe.
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-fimil-dev
+          path: playwright-report/
+          retention-days: 7
+
   build:
     name: Build
     runs-on: ubuntu-latest
